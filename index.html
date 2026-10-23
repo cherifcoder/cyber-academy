@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Cyber Academy — Web Pentest &amp; Security Learning</title>
+  <meta name="description" content="Plateforme d'apprentissage interactive : pentest éthique, OWASP Top 10, Burp Suite, reporting CVSS et défense applicative. Environnements de laboratoire autorisés uniquement." />
+  <meta name="color-scheme" content="dark light" />
+  <script>
+    try {
+      var _saved = JSON.parse(localStorage.getItem('cyberacademy.state.v1') || '{}');
+      if (_saved && _saved.theme === 'light') document.documentElement.dataset.theme = 'light';
+    } catch (e) { /* localStorage indisponible */ }
+  </script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060a12'/%3E%3Cpath d='M32 10l16 6v12c0 11-7 19-16 22-9-3-16-11-16-22V16z' fill='none' stroke='%2300e5ff' stroke-width='3'/%3E%3Cpath d='M24 32l6 6 12-13' fill='none' stroke='%237cff6b' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/views.css" />
+</head>
+<body>
+  <a class="skip-link" href="#view">Aller au contenu principal</a>
+
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Navigation principale">
+      <a class="brand" href="#/">
+        <span class="brand-mark" aria-hidden="true">◈</span>
+        <span class="brand-text">
+          <strong>CYBER<span>ACADEMY</span></strong>
+          <small>Web Pentest &amp; Security</small>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav"></nav>
+
+      <div class="sidebar-foot">
+        <div class="sidebar-progress">
+          <div class="sp-row"><span>Progression</span><b id="side-progress">0 %</b></div>
+          <div class="bar bar-sm"><i id="side-progress-bar" style="width:0%"></i></div>
+        </div>
+        <div class="lab-badge">⚠ Environnements de lab autorisés uniquement</div>
+        <button class="btn btn-ghost btn-sm btn-block" id="reset-btn" type="button">Réinitialiser la progression</button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn" id="menu-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+        <div class="topbar-title" id="topbar-title">Tableau de bord</div>
+        <div class="topbar-actions">
+          <div class="chip chip-xp" title="Points d'expérience">
+            <span class="chip-ico" aria-hidden="true">✦</span><span id="xp-chip">0 XP</span>
+          </div>
+          <div class="chip chip-time" title="Temps d'étude cumulé">
+            <span class="chip-ico" aria-hidden="true">◷</span><span id="time-chip">0 min</span>
+          </div>
+          <button class="icon-btn" id="theme-btn" type="button" aria-label="Changer de thème" title="Thème clair / sombre">◐</button>
+          <button class="avatar" id="profile-btn" type="button" aria-label="Profil utilisateur" title="Profil">R</button>
+        </div>
+      </header>
+
+      <main class="view" id="view" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <div class="scrim" id="scrim" hidden></div>
+  <div id="modal-root"></div>
+  <div id="print-root"></div>
+  <div class="toast-root" id="toast-root" aria-live="polite" aria-atomic="false"></div>
+
+  <script type="module" src="assets/js/app.js"></script>
+  <noscript><div class="noscript">Cyber Academy nécessite JavaScript pour fonctionner.</div></noscript>
+</body>
+</html>
