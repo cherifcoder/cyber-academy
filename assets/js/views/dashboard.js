@@ -27,7 +27,7 @@ export function renderDashboard() {
       <div>
         <div class="hero-kicker">◈ Parcours Web Pentest &amp; Security</div>
         <h1>Bonjour ${esc(name)}, <span>prêt à auditer ?</span></h1>
-        <p>Huit modules pour apprendre le pentest web, de la reconnaissance au rapport d'audit, et la défense applicative. Tout se pratique dans des environnements de laboratoire autorisés.</p>
+        <p>${MODULES.length} modules pour apprendre le pentest web, de la reconnaissance au rapport d'audit, et la défense applicative — dont 4 parcours Capture The Flag guidés (web, WordPress, SQLi, privesc). Tout se pratique dans des environnements de laboratoire autorisés.</p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-lg" href="#/module/${next.id}">
             ${done === 0 ? 'Commencer le parcours' : done >= MODULES.length ? 'Revoir le parcours' : 'Reprendre le parcours'} →

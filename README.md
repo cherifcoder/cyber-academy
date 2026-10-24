@@ -15,12 +15,13 @@ Plateforme d'apprentissage interactive entièrement en français, consacrée au 
 
 ## Fonctionnalités
 
-- **Parcours structuré** — 8 modules progressifs avec objectifs, blocs pédagogiques, quiz par module et validation par seuil de 70 %.
+- **Parcours structuré** — 12 modules progressifs avec objectifs, blocs pédagogiques, quiz par module et validation par seuil de 70 %.
+- **Modules Capture The Flag** — 4 parcours guidés pas à pas (application web, WordPress, injection SQL, élévation de privilèges Linux) avec flags, preuves, exercices et remédiation.
 - **Tableau de bord** — Progression globale, XP, niveau (Recrue → Expert), temps d'étude cumulé, activité récente et badges.
 - **Ateliers interactifs** — 9 simulateurs pédagogiques (cadre d'autorisation, Nmap, fuzzing, SQLi, XSS, falsification de requête Burp, élévation de privilèges, calculateur CVSS v3.1, durcissement HTTP). **Aucune requête réseau réelle**.
 - **Boîte à outils** — Fiches outils filtrables, cheatsheet commandes, checklist de durcissement téléchargeable/imprimable.
 - **Flashcards** — 6 decks (termes, HTTP, statuts, Burp, OWASP, privesc) avec suivi « maîtrisé ».
-- **Badges** — 20 badges débloquables en fonction de la progression, des XP, du temps d'étude et de la pratique.
+- **Badges** — 24 badges débloquables en fonction de la progression, des XP, du temps d'étude et de la pratique.
 - **Certificat** — Généré localement en Canvas (PNG, 1600×1131) et imprimable/PDF, personnalisé au nom de l'apprenti.
 - **Rapport d'audit** — Générateur avec formulaire dynamique, aperçu en direct, brouillons locaux (jusqu'à 20), export Markdown et impression/PDF.
 - **Thème sombre/clair** — Persistance dans `localStorage`.
@@ -55,7 +56,7 @@ Plateforme d'apprentissage interactive entièrement en français, consacrée au 
 │       ├── store.js       # État, progression, XP, badges, LocalStorage
 │       ├── ui.js          # Helpers UI, toasts, modales, copie, impression
 │       ├── cvss.js        # Calcul CVSS v3.1 (formule officielle)
-│       ├── data/          # Contenu pédagogique (m1–m8), quiz, outils, flashcards, badges
+│       ├── data/          # Contenu pédagogique (m1–m12), quiz, outils, flashcards, badges
 │       └── views/         # Vues (dashboard, module, quiz, labs, toolbox, flashcards, badges, certificate, report)
 ```
 

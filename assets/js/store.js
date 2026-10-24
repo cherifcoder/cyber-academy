@@ -25,6 +25,7 @@ const defaults = () => ({
   badges: [],
   study: { seconds: 0 },
   labs: {},
+  drills: {},
   cards: { known: [], seen: [] },
   reports: [],
   activity: [],
@@ -137,6 +138,24 @@ export function levelInfo() {
 
 /* ---------------- progression ---------------- */
 export const MODULE_IDS = MODULES.map((m) => m.id);
+
+/* ---------------- exercices de simulation ---------------- */
+export function drillDone(moduleId, exoId) {
+  return !!state.drills?.[moduleId]?.[exoId];
+}
+
+export function markDrill(moduleId, exoId) {
+  if (!state.drills) state.drills = {};
+  if (!state.drills[moduleId]) state.drills[moduleId] = {};
+  if (state.drills[moduleId][exoId]) return false;
+  state.drills[moduleId][exoId] = Date.now();
+  save(true);
+  return true;
+}
+
+export function drillsCompleted(moduleId, exos = []) {
+  return exos.filter((e) => drillDone(moduleId, e.id)).length;
+}
 
 export function moduleProgress(id) {
   if (state.completed[id]) return 100;

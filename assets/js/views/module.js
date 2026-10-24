@@ -4,6 +4,7 @@ import { state } from '../store.js';
 import { esc, codeBlock, termBlock, fmtDateTime } from '../ui.js';
 import { createQuiz } from './quiz.js';
 import { mountLab } from './labs.js';
+import { mountExercises } from './exercises.js';
 
 export function renderBlock(b) {
   switch (b.t) {
@@ -37,6 +38,35 @@ export function renderBlock(b) {
         <div class="step"><h4>${esc(s.h)}</h4><p>${s.p}</p></div>`).join('')}</div></div>`;
     case 'lab':
       return `<div class="block"><div class="lab-slot" data-lab="${esc(b.id)}"></div></div>`;
+    case 'cmdref':
+      return `<div class="block">${b.title ? `<h3>${esc(b.title)}</h3>` : ''}
+        ${b.intro ? `<p class="block-body">${b.intro}</p>` : ''}
+        <div class="cmd-grid">${b.items.map((c) => `
+          <article class="cmd-card">
+            <header class="cmd-card-head">
+              <code>${esc(c.cmd)}</code>
+              ${c.tag ? `<span class="pill pill-cyan">${esc(c.tag)}</span>` : ''}
+            </header>
+            <div class="cmd-part"><b>À quoi elle sert</b><p>${c.what}</p></div>
+            <div class="cmd-part"><b>Informations obtenues</b><p>${c.gives}</p></div>
+            <div class="cmd-part"><b>Comment l'utiliser</b><p>${c.use}</p></div>
+            <div class="cmd-syntax"><span>Syntaxe</span><code>${esc(c.syntax)}</code></div>
+            <div class="cmd-syntax"><span>Exemple</span><code>${esc(c.example)}</code></div>
+            <div class="cmd-part cmd-read"><b>Lecture &amp; exploitation de l'info</b><p>${c.read}</p></div>
+          </article>`).join('')}</div>
+      </div>`;
+    case 'glossary':
+      return `<div class="block">${b.title ? `<h3>${esc(b.title)}</h3>` : ''}
+        ${b.intro ? `<p class="block-body">${b.intro}</p>` : ''}
+        <dl class="glossary">${b.items.map((g) => `
+          <div class="gloss-item">
+            <dt>${esc(g.term)}${g.full ? ` <span class="gloss-full">${esc(g.full)}</span>` : ''}</dt>
+            <dd><p>${g.def}</p>
+              ${g.use ? `<p class="gloss-use"><b>Comment l'utiliser :</b> ${g.use}</p>` : ''}
+              ${g.ex ? `<code class="gloss-ex">${esc(g.ex)}</code>` : ''}
+            </dd>
+          </div>`).join('')}</dl>
+      </div>`;
     default:
       return '';
   }
@@ -94,7 +124,12 @@ export function moduleView(modId) {
 
     ${mod.blocks.map(renderBlock).join('')}
 
-    <div class="section-title">Évaluation & validation</div>
+    ${mod.exos?.length ? `
+    <div class="section-title" id="exercices">Atelier de simulation — ${mod.exos.length} exercices</div>
+    <p class="muted" style="margin-top:-6px">Chaque exercice reprend une commande vue dans le module. La sortie est simulée localement : aucune requête n'est envoyée. Réussissez les ${mod.exos.length} exercices, puis validez le test de fin de module.</p>
+    <div id="exos-slot"></div>` : ''}
+
+    <div class="section-title" id="test-final">Test de fin de module</div>
     <div id="quiz-slot"></div>
     <div class="mt-2" id="status-wrap">${statusCard(mod)}</div>
 
@@ -108,6 +143,9 @@ export function moduleView(modId) {
     html,
     mount(root) {
       root.querySelectorAll('.lab-slot').forEach((slot) => mountLab(slot, slot.dataset.lab));
+
+      const exoSlot = root.querySelector('#exos-slot');
+      if (exoSlot) mountExercises(exoSlot, mod.id, mod.exos);
 
       const slot = root.querySelector('#quiz-slot');
       if (slot && quiz) {
