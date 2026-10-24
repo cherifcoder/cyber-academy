@@ -181,7 +181,128 @@ curl -s https://app.acme.example/static/js/main.js | grep -oE '"/api/[a-zA-Z0-9/
       t: 'p',
       x: "Choisissez une cible de laboratoire et une stratégie de scan. Le simulateur produit une sortie réaliste, puis vous devez identifier les services et les pistes prioritaires."
     },
-    { t: 'lab', id: 'nmap' }
+    { t: 'lab', id: 'nmap' },
+
+    { t: 'h', x: "2.7 PAS À PAS POUR DÉBUTANT : Reconnaissance complète sur LAB AUTORISÉ" },
+    {
+      t: 'p',
+      x: "Objectif : cartographier UNIQUEMENT un environnement de lab local (DVWA/Juice Shop/Metasploitable) de manière méthodique. On privilégie le passif d'abord, puis l'actif contrôlé."
+    },
+    {
+      t: 'callout', v: 'legal', title: "Règle absolue",
+      x: "N'utilisez QUE des cibles que vous possédez/locales. Exemples sûrs : 127.0.0.1, 192.168.56.XXX, 10.0.2.XXX (réseau host-only/isolé)."
+    },
+    {
+      t: 'steps',
+      items: [
+        { h: "Étape 1 : Préparer le workspace", p: "Créer mission-recon dans votre arborescence, journaliser les actions." },
+        { h: "Étape 2 : Reconnaissance passive", p: "whois/dig/host/nslookup sur cibles autorisées." },
+        { h: "Étape 3 : Découverte réseau (actif, lab)", p: "nmap ping scan sur le réseau du lab UNIQUEMENT." },
+        { h: "Étape 4 : Scan de ports/services", p: "TCP SYN/Connect, détection version, scripts sûrs." },
+        { h: "Étape 5 : Empreinte web", p: "whatweb/curl/wappalyzer sur les services HTTP/HTTPS du lab." },
+        { h: "Étape 6 : Documentation", p: "Captures, logs, synthèse dans reports/." }
+      ]
+    },
+    { t: 'h', x: "2.7.1 Préparation (Linux/macOS/Windows)" },
+    {
+      t: 'code', lang: 'bash', title: "VARIANTES - Linux/macOS",
+      x: `mkdir -p ~/pentest-lab/mission-recon/{evidence/{logs,pcaps,screenshots},reports,notes}
+cd ~/pentest-lab/mission-recon
+echo "# RECON MISSION - LAB LOCAL" > notes/journal-$(date +%Y%m%d).md
+echo "[$(date -Iseconds)] Début recon sur LAB UNIQUEMENT" >> notes/journal-$(date +%Y%m%d).md
+echo "Définir LAB_NET et LAB_HOST" >> notes/journal-$(date +%Y%m%d).md`
+    },
+    {
+      t: 'code', lang: 'powershell', title: "VARIANTE - Windows",
+      x: `$r="$env:USERPROFILE\\pentest-lab\\mission-recon"; New-Item -ItemType Directory -Force -Path "$r\\evidence\\logs","$r\\evidence\\pcaps","$r\\evidence\\screenshots","$r\\reports","$r\\notes"|Out-Null; Set-Location $r; "# RECON MISSION - LAB LOCAL" | Out-File -Encoding UTF8 .\\notes\\journal-$(Get-Date -Format yyyyMMdd).md; "[$(Get-Date -Format o)] Debut recon LAB" | Out-File -Append -Encoding UTF8 .\\notes\\journal-$(Get-Date -Format yyyyMMdd).md`
+    },
+    { t: 'h', x: "2.7.2 Reconnaissance passive (sans scan agressif)" },
+    {
+      t: 'code', lang: 'bash', title: "VARIANTES - DNS/passif (lab/public autorisé)",
+      x: `whois example.com 2>&1 | head -30
+dig example.com A +short
+dig example.com MX +short
+dig example.com TXT +short
+dig example.com NS +short
+host example.com
+nslookup example.com 8.8.8.8
+echo "[$(date -Iseconds)] Passif DNS fait (cible autorisée)" >> notes/journal-$(date +%Y%m%d).md`
+    },
+    { t: 'h', x: "2.7.3 Découverte d'hôtes sur réseau LAB (actif contrôlé)" },
+    {
+      t: 'callout', v: 'warn', title: "UNIQUEMENT RÉSEAU DE LAB",
+      x: "Remplacez 192.168.56.0/24 par VOTRE réseau host-only. Jamais 0.0.0.0/0 ni réseau entreprise."
+    },
+    {
+      t: 'code', lang: 'bash', title: "VARIANTES - nmap host discovery (lab uniquement)",
+      x: `LAB_NET="192.168.56.0/24"
+sudo nmap -PR -sn $LAB_NET -oN evidence/logs/arp-discovery.nmap 2>&1 | tail -25
+nmap -PE -PP -sn $LAB_NET -oN evidence/logs/icmp-discovery.nmap 2>&1 | tail -15
+nmap -PS22,80,443,8080,8443 -sn $LAB_NET -oN evidence/logs/tcp-ping.nmap 2>&1 | tail -15
+grep -E "Nmap scan report|Up" evidence/logs/arp-discovery.nmap | head -10`
+    },
+    { t: 'h', x: "2.7.4 Scan de ports et services (détaillé)" },
+    {
+      t: 'code', lang: 'bash', title: "VARIANTES - nmap scan sur hôte lab unique",
+      x: `LAB_HOST="192.168.56.101"
+sudo nmap -sS -sV --version-intensity 5 -T4 $LAB_HOST -oN evidence/logs/ports-syn-sv.nmap 2>&1 | tail -40
+nmap -sT -sV -T4 $LAB_HOST -oN evidence/logs/ports-connect-sv.nmap 2>&1 | tail -40
+nmap --top-ports 1000 -sV -sC -T4 $LAB_HOST -oN evidence/logs/top1000-svc-scripts.nmap 2>&1 | tail -50
+nmap -p 80,443,8080,8443,8000,3000,5000 -sV -sC $LAB_HOST -oN evidence/logs/web-ports.nmap 2>&1 | tail -30`
+    },
+    {
+      t: 'callout', v: 'tip', title: "Interprétation débutant",
+      x: "<strong>open</strong>=service écoute. <strong>closed</strong>=port joignable mais rien. <strong>filtered</strong>=filtré (firewall). <strong>open|filtered</strong>=incertain."
+    },
+    { t: 'h', x: "2.7.5 Empreinte technologique web (lab)" },
+    {
+      t: 'code', lang: 'bash', title: "VARIANTES - whatweb/curl/nikto",
+      x: `LAB_HOST="192.168.56.101"
+whatweb http://$LAB_HOST:8080 2>&1 | tee evidence/logs/whatweb-8080.txt
+curl -I http://$LAB_HOST:8080 2>&1 | tee evidence/logs/headers-8080.txt
+curl -L -A "Mozilla/5.0 (PentestLab)" http://$LAB_HOST:8080/ 2>&1 | head -40
+nikto -h http://$LAB_HOST:8080 -output evidence/logs/nikto-8080.txt 2>&1 | tail -30`
+    },
+    { t: 'h', x: "2.7.6 Synthèse" },
+    {
+      t: 'code', lang: 'bash', title: "VARIANTE - Générer mini-rapport recon (lab)",
+      x: `cat > reports/recon_synthese_lab.md << EOF
+# SYNTHÈSE RECON - MISSION LAB LOCAL
+Date: $(date -Iseconds)
+Cible(s): LAB UNIQUEMENT (127.0.0.1 / host-only)
+EOF
+cat reports/recon_synthese_lab.md`
+    },
+    { t: 'h', x: "2.8 TEST PRATIQUE À LA FIN DU MODULE - Recon pas à pas sur LAB SÉCURISÉ" },
+    {
+      t: 'p',
+      x: "Réalisez ce parcours COMPLET sur VOTRE lab local (DVWA/Metasploitable/Juice Shop). Durée: 45-60 min."
+    },
+    {
+      t: 'steps',
+      items: [
+        { h: "TEST 1 - Cadrage (5-10 min)", p: "Vérifier que cible = 127.0.0.1 ou host-only. Mettre à jour journal." },
+        { h: "TEST 2 - Découverte (10 min)", p: "nmap -sn sur réseau lab. Identifier hôte UP." },
+        { h: "TEST 3 - Scan détaillé (15 min)", p: "nmap -sV -sC sur ports web. Sauver en .nmap." },
+        { h: "TEST 4 - Empreinte (10 min)", p: "whatweb + curl -I + notes. Identifier framework/serveur." },
+        { h: "TEST 5 - Synthèse (10 min)", p: "Rédiger recon_synthese_lab.md avec preuves + chemins." }
+      ]
+    },
+    {
+      t: 'table',
+      head: ['Étape', 'Commande(s)', 'Attendu', 'Preuve'],
+      rows: [
+        ['Découverte', 'nmap -sn <LAB_NET>', 'Host up identifié', 'evidence/logs/discovery-*.nmap'],
+        ['Ports+versions', 'nmap -sV -sC <LAB_HOST>', 'Ports ouverts + services', 'evidence/logs/ports-*.nmap'],
+        ['Web headers', 'curl -I http://<LAB_HOST>:<PORT>', 'Server/X-Powered-By', 'evidence/logs/headers-*.txt'],
+        ['Tech', 'whatweb http://<LAB_HOST>:<PORT>', 'CMS/framework', 'evidence/logs/whatweb-*.txt'],
+        ['Synthèse', 'reports/recon_synthese_lab.md', 'Doc complète', 'reports/recon_synthese_lab.md']
+      ]
+    },
+    {
+      t: 'callout', v: 'tip', title: "Critère de réussite",
+      x: "Vous devez pouvoir expliquer chaque port ouvert et justifier pourquoi c'est pertinent sans exploiter hors lab."
+    }
   ],
   quiz: 'q2'
 };
