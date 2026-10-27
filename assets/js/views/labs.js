@@ -37,7 +37,8 @@ const LAB_META = [
   { id: 'burp', title: "Interception & falsification", tag: 'Burp Suite', icon: '🕵️', desc: "Modifiez une requête HTTP brute et observez l'impact côté serveur." },
   { id: 'privesc', title: "Élévation de privilèges", tag: 'Post-exploitation', icon: '🔺', desc: "Analysez une VM de lab et choisissez le bon chemin vers root." },
   { id: 'cvss', title: "Calculateur CVSS v3.1", tag: 'Reporting', icon: '📊', desc: "Scorez une vulnérabilité avec la formule officielle et générez son vecteur." },
-  { id: 'headers', title: "Durcissement HTTP", tag: 'Défense', icon: '🛡️', desc: "Activez les en-têtes de sécurité et faites grimper la note du serveur." }
+  { id: 'headers', title: "Durcissement HTTP", tag: 'Défense', icon: '🛡️', desc: "Activez les en-têtes de sécurité et faites grimper la note du serveur." },
+  { id: 'identity', title: "Traceur IP, MAC & IMEI", tag: 'Identité réseau', icon: '📡', desc: "Analysez trois identifiants et distinguez ce qui est réellement traçable." }
 ];
 
 /* ------------------------------------------------------------------ */
@@ -902,6 +903,279 @@ function labHeaders(body, api) {
 }
 
 /* ------------------------------------------------------------------ */
+/* LAB 10 — traceur IP, MAC & IMEI                                     */
+/* ------------------------------------------------------------------ */
+
+const ID_IP_CASES = {
+  private: {
+    ip: '192.168.56.42',
+    kind: 'Adresse privée RFC 1918',
+    route: 'Non routable sur Internet : elle reste derrière le NAT.',
+    trace: 'Visible du routeur local et des journaux internes. Aucun whois public utile.',
+    answer: 0
+  },
+  public: {
+    ip: '8.8.8.8',
+    kind: 'Adresse publique routable',
+    route: 'Annoncée sur Internet via un ASN ; elle appartient à un opérateur.',
+    trace: 'whois/RDAP → opérateur et pays ; géolocalisation approximative. Jamais l’identité de l’utilisateur.',
+    answer: 1
+  },
+  doc: {
+    ip: '203.0.113.42',
+    kind: 'Documentation RFC 5737 (TEST-NET-3)',
+    route: 'Réservée à la documentation : elle ne doit jamais être routée.',
+    trace: 'Aucun abonné réel. Si elle apparaît dans un log de production, c’est une erreur ou une falsification.',
+    answer: 2
+  },
+  cgnat: {
+    ip: '100.64.12.7',
+    kind: 'CGNAT opérateur (RFC 6598)',
+    route: 'Partagée par de nombreux abonnés derrière le NAT de l’opérateur.',
+    trace: 'Impossible de remonter à un foyer sans la table de translation de l’opérateur et l’horodatage exact.',
+    answer: 3
+  }
+};
+
+function macInfo(raw) {
+  const clean = String(raw || '').trim().replace(/[^0-9a-f]/gi, '').toLowerCase();
+  if (!/^[0-9a-f]{12}$/.test(clean)) return { ok: false };
+  const bytes = clean.match(/../g);
+  const first = parseInt(bytes[0], 16);
+  const vendors = {
+    '08:00:27': 'PCS Systemtechnik / VirtualBox',
+    '00:50:56': 'VMware',
+    '00:1c:42': 'Parallels',
+    '00:0c:29': 'VMware'
+  };
+  const oui = bytes.slice(0, 3).join(':');
+  return {
+    ok: true,
+    mac: bytes.join(':'),
+    oui,
+    multicast: (first & 1) === 1,
+    local: (first & 2) === 2,
+    vendor: vendors[oui] || ((first & 2) === 2 ? 'Aucun OUI fabricant (adresse locale)' : 'Fabricant inconnu ou non vérifié')
+  };
+}
+
+function luhnOk(number) {
+  let total = 0;
+  const digits = String(number);
+  for (let i = 0; i < digits.length; i++) {
+    let d = Number(digits[digits.length - 1 - i]);
+    if (i % 2 === 1) {
+      d *= 2;
+      if (d > 9) d -= 9;
+    }
+    total += d;
+  }
+  return total % 10 === 0;
+}
+
+function imeiInfo(raw) {
+  const digits = String(raw || '').replace(/\D/g, '');
+  if (digits.length !== 15) return { ok: false, reason: 'Un IMEI classique comporte exactement 15 chiffres.' };
+  return {
+    ok: true,
+    imei: digits,
+    tac: digits.slice(0, 8),
+    serial: digits.slice(8, 14),
+    check: digits[14],
+    valid: luhnOk(digits)
+  };
+}
+
+function labIdentity(body, api) {
+  body.innerHTML = `
+    <p class="lab-note">Analysez les trois couches. Les valeurs proposées sont fictives ou réservées à la documentation : aucune requête réseau n’est émise.</p>
+    <div class="flex-between mt-2 mb-2" style="gap:10px;flex-wrap:wrap">
+      <span class="small muted">Progression de l’atelier</span>
+      <span class="pill pill-cyan" id="id-score">0 / 3 couches validées</span>
+    </div>
+    <div class="grid grid-2" style="gap:14px;align-items:start">
+
+      <div class="card pad-sm">
+        <h4 class="mt-0">1. Adresse IP</h4>
+        <label class="field"><span>Choisir une adresse</span>
+          <select id="id-ip-select">
+            ${Object.entries(ID_IP_CASES).map(([k, c]) => `<option value="${k}">${esc(c.ip)} — ${esc(c.kind)}</option>`).join('')}
+          </select>
+        </label>
+        <div class="panel-mock mt-2"><div class="pm-head"><span class="ok">●</span> lecture réseau</div><div class="pm-body" id="id-ip-info"></div></div>
+        <p class="small muted mt-2"><b>Question :</b> quelle est la portée de cette adresse ?</p>
+        <div class="q-opts" id="id-ip-opts">
+          ${['Privée / réseau local', 'Publique routable', 'Documentation non routable', 'CGNAT partagé'].map((o, i) => `<button class="q-opt" type="button" data-i="${i}"><span class="q-key">${String.fromCharCode(65 + i)}</span><span>${esc(o)}</span></button>`).join('')}
+        </div>
+        <div class="small mt-2" id="id-ip-fb"></div>
+      </div>
+
+      <div class="card pad-sm">
+        <h4 class="mt-0">2. Adresse MAC</h4>
+        <label class="field"><span>Adresse MAC (12 chiffres hexadécimaux)</span>
+          <input type="text" id="id-mac-input" value="02:00:5E:10:00:01" spellcheck="false" autocomplete="off">
+        </label>
+        <button class="btn btn-primary btn-block btn-sm" id="id-mac-run" type="button">Analyser la MAC</button>
+        <div class="panel-mock mt-2"><div class="pm-head"><span class="ok">●</span> lecture couche 2</div><div class="pm-body" id="id-mac-info"><span class="mut">En attente…</span></div></div>
+        <p class="small muted mt-2"><b>Question :</b> que signifie le bit U/L à 1 ?</p>
+        <div class="q-opts" id="id-mac-opts">
+          ${['Adresse globale, unique au fabricant', 'Adresse administrée localement, souvent randomisée', 'Adresse multicast', 'Adresse de broadcast'].map((o, i) => `<button class="q-opt" type="button" data-i="${i}"><span class="q-key">${String.fromCharCode(65 + i)}</span><span>${esc(o)}</span></button>`).join('')}
+        </div>
+        <div class="small mt-2" id="id-mac-fb"></div>
+      </div>
+
+      <div class="card pad-sm">
+        <h4 class="mt-0">3. IMEI</h4>
+        <label class="field"><span>IMEI (15 chiffres)</span>
+          <input type="text" id="id-imei-input" value="356938035643809" inputmode="numeric" spellcheck="false" autocomplete="off">
+        </label>
+        <button class="btn btn-primary btn-block btn-sm" id="id-imei-run" type="button">Vérifier l’IMEI</button>
+        <div class="panel-mock mt-2"><div class="pm-head"><span class="ok">●</span> lecture identifiant mobile</div><div class="pm-body" id="id-imei-info"><span class="mut">En attente…</span></div></div>
+        <p class="small muted mt-2"><b>Question :</b> un site public peut-il localiser l’appareil avec l’IMEI ?</p>
+        <div class="q-opts" id="id-imei-opts">
+          ${['Oui, il convertit l’IMEI en coordonnées GPS', 'Oui, tout opérateur publie la position', 'Non, seul l’opérateur avec un cadre légal le peut', 'Oui, grâce à l’adresse MAC du téléphone'].map((o, i) => `<button class="q-opt" type="button" data-i="${i}"><span class="q-key">${String.fromCharCode(65 + i)}</span><span>${esc(o)}</span></button>`).join('')}
+        </div>
+        <div class="small mt-2" id="id-imei-fb"></div>
+      </div>
+
+      <div class="card pad-sm" style="background:var(--bg-2)">
+        <h4 class="mt-0">Synthèse</h4>
+        <p class="small muted">Chaque couche répond à une question différente : l’IP route, la MAC identifie localement, l’IMEI identifie le terminal mobile. Aucune ne désigne une personne à elle seule.</p>
+        <ul class="small" style="padding-left:18px;margin:0">
+          <li><b>IP</b> : opérateur, ASN, zone approximative, logs.</li>
+          <li><b>MAC</b> : segment local, switch, bail DHCP, fabricant.</li>
+          <li><b>IMEI</b> : terminal, TAC, opérateur, réquisition.</li>
+        </ul>
+        <div class="small mt-2" id="id-final"></div>
+      </div>
+    </div>`;
+
+  let ipSolved = false;
+  let macSolved = false;
+  let imeiSolved = false;
+  let macAnalyzed = false;
+  let imeiAnalyzed = false;
+
+  const sync = () => {
+    const n = [ipSolved, macSolved, imeiSolved].filter(Boolean).length;
+    const score = body.querySelector('#id-score');
+    score.textContent = `${n} / 3 couches validées`;
+    score.className = `pill ${n === 3 ? 'pill-lime' : 'pill-cyan'}`;
+    body.querySelector('#id-final').innerHTML = n === 3
+      ? '<span class="ok"><b>Atelier terminé.</b> Vous savez distinguer portée réseau, portée locale et portée mobile.</span>'
+      : `<span class="mut">${3 - n} couche(s) restante(s) à valider.</span>`;
+    if (n === 3) api.done('Traceur IP, MAC et IMEI');
+  };
+
+  const ipSel = body.querySelector('#id-ip-select');
+  const ipInfo = body.querySelector('#id-ip-info');
+  const ipFb = body.querySelector('#id-ip-fb');
+  const drawIp = () => {
+    const c = ID_IP_CASES[ipSel.value];
+    ipInfo.innerHTML = `
+      <div><b>${esc(c.ip)}</b></div>
+      <div class="small">Type : ${esc(c.kind)}</div>
+      <div class="small">Routage : ${esc(c.route)}</div>
+      <div class="small">Traçage : ${esc(c.trace)}</div>`;
+  };
+  ipSel.addEventListener('change', () => {
+    drawIp();
+    ipFb.innerHTML = '';
+  });
+  body.querySelectorAll('#id-ip-opts .q-opt').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const c = ID_IP_CASES[ipSel.value];
+      const i = Number(btn.dataset.i);
+      if (i === c.answer) {
+        ipSolved = true;
+        ipFb.innerHTML = '<span class="ok">✓ Correct. ' + esc(c.trace) + '</span>';
+        btn.classList.add('correct');
+      } else {
+        ipFb.innerHTML = '<span class="ko">✕ Relisez la plage et le routage indiqués ci-dessus.</span>';
+      }
+      sync();
+    });
+  });
+  drawIp();
+
+  const macRun = body.querySelector('#id-mac-run');
+  const macInput = body.querySelector('#id-mac-input');
+  const macInfoEl = body.querySelector('#id-mac-info');
+  const macFb = body.querySelector('#id-mac-fb');
+  macRun.addEventListener('click', () => {
+    const info = macInfo(macInput.value);
+    if (!info.ok) {
+      macAnalyzed = false;
+      macInfoEl.innerHTML = '<span class="err">Format invalide : 12 chiffres hexadécimaux attendus (ex. 08:00:27:AA:BB:CC).</span>';
+      return;
+    }
+    macAnalyzed = true;
+    macInfoEl.innerHTML = `
+      <div><b>${esc(info.mac)}</b></div>
+      <div class="small">OUI : ${esc(info.oui)} — ${esc(info.vendor)}</div>
+      <div class="small">Type : ${info.multicast ? 'multicast' : 'unicast'}</div>
+      <div class="small">Portée : ${info.local ? 'locale (bit U/L = 1)' : 'globale (bit U/L = 0)'}</div>
+      <div class="small">Visible : segment local uniquement, réécrite par chaque routeur.</div>`;
+    macFb.innerHTML = '<span class="mut">Analyse effectuée. Répondez à la question ci-dessous.</span>';
+  });
+  body.querySelectorAll('#id-mac-opts .q-opt').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!macAnalyzed) {
+        macFb.innerHTML = '<span class="ko">Analysez d’abord l’adresse MAC.</span>';
+        return;
+      }
+      if (Number(btn.dataset.i) === 1) {
+        macSolved = true;
+        macFb.innerHTML = '<span class="ok">✓ Exact. Le bit U/L à 1 indique une adresse locale, typique d’une VM ou d’une randomisation : aucun OUI fabricant.</span>';
+        btn.classList.add('correct');
+      } else {
+        macFb.innerHTML = '<span class="ko">✕ Le bit U/L n’a rien à voir avec le multicast ni avec le broadcast.</span>';
+      }
+      sync();
+    });
+  });
+
+  const imeiRun = body.querySelector('#id-imei-run');
+  const imeiInput = body.querySelector('#id-imei-input');
+  const imeiInfoEl = body.querySelector('#id-imei-info');
+  const imeiFb = body.querySelector('#id-imei-fb');
+  imeiRun.addEventListener('click', () => {
+    const info = imeiInfo(imeiInput.value);
+    if (!info.ok) {
+      imeiAnalyzed = false;
+      imeiInfoEl.innerHTML = `<span class="err">${esc(info.reason)}</span>`;
+      return;
+    }
+    imeiAnalyzed = true;
+    imeiInfoEl.innerHTML = `
+      <div><b>${esc(info.imei)}</b> — ${info.valid ? '<span class="ok">Luhn valide</span>' : '<span class="err">Luhn invalide</span>'}</div>
+      <div class="small">TAC (8) : ${esc(info.tac)}</div>
+      <div class="small">Série (6) : ${esc(info.serial)}</div>
+      <div class="small">Contrôle (1) : ${esc(info.check)}</div>
+      <div class="small">Localisation : non contenue dans l’IMEI ; l’opérateur voit la cellule.</div>`;
+    imeiFb.innerHTML = '<span class="mut">Vérification effectuée. Répondez à la question ci-dessous.</span>';
+  });
+  body.querySelectorAll('#id-imei-opts .q-opt').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!imeiAnalyzed) {
+        imeiFb.innerHTML = '<span class="ko">Vérifiez d’abord l’IMEI.</span>';
+        return;
+      }
+      if (Number(btn.dataset.i) === 2) {
+        imeiSolved = true;
+        imeiFb.innerHTML = '<span class="ok">✓ Correct. L’IMEI identifie le terminal ; la localisation relève de l’opérateur et d’un cadre légal.</span>';
+        btn.classList.add('correct');
+      } else {
+        imeiFb.innerHTML = '<span class="ko">✕ L’IMEI ne contient aucune coordonnée et n’est pas un identifiant public de localisation.</span>';
+      }
+      sync();
+    });
+  });
+
+  sync();
+}
+
+/* ------------------------------------------------------------------ */
 /* registre & montage                                                  */
 /* ------------------------------------------------------------------ */
 
@@ -914,7 +1188,8 @@ const REGISTRY = {
   burp: { meta: LAB_META[5], render: labBurp },
   privesc: { meta: LAB_META[6], render: labPrivesc },
   cvss: { meta: LAB_META[7], render: labCvss },
-  headers: { meta: LAB_META[8], render: labHeaders }
+  headers: { meta: LAB_META[8], render: labHeaders },
+  identity: { meta: LAB_META[9], render: labIdentity }
 };
 
 export const LABS = Object.values(REGISTRY).map((l) => l.meta);

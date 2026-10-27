@@ -22,6 +22,7 @@ export const BADGES = [
   { id: 'ctf-wordpress', name: "Briseur de WordPress", icon: '🧩', desc: "CTF WordPress terminé : énumération, plugin et RCE.", hint: "Validez le module 10 (CTF WordPress).", test: (s) => !!s.completed.m10 },
   { id: 'ctf-sqli', name: "Maître de l'injection", icon: '💉', desc: "CTF SQLi terminé : de l'apostrophe au flag root.", hint: "Validez le module 11 (CTF injection SQL).", test: (s) => !!s.completed.m11 },
   { id: 'ctf-privesc', name: "Ascension finale", icon: '🪜', desc: "CTF privesc terminé : de www-data à root.", hint: "Validez le module 12 (CTF élévation de privilèges).", test: (s) => !!s.completed.m12 },
+  { id: 'sentinelle', name: "Sentinelle réseau", icon: '📡', desc: "Module 13 validé : IP, MAC et IMEI ne vous cachent plus leur portée.", hint: "Validez le module 13 (identités réseau).", test: (s) => !!s.completed.m13 },
 
   { id: 'sans-faute', name: "Sans faute", icon: '🎯', desc: "Un quiz réussi à 100 %.", hint: "Obtenez 100 % à un quiz.", test: (s) => Object.values(s.quizzes).some((q) => q.total > 0 && q.best === q.total) },
 

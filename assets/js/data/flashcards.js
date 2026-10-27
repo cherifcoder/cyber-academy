@@ -1,4 +1,4 @@
-export const DECKS = ['Tous', 'Terminologie', 'HTTP & en-têtes', 'Codes de statut', 'OWASP', 'Outils', 'Défense'];
+export const DECKS = ['Tous', 'Terminologie', 'HTTP & en-têtes', 'Codes de statut', 'OWASP', 'Outils', 'Défense', 'Identité réseau'];
 
 export const FLASHCARDS = [
   { deck: 'Terminologie', q: "Pentest", a: "Test d'intrusion autorisé, planifié et documenté, visant à évaluer la sécurité d'un système. La technique peut être identique à celle d'un attaquant ; seuls le consentement, le périmètre et la finalité changent." },
@@ -60,5 +60,17 @@ export const FLASHCARDS = [
   { deck: 'Défense', q: "WAF : bonne et mauvaise usage", a: "Bon : défense en profondeur, mitigation temporaire, virtual patching. Mauvais : remplacer la correction du code ou empiler des règles non maintenues." },
   { deck: 'Défense', q: "Moindre privilège", a: "Chaque composant (app, base, conteneur, utilisateur) ne dispose que des droits strictement nécessaires. Limite la portée d'une compromission." },
   { deck: 'Défense', q: "Défense en profondeur", a: "Empiler des contrôles indépendants : validation, paramétrage, encodage, CSP, WAF, monitoring. Si une couche cède, les autres limitent l'impact." },
-  { deck: 'Défense', q: "Réponse à incident : 4 étapes", a: "Préparation, détection/analyse, confinement/éradication, récupération + retour d'expérience. La notification RGPD peut être requise sous 72 h." }
+  { deck: 'Défense', q: "Réponse à incident : 4 étapes", a: "Préparation, détection/analyse, confinement/éradication, récupération + retour d'expérience. La notification RGPD peut être requise sous 72 h." },
+
+  { deck: 'Identité réseau', q: "IP privée vs publique", a: "Une IP privée (10/8, 172.16/12, 192.168/16) n'est pas routable sur Internet et vit derrière un NAT. Une IP publique est annoncée par un opérateur ; elle identifie une interface, pas une personne." },
+  { deck: 'Identité réseau', q: "CIDR /27", a: "Un /27 contient 32 adresses et 30 hôtes utiles. Le premier est le réseau, le dernier le broadcast. Pour 192.168.56.42/27 : réseau .32, plage .33–.62, broadcast .63." },
+  { deck: 'Identité réseau', q: "NAT vs CGNAT", a: "Le NAT traduit adresses et ports entre deux réseaux. Le CGNAT (100.64.0.0/10) est un NAT opérateur massif : des milliers d'abonnés partagent une IP publique. Sans la table de translation et l'horodatage, aucune attribution." },
+  { deck: 'Identité réseau', q: "Ce qu'une IP révèle", a: "Le bloc, l'ASN, le FAI et parfois une zone géographique approximative. Elle ne donne ni l'identité civile, ni l'adresse exacte, ni le contenu des communications : ces données exigent une réquisition auprès de l'opérateur." },
+  { deck: 'Identité réseau', q: "Fuites VPN classiques", a: "WebRTC peut exposer l'IP réelle et des candidats locaux ; IPv6 non capturée peut sortir en clair ; le DNS local peut révéler le FAI. Un VPN ne protège que le trafic qui passe réellement par le tunnel." },
+  { deck: 'Identité réseau', q: "Adresse MAC : OUI et bits", a: "48 bits : 24 bits d'OUI (fabricant) + 24 bits de série. Bit I/G (bit 0) : 0 unicast, 1 multicast. Bit U/L (bit 1) : 0 globale, 1 localement administrée. 02:… indique unicast local, souvent une VM ou une MAC randomisée." },
+  { deck: 'Identité réseau', q: "Portée d'une MAC", a: "La MAC reste sur le segment local. Le switch l'apprend dans sa table CAM, l'ARP l'associe à une IP, le DHCP peut la journaliser. Chaque routeur réécrit l'en-tête de liaison : un serveur distant ne voit jamais la MAC d'origine." },
+  { deck: 'Identité réseau', q: "Randomisation MAC", a: "Les OS modernes changent de MAC par réseau Wi-Fi pour éviter le pistage. C'est légitime sur ses propres appareils, mais cela casse parfois le NAC, le port-security ou les réservations DHCP. Le filtrage MAC seul n'est pas une sécurité." },
+  { deck: 'Identité réseau', q: "Structure d'un IMEI", a: "15 chiffres : TAC (8) + numéro de série (6) + chiffre de contrôle Luhn (1). L'IMEISV ajoute deux chiffres de version. L'IMEI identifie le terminal, l'IMSI identifie l'abonnement SIM, le MSISDN le numéro de téléphone." },
+  { deck: 'Identité réseau', q: "Tracer un IMEI", a: "L'opérateur voit l'IMEI, l'IMSI et la cellule à l'attachement, et peut produire des CDR. La localisation précise relève de l'opérateur et des autorités dans un cadre légal. Un site public ne peut au mieux identifier que le modèle via le TAC." },
+  { deck: 'Identité réseau', q: "Défense : identités réseau", a: "802.1X, port-security, DHCP snooping, segmentation VLAN pour la MAC ; limitation de débit, MFA, journaux synchronisés pour l'IP ; chiffrement, MDM et déclaration officielle en cas de vol pour l'IMEI. Toujours minimiser la collecte et la durée de conservation." }
 ];
