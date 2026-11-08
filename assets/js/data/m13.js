@@ -1,726 +1,531 @@
 export default {
   id: 'm13',
   num: 13,
-  title: "Réseaux — les fondamentaux expliqués simplement",
-  short: "Fondamentaux réseau",
-  icon: "🌐",
-  xp: 500,
-  duration: 120,
-  summary: "Comprendre Internet sans jargon : réseau, paquets, couches OSI et TCP/IP, TCP et UDP, ports, DNS, DHCP, NAT et routage, avec des analogies du quotidien et des labs de diagnostic.",
+  title: "Identités réseau : IP, MAC et IMEI",
+  short: "IP • MAC • IMEI",
+  icon: "📡",
+  xp: 450,
+  duration: 105,
+  summary: "Comprendre trois identifiants complémentaires — l'adresse IP, l'adresse MAC et l'IMEI —, ce qu'ils révèlent réellement, comment les tracer dans un cadre autorisé, comment les masquer légitimement et comment s'en défendre.",
   objectives: [
-    "Expliquer avec des mots simples ce qu'est un réseau, une IP, un port et un paquet",
-    "Situer les protocoles dans les couches OSI et TCP/IP",
-    "Distinguer TCP et UDP et choisir le bon protocole selon l'usage",
-    "Identifier les ports et services les plus courants",
-    "Décrire pas à pas une résolution DNS et un bail DHCP",
-    "Diagnostiquer une connectivité avec ping, dig, ss, traceroute, curl et tcpdump"
+    "Distinguer la portée d'une IP, d'une MAC et d'un IMEI et identifier la couche concernée",
+    "Lire une adresse IPv4/IPv6, un masque CIDR et calculer réseau, broadcast et hôtes utiles",
+    "Tracer une IP avec whois/RDAP, DNS inverse, ASN et journaux, en mesurant les limites",
+    "Analyser une adresse MAC : OUI, bits U/L et I/G, table ARP et switches",
+    "Vérifier la structure d'un IMEI et comprendre le rôle de l'opérateur mobile",
+    "Masquer ou limiter la diffusion d'un identifiant sans commettre d'infraction",
+    "Corréler plusieurs identifiants (NAT, DHCP, logs) pour reconstituer une chaîne de preuve",
+    "Réaliser des challenges CTF IP/MAC/IMEI et rédiger les conclusions avec le bon niveau de certitude"
   ],
   blocks: [
     {
-      t: 'callout', v: 'info', title: "Aucun prérequis technique",
-      x: "Ce module part de zéro. Chaque notion est d'abord expliquée avec une analogie du quotidien, puis reliée à la technique. Les commandes sont exécutées dans un lab local ou simulé : <strong>aucune requête réseau réelle n'est émise</strong> par la plateforme."
+      t: 'callout', v: 'legal', title: "Trois identifiants, pas trois personnes",
+      x: "Ce module utilise uniquement des adresses et des numéros <strong>fictifs</strong> ou réservés à la documentation. Tracer, surveiller ou usurper l'identité de quelqu'un sans autorisation est illégal. Les manipulations décrites s'effectuent sur <strong>vos propres appareils</strong> ou dans un laboratoire isolé. La modification d'un IMEI est interdite dans de nombreux pays, dont la France : elle n'est jamais présentée ici comme une solution."
     },
     {
       t: 'p',
-      x: "Un <strong>réseau</strong>, c'est un ensemble d'ordinateurs qui peuvent se parler. Internet est simplement le plus grand réseau de réseaux : des milliers de réseaux locaux reliés entre eux par des routeurs. Pour qu'un message arrive au bon endroit, il faut trois informations : <strong>une adresse</strong> (où ?), <strong>un port</strong> (à quelle porte ?) et <strong>un protocole</strong> (comment parler ?)."
+      x: "Une connexion laisse des traces à plusieurs niveaux. L'<strong>adresse IP</strong> identifie une interface sur un réseau et permet le routage ; l'<strong>adresse MAC</strong> identifie une carte réseau sur un segment local ; l'<strong>IMEI</strong> identifie un terminal mobile auprès du réseau de l'opérateur. Ces identifiants ne sont ni équivalents, ni interchangeables, et aucun ne désigne directement une personne."
+    },
+    {
+      t: 'table',
+      head: ['Couche', 'Identifiant', 'Portée native', 'Qui le voit nativement'],
+      rows: [
+        ['Applicative', 'Compte, e-mail, cookie, jeton', 'Service en ligne', 'Le service, éventuellement ses partenaires'],
+        ['Réseau', 'IP publique / privée', 'Internet ou réseau local', 'Routeurs, serveurs, FAI, opérateur'],
+        ['Liaison', 'Adresse MAC', 'Segment Ethernet / Wi-Fi', 'Switch, point d\'accès, voisins directs'],
+        ['Mobile', 'IMEI, IMSI, MSISDN', 'Réseau de l\'opérateur', 'Opérateur mobile, équipements cœur de réseau'],
+        ['Matériel', 'Numéro de série', 'Appareil', 'Fabricant, technicien, logiciel local']
+      ]
     },
     {
       t: 'mini',
       items: [
-        { v: 'cyan', h: 'Adresse IP', p: "Comme l'adresse postale d'un immeuble : elle identifie une machine sur le réseau. Exemple : <code>192.168.1.10</code>." },
-        { v: 'amber', h: 'Port', p: "Comme le numéro d'appartement dans l'immeuble : plusieurs services peuvent vivre sur la même IP. Exemple : <code>443</code> pour HTTPS." },
-        { v: 'lime', h: 'Protocole', p: "Comme la langue parlée : les deux machines doivent utiliser les mêmes règles. Exemple : HTTP pour le web, DNS pour les noms." },
-        { v: 'magenta', h: 'Paquet', p: "Comme une enveloppe : le message est découpé en morceaux, chaque morceau porte l'adresse de départ et d'arrivée." }
+        { v: 'cyan', h: 'IP — le fil d\'Ariane', p: "Elle change avec le réseau, le NAT, le VPN ou le redémarrage. Elle permet de remonter à un <strong>FAI</strong> et à une zone approximative, rarement à une personne sans réquisition." },
+        { v: 'amber', h: 'MAC — l\'adresse du segment', p: "Elle reste normalement dans le réseau local. Le routeur la réécrit à chaque saut. Elle est facile à observer sur un LAN et facile à modifier sur son propre appareil." },
+        { v: 'magenta', h: 'IMEI — la carte d\'identité du mobile', p: "Il identifie l'appareil, pas la SIM. L'opérateur le voit à l'attachement. Seul un cadre légal permet de relier IMEI, IMSI et localisation." }
       ]
     },
-    { t: 'h', x: "13.1 Une journée sur le réseau : que se passe-t-il quand vous ouvrez un site ?" },
+    {
+      t: 'callout', v: 'info', title: "La corrélation avant l'identification",
+      x: "Un identifiant isolé est faible : une IP publique peut être partagée par un foyer, une entreprise ou un CGNAT entier. C'est la <strong>chaîne</strong> — IP + port + horodatage + bail DHCP + MAC + compte authentifié — qui produit une preuve. Sans cette chaîne, on formule une hypothèse, pas une accusation."
+    },
+
+    { t: 'h', x: "13.1 Adresse IP : structure, portée et lecture" },
     {
       t: 'p',
-      x: "Vous tapez <code>example.com</code> dans votre navigateur. Votre ordinateur ne connaît pas l'adresse IP de ce nom. Il demande donc à un <strong>serveur DNS</strong> de traduire le nom en adresse, comme on cherche un numéro dans un annuaire. Une fois l'IP obtenue, il ouvre une connexion vers le port <code>443</code>, échange des paquets chiffrés et affiche la page."
+      x: "Une adresse <strong>IPv4</strong> est un nombre de 32 bits écrit en quatre octets décimaux séparés par des points, par exemple <code>192.168.56.42</code>. Elle se décompose en une <strong>partie réseau</strong> et une <strong>partie hôte</strong>, délimitées par le masque ou la notation CIDR : <code>/24</code> signifie 24 bits de réseau et 8 bits d'hôtes."
+    },
+    {
+      t: 'table',
+      head: ['Bloc', 'Plage', 'Usage', 'Routable sur Internet ?'],
+      rows: [
+        ['10.0.0.0/8', '10.0.0.0 – 10.255.255.255', 'Réseaux privés (RFC 1918)', 'Non'],
+        ['172.16.0.0/12', '172.16.0.0 – 172.31.255.255', 'Réseaux privés (RFC 1918)', 'Non'],
+        ['192.168.0.0/16', '192.168.0.0 – 192.168.255.255', 'Réseaux privés (RFC 1918)', 'Non'],
+        ['127.0.0.0/8', '127.0.0.1 (localhost)', 'Boucle locale', 'Non'],
+        ['169.254.0.0/16', '169.254.0.0 – 169.254.255.255', 'Link-local / APIPA', 'Non'],
+        ['100.64.0.0/10', '100.64.0.0 – 100.127.255.255', 'CGNAT opérateur (RFC 6598)', 'Non (partagé)'],
+        ['192.0.2.0/24', '192.0.2.0 – 192.0.2.255', 'Documentation (TEST-NET-1)', 'Non'],
+        ['198.51.100.0/24', '198.51.100.0 – 198.51.100.255', 'Documentation (TEST-NET-2)', 'Non'],
+        ['203.0.113.0/24', '203.0.113.0 – 203.0.113.255', 'Documentation (TEST-NET-3)', 'Non'],
+        ['2001:db8::/32', '2001:db8::/32', 'Documentation IPv6', 'Non']
+      ]
+    },
+    {
+      t: 'p',
+      x: "Le <strong>CIDR</strong> se calcule de tête : pour <code>/24</code>, 256 adresses et 254 hôtes utiles ; pour <code>/25</code>, 128 adresses et 126 hôtes ; pour <code>/27</code>, 32 adresses et 30 hôtes. Le premier et le dernier de chaque bloc sont l'adresse de réseau et l'adresse de diffusion (broadcast), non attribuables à des hôtes."
+    },
+    {
+      t: 'code', lang: 'bash', title: "Lire une configuration IP sans envoyer de paquet",
+      x: `# Interfaces, adresses et état (Linux)
+ip -br address
+ip route show
+
+# Windows
+ipconfig /all
+
+# Calcul d'un sous-réseau (paquet ipcalc)
+ipcalc 192.168.56.42/27`
+    },
+    {
+      t: 'term', title: "Résultat attendu de ipcalc",
+      x: [
+        { c: "ipcalc 192.168.56.42/27", o: [
+          "Address:   192.168.56.42",
+          "Netmask:   255.255.255.224 = 27",
+          "Network:   192.168.56.32/27",
+          "HostMin:   192.168.56.33",
+          "HostMax:   192.168.56.62",
+          "Broadcast: 192.168.56.63",
+          "Hosts/Net: 30"
+        ] }
+      ]
+    },
+    { t: 'h', x: "13.2 Tracer une IP : ce que l'on peut vraiment obtenir" },
+    {
+      t: 'p',
+      x: "Tracer une IP consiste à collecter des informations <strong>publiques</strong> ou <strong>internes à votre organisation</strong>, puis à les corréler. Sur Internet, on obtient surtout le propriétaire du bloc, l'ASN, le FAI, parfois une organisation et une localisation approximative. L'identité civile et l'adresse exacte nécessitent une réquisition auprès de l'opérateur."
+    },
+    {
+      t: 'table',
+      head: ['Source', 'Ce qu\'elle donne', 'Limite principale'],
+      rows: [
+        ['whois / RDAP', 'Titulaire du bloc, ASN, contacts, pays', 'Souvent le FAI, pas le client final'],
+        ['DNS inverse (PTR)', 'Nom d\'hôte éventuel', 'Souvent absent ou générique'],
+        ['BGP / ASN', 'Réseau annoncé, opérateur, chemin', 'Ne dit rien de l\'utilisateur'],
+        ['Base géolocalisation', 'Pays, ville approximative, coordonnées', 'Erreurs fréquentes, VPN et mobilité'],
+        ['Journaux de votre serveur', 'IP source, date, URL, user-agent', 'NAT, proxies, horloges non synchronisées'],
+        ['Opérateur / autorité', 'Abonné, adresse, durée de session', 'Réquisition légale uniquement']
+      ]
     },
     {
       t: 'steps',
       items: [
-        { h: "1. Résolution DNS", p: "Le nom <code>example.com</code> est traduit en adresse IP. Sans DNS, il faudrait retenir des nombres par cœur." },
-        { h: "2. Routage", p: "Votre machine compare l'adresse cible à son réseau local. Si la cible est ailleurs, elle envoie le paquet à sa passerelle (le routeur)." },
-        { h: "3. Connexion TCP", p: "Pour HTTPS, un échange en trois temps (SYN, SYN-ACK, ACK) établit une connexion fiable avant l'échange de données." },
-        { h: "4. Requête HTTP", p: "Le navigateur demande la page. Le serveur répond avec un code (200, 404, 500…) et le contenu." },
-        { h: "5. Rendu", p: "Le navigateur analyse le HTML, charge les images et le CSS, puis affiche la page." }
+        { h: "Étape 1 — Qualifier l'adresse", p: "Privée, publique, documentation, CGNAT, IPv6 ? Une adresse privée ou de documentation ne doit jamais être « géolocalisée » sur Internet." },
+        { h: "Étape 2 — Vérifier le propriétaire", p: "Interrogez le registre RDAP/whois du RIR compétent (RIPE, ARIN, APNIC, LACNIC, AFRINIC). Notez l'ASN et le pays du bloc." },
+        { h: "Étape 3 — Résoudre le nom", p: "Un enregistrement PTR peut révéler un hostname de FAI ou d'entreprise. Absence de PTR = information, pas anomalie." },
+        { h: "Étape 4 — Mesurer le chemin", p: "Sur une cible autorisée, <code>traceroute</code> ou <code>mtr</code> montre les routeurs traversés. Ne scannez jamais un routeur intermédiaire hors périmètre." },
+        { h: "Étape 5 — Corréler les journaux", p: "Rapprochez l'IP, le port source, l'horodatage et le compte authentifié. Vérifiez la synchronisation NTP et le fuseau horaire." },
+        { h: "Étape 6 — Conclure avec prudence", p: "Distinguez le fait (« cette IP a envoyé une requête ») de l'inférence (« un abonné de cet opérateur ») et de l'hypothèse (« telle personne »)." }
       ]
     },
     {
-      t: 'callout', v: 'tip', title: "L'analogie de la lettre",
-      x: "<strong>IP</strong> = l'adresse de l'immeuble. <strong>Port</strong> = le numéro d'appartement. <strong>DNS</strong> = l'annuaire qui donne l'adresse à partir du nom. <strong>TCP</strong> = un recommandé avec accusé de réception. <strong>UDP</strong> = une carte postale : plus rapide, mais sans garantie d'arrivée."
+      t: 'callout', v: 'warn', title: "Les cinq pièges d'une IP",
+      x: "<strong>NAT</strong> : plusieurs machines partagent une IP publique. <strong>CGNAT</strong> : des milliers d'abonnés partagent une IP et des ports. <strong>VPN/Tor</strong> : l'IP visible appartient au fournisseur d'anonymisation. <strong>Mobile</strong> : l'IP change et appartient à l'opérateur. <strong>Dynamique</strong> : l'IP d'hier peut appartenir à quelqu'un d'autre aujourd'hui. Aucune de ces situations ne permet d'affirmer « c'est lui »."
     },
-    { t: 'h', x: "13.2 Les couches réseau : OSI et TCP/IP" },
     {
       t: 'p',
-      x: "On ne construit pas un réseau en une seule fois : on le découpe en <strong>couches</strong>. Chaque couche rend un service à la couche du dessus et utilise les services de la couche du dessous. C'est comme envoyer un colis : vous écrivez la lettre (application), vous la mettez dans une enveloppe (transport), vous ajoutez l'adresse (réseau), puis le facteur la transporte (liaison)."
+      x: "<strong>IPv6</strong> fonctionne sur 128 bits, souvent découpé en <code>/64</code> par réseau client. Il n'y a généralement pas de NAT : chaque appareil peut avoir une adresse publique, mais les extensions de confidentialité renouvellent l'identifiant d'interface. Une adresse IPv6 peut donc être plus stable qu'une IPv4… ou changer régulièrement. Le tracing reste identique : registre, ASN, DNS inverse, journaux, opérateur."
+    },
+    {
+      t: 'code', lang: 'bash', title: "Enquête IP minimale (adresses de documentation)",
+      x: `# Propriétaire du bloc et ASN (RDAP, sortie lisible)
+whois 203.0.113.42 | head -40
+
+# Alternative moderne, réponse JSON
+curl -s https://rdap.org/ip/203.0.113.42 | head -60
+
+# DNS inverse
+dig -x 203.0.113.42 +short
+
+# Chemin réseau (cible de laboratoire autorisée uniquement)
+traceroute -n 203.0.113.42`
+    },
+    {
+      t: 'callout', v: 'tip', title: "IP publique de son propre poste",
+      x: "Pour connaître votre IP de sortie, <code>curl -s https://ipinfo.io/json</code> suffit. Ne confiez pas d'informations sensibles à un site de « test IP » gratuit : il voit votre adresse, votre user-agent et parfois votre position estimée. Préférez un service que vous savez journaliser et supprimez les traces inutiles."
+    },
+    { t: 'h', x: "13.3 Masquer une IP : usages légitimes et limites" },
+    {
+      t: 'p',
+      x: "Masquer son adresse IP est légitime pour protéger sa vie privée, tester son propre service depuis un autre réseau ou isoler un laboratoire. Cela ne doit jamais servir à frauder, harceler, contourner une sanction ou échapper à une enquête. Techniquement, aucune méthode n'est magique : le fournisseur du tunnel voit votre trafic, et le navigateur peut fuiter votre adresse réelle."
     },
     {
       t: 'table',
-      head: ['Couche OSI', 'Rôle simple', 'Exemples', 'Analogie'],
+      head: ['Méthode', 'Ce qu\'elle masque', 'Ce qu\'elle ne masque pas', 'Usage légitime'],
       rows: [
-        ['7 — Application', "Ce que l'utilisateur utilise", 'HTTP, DNS, SMTP, SSH', "Le contenu de la lettre"],
-        ['6 — Présentation', "Format, chiffrement, encodage", 'TLS, UTF-8, JPEG', "La langue et le format"],
-        ['5 — Session', "Ouvrir, maintenir, fermer un dialogue", 'Sessions, RPC', "Le fil de la conversation"],
-        ['4 — Transport', "Découper, fiabiliser, adresser un service", 'TCP, UDP, ports', "Le numéro d'appartement"],
-        ['3 — Réseau', "Acheminer entre réseaux", 'IP, ICMP, routage', "L'adresse postale"],
-        ['2 — Liaison', "Transmettre sur le support local", 'Ethernet, Wi-Fi, ARP', "Le camion de livraison local"],
-        ['1 — Physique', "Transporter les bits", 'Câbles, ondes, fibre', "La route et le véhicule"]
+        ['VPN', 'IP réelle vis-à-vis du serveur visité', 'Le fournisseur VPN, les comptes, l\'empreinte navigateur', 'Télétravail, réseaux publics, test géographique'],
+        ['Tor', 'IP réelle et destination vis-à-vis du nœud de sortie', 'Les comptes connectés, les fuites applicatives, le dernier saut', 'Recherche en vie privée, accès à l\'information'],
+        ['Proxy HTTP/SOCKS', 'IP réelle pour l\'application configurée', 'Les applications qui ignorent le proxy, le DNS', 'Filtrage d\'entreprise, test applicatif'],
+        ['NAT / CGNAT', 'IP privée derrière une IP publique partagée', 'L\'opérateur, les logs de translation, la corrélation', 'Architecture réseau normale'],
+        ['Réseau mobile', 'IP fixe de l\'abonnement', 'L\'opérateur, la cellule, l\'IMEI/IMSI', 'Mobilité, secours'],
+        ['Changement de réseau', 'L\'IP précédente', 'Les autres identifiants et traces', 'Dépannage, mobilité']
       ]
     },
     {
+      t: 'callout', v: 'danger', title: "Un VPN ne vous rend pas anonyme",
+      x: "Le serveur visité voit l'IP du VPN, mais votre fournisseur VPN voit votre IP réelle et peut journaliser. Le navigateur peut révéler votre IP locale via WebRTC, votre DNS peut sortir en clair, et vos comptes connectés relient toutes les sessions. L'anonymat réel exige une discipline complète : navigateur dédié, DNS maîtrisé, absence de compte personnel, vérification des fuites IPv6 et WebRTC."
+    },
+    {
+      t: 'code', lang: 'bash', title: "Contrôler ses propres fuites",
+      x: `# IP de sortie vue par un service
+curl -s https://ipinfo.io/json
+
+# Vérifier que le DNS ne sort pas chez le FAI local
+# (utiliser un résolveur chiffré et vérifier avec un test DNS de confiance)
+
+# Vérifier IPv6 : une adresse publique peut contourner le tunnel IPv4
+ip -6 address show scope global
+
+# Sous Windows : ipconfig /all, puis tester WebRTC dans un navigateur dédié`
+    },
+    {
       t: 'p',
-      x: "Le modèle <strong>TCP/IP</strong> regroupe ces couches en quatre : <strong>Application</strong> (OSI 5-7), <strong>Transport</strong> (OSI 4), <strong>Internet</strong> (OSI 3) et <strong>Accès réseau</strong> (OSI 1-2). C'est le modèle réellement utilisé sur Internet. Retenez surtout la logique : plus on descend, plus on parle de bits et de câbles ; plus on monte, plus on parle d'applications."
+      x: "Côté défense, l'IP n'est pas une identité : ne bannissez pas définitivement une IP partagée, ne l'utilisez pas seule pour autoriser un compte, et ne faites pas confiance à <code>X-Forwarded-For</code> s'il peut être forgé par le client. Combinez limitation de débit, authentification, MFA, analyse comportementale et journaux corrélés."
+    },
+
+    { t: 'h', x: "13.4 Adresse MAC : le lien local" },
+    {
+      t: 'p',
+      x: "Une adresse <strong>MAC</strong> (Media Access Control) est un identifiant de 48 bits, écrit en six octets hexadécimaux : <code>08:00:27:AA:BB:CC</code>. Les 24 premiers bits forment l'<strong>OUI</strong> (Organizationally Unique Identifier), attribué à un fabricant ; les 24 derniers identifient l'interface. Certains équipements utilisent 64 bits (EUI-64)."
     },
     {
       t: 'table',
-      head: ['TCP/IP', 'Correspondance OSI', 'Unité de données', 'Question à laquelle la couche répond'],
+      head: ['Bit', 'Position', 'Valeur', 'Signification'],
       rows: [
-        ['Application', '5, 6, 7', 'Message', "Que veut-on envoyer ?"],
-        ['Transport', '4', 'Segment (TCP) / datagramme (UDP)', "À quel service, et avec quelles garanties ?"],
-        ['Internet', '3', 'Paquet', "Vers quelle adresse IP et par quel chemin ?"],
-        ['Accès réseau', '1, 2', 'Trame / bits', "Comment transmettre sur le support local ?"]
+        ['I/G', 'Bit 0 du premier octet', '0 = unicast / 1 = multicast', 'Une carte normale est en unicast'],
+        ['U/L', 'Bit 1 du premier octet', '0 = globale / 1 = locale', '1 indique une adresse administrée localement'],
+        ['OUI', '24 premiers bits', 'Ex. 08:00:27', 'Fabricant ou organisation (peut être virtuel)'],
+        ['NIC', '24 derniers bits', 'Ex. AA:BB:CC', 'Suffixe attribué par le fabricant'],
+        ['Broadcast', 'FF:FF:FF:FF:FF:FF', 'Tous les bits à 1', 'Destine la trame à tout le segment']
       ]
     },
     {
-      t: 'p',
-      x: "<strong>Encapsulation</strong> : chaque couche ajoute son propre en-tête. Votre message HTTP devient un segment TCP, puis un paquet IP, puis une trame Ethernet. À l'arrivée, chaque couche retire son en-tête, comme on ouvre successivement l'enveloppe, puis la boîte, puis le paquet."
-    },
-    { t: 'h', x: "13.3 TCP et UDP : deux façons de transporter" },
-    {
-      t: 'p',
-      x: "<strong>TCP</strong> est fiable : il numérote les segments, vérifie leur arrivée, retransmet ce qui manque et remet tout dans l'ordre. C'est le protocole du web, du mail et du SSH. <strong>UDP</strong> est plus simple : il envoie sans garantie. C'est parfait pour la voix, la vidéo, les jeux ou DNS, où attendre une retransmission serait pire que perdre un paquet."
-    },
-    {
-      t: 'table',
-      head: ['Critère', 'TCP', 'UDP'],
-      rows: [
-        ['Connexion', "Établie (handshake)", "Sans connexion"],
-        ['Fiabilité', "Accusés, retransmission, ordre garanti", "Aucune garantie"],
-        ['Vitesse / latence', "Plus lourd, un peu plus lent", "Plus léger, plus rapide"],
-        ['Usages', 'HTTP/HTTPS, SSH, SMTP, bases de données', 'DNS, DHCP, VoIP, streaming, jeux'],
-        ['Analogie', "Recommandé avec accusé de réception", "Carte postale"]
-      ]
-    },
-    {
-      t: 'p',
-      x: "Le <strong>handshake TCP</strong> en trois étapes est un dialogue : le client dit « je veux ouvrir une connexion » (<code>SYN</code>), le serveur répond « d'accord, je suis prêt » (<code>SYN-ACK</code>), le client confirme (<code>ACK</code>). Ensuite seulement, les données circulent. C'est pour cela qu'une connexion TCP est plus lente à démarrer qu'un simple envoi UDP."
-    },
-    { t: 'h', x: "13.4 Les ports : les portes des services" },
-    {
-      t: 'p',
-      x: "Une machine a une adresse IP, mais elle peut héberger plusieurs services. Le <strong>port</strong> est un numéro de 0 à 65535 qui identifie le service visé. Les ports 0 à 1023 sont dits « privilégiés » : seuls les administrateurs peuvent ouvrir un service dessus. Un serveur web écoute généralement sur <code>80</code> (HTTP) et <code>443</code> (HTTPS)."
-    },
-    {
-      t: 'table',
-      head: ['Port', 'Service', 'À quoi ça sert', 'Transport'],
-      rows: [
-        ['20/21', 'FTP', "Transfert de fichiers (ancien, souvent à remplacer par SFTP)", 'TCP'],
-        ['22', 'SSH / SFTP', "Administration et transfert sécurisés", 'TCP'],
-        ['25 / 587', 'SMTP', "Envoi de courrier", 'TCP'],
-        ['53', 'DNS', "Traduction des noms en IP", 'UDP et TCP'],
-        ['67/68', 'DHCP', "Attribution automatique des adresses", 'UDP'],
-        ['80', 'HTTP', "Web non chiffré", 'TCP'],
-        ['443', 'HTTPS', "Web chiffré avec TLS", 'TCP'],
-        ['3306', 'MySQL', "Base de données MySQL/MariaDB", 'TCP'],
-        ['5432', 'PostgreSQL', "Base de données PostgreSQL", 'TCP'],
-        ['8080', 'HTTP alternatif', "Proxy, application de test, API", 'TCP']
-      ]
-    },
-    {
-      t: 'code', lang: 'bash', title: "Voir les ports en écoute sur une machine Linux",
-      x: `ss -tulpn
-ss -tulpn | grep -E ':22|:80|:443'
-sudo ss -tulpn | grep LISTEN`
-    },
-    {
-      t: 'term',
-      title: "Sortie commentée",
+      t: 'term', title: "Observer les adresses MAC autour de soi (Linux)",
       x: [
-        { c: "ss -tulpn", o: [
-          "Netid State  Local Address:Port  Process",
-          "udp   UNCONN 0.0.0.0:53           systemd-resolve",
-          "tcp   LISTEN 0.0.0.0:22           sshd",
-          "tcp   LISTEN 0.0.0.0:80           nginx",
-          "tcp   LISTEN 127.0.0.1:3306       mysqld"
+        { c: "ip link show eth0", o: [
+          "2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP",
+          "    link/ether 08:00:27:aa:bb:cc brd ff:ff:ff:ff:ff:ff"
         ] },
-        { c: "ss -tulpn | grep -E ':22|:80|:443'", o: [
-          "tcp LISTEN 0.0.0.0:22 sshd",
-          "tcp LISTEN 0.0.0.0:80 nginx"
+        { c: "ip neigh", o: [
+          "192.168.56.1 dev eth0 lladdr 0a:00:27:00:00:01 REACHABLE",
+          "192.168.56.10 dev eth0 lladdr 02:00:5e:10:00:01 STALE"
+        ] },
+        { c: "arp -a", o: [
+          "? (192.168.56.1) at 0a:00:27:00:00:01 [ether] on eth0",
+          "? (192.168.56.10) at 02:00:5e:10:00:01 [ether] on eth0"
         ] }
       ]
     },
     {
-      t: 'callout', v: 'warn', title: "Un port ouvert n'est pas toujours voulu",
-      x: "Un service à l'écoute sur <code>0.0.0.0</code> accepte les connexions de toutes les interfaces. Un service sur <code>127.0.0.1</code> n'est accessible que depuis la machine elle-même. En sécurité, on ferme les ports inutiles et on limite l'exposition aux seules interfaces nécessaires."
-    },
-    { t: 'h', x: "13.5 DNS : l'annuaire d'Internet" },
-    {
       t: 'p',
-      x: "Les humains retiennent des noms, les machines utilisent des adresses IP. Le <strong>DNS</strong> (Domain Name System) fait le pont. Quand vous demandez <code>www.example.com</code>, votre ordinateur interroge d'abord un résolveur (souvent votre box ou le DNS de votre fournisseur). Le résolveur demande au serveur racine, puis au serveur du domaine <code>.com</code>, puis au serveur autoritaire d'<code>example.com</code>, qui donne l'adresse finale."
+      x: "Contrairement à l'IP, la MAC ne traverse pas Internet : elle sert uniquement sur le <strong>segment local</strong>. À chaque saut, le routeur retire l'en-tête de liaison et en construit un nouveau avec sa propre MAC. Le switch apprend les MAC sur ses ports dans une <strong>table CAM</strong> ; le protocole ARP associe une IP à une MAC sur le LAN ; le serveur DHCP peut enregistrer la MAC du client avec son bail."
     },
     {
       t: 'steps',
       items: [
-        { h: "1. Cache local", p: "Votre machine vérifie si elle connaît déjà la réponse. Si oui, elle l'utilise immédiatement." },
-        { h: "2. Résolveur récursif", p: "Sinon, elle interroge le résolveur configuré, qui fait le travail à sa place." },
-        { h: "3. Racine → TLD → autoritaire", p: "Le résolveur remonte la hiérarchie : racine, puis <code>.com</code>, puis le serveur du domaine." },
-        { h: "4. Réponse et cache", p: "L'adresse est renvoyée avec une durée de vie (TTL). Elle est mise en cache pour éviter de répéter la requête." }
+        { h: "Étape 1 — Identifier l'interface", p: "Sur votre poste : <code>ip link</code> ou <code>ipconfig /all</code>. Notez la MAC de l'interface concernée et son état (connectée, virtuelle, Wi-Fi)." },
+        { h: "Étape 2 — Lire la table des voisins", p: "<code>ip neigh</code> ou <code>arp -a</code> donne les couples IP/MAC récemment vus. Une entrée STALE peut encore être valide ; une entrée FAILED indique une résolution ARP échouée." },
+        { h: "Étape 3 — Interroger le switch", p: "Sur un équipement administré et autorisé : <code>show mac address-table</code> indique la MAC, le port et le VLAN. Sur un réseau non administré, vous ne verrez que votre segment." },
+        { h: "Étape 4 — Croiser avec le DHCP", p: "Le bail DHCP associe MAC, IP, hostname, date et durée. C'est souvent la pièce qui relie l'IP à un poste." },
+        { h: "Étape 5 — Vérifier le fabricant", p: "L'OUI donne le fabricant, pas le modèle ni l'utilisateur. Une MAC virtuelle (VM, conteneur, randomisation) peut ne correspondre à aucun matériel réel." },
+        { h: "Étape 6 — Corréler avec les journaux", p: "Wi-Fi (association), 802.1X, port-security, DHCP et DNS interne. Attention aux MAC aléatoires : un même appareil peut en changer à chaque réseau." }
+      ]
+    },
+    {
+      t: 'callout', v: 'warn', title: "Le filtrage MAC n'est pas une sécurité",
+      x: "Une adresse MAC se modifie en quelques secondes sur un appareil dont on est propriétaire. Le filtrage par MAC bloque les erreurs et les imprudents, pas un attaquant. Utilisez 802.1X, des VLAN séparés, du port-security, du DHCP snooping et une supervision des changements d'identité."
+    },
+    {
+      t: 'p',
+      x: "La <strong>randomisation MAC</strong> est intégrée aux systèmes modernes (Wi-Fi, iOS, Android, Windows) pour éviter le pistage entre réseaux. Elle est légitime sur ses propres appareils. En revanche, changer de MAC pour usurper un autre poste, contourner un contrôle d'accès ou fausser une facturation est une atteinte au réseau d'autrui. Sur un réseau d'entreprise, la randomisation peut casser le NAC, le port-security ou les réservations DHCP."
+    },
+    {
+      t: 'code', lang: 'bash', title: "Changer la MAC de son propre poste (lab uniquement)",
+      x: `# Vérifier l'interface et sa MAC actuelle
+ip link show eth0
+
+# Couper l'interface, changer la MAC, la réactiver (laboratoire personnel)
+sudo ip link set eth0 down
+sudo ip link set eth0 address 02:00:5e:10:00:01
+sudo ip link set eth0 up
+
+# Outil dédié, équivalent
+sudo macchanger -r eth0   # adresse aléatoire locale
+sudo macchanger -p eth0   # restaurer la MAC d'origine`
+    },
+    {
+      t: 'callout', v: 'legal', title: "Sur votre matériel, avec votre autorisation",
+      x: "Modifier la MAC d'une interface que vous possédez est acceptable pour tester, se protéger ou s'entraîner. La modifier pour accéder à un réseau qui vous a exclu, usurper l'identité d'un équipement ou contourner un contrôle d'accès est une infraction. Ne le faites jamais sur un réseau d'entreprise sans autorisation écrite."
+    },
+    { t: 'h', x: "13.5 IMEI : l'identité du terminal mobile" },
+    {
+      t: 'p',
+      x: "L'<strong>IMEI</strong> (International Mobile Equipment Identity) identifie un terminal mobile. Il comporte classiquement <strong>15 chiffres</strong> : 8 chiffres de <strong>TAC</strong> (Type Allocation Code), 6 chiffres de numéro de série et 1 chiffre de contrôle calculé par l'algorithme de <strong>Luhn</strong>. Les versions <strong>IMEISV</strong> ajoutent deux chiffres de version logicielle (16 ou 17 chiffres)."
+    },
+    {
+      t: 'table',
+      head: ['Identifiant', 'Ce qu\'il identifie', 'Où il vit', 'Qui le voit'],
+      rows: [
+        ['IMEI', 'Le terminal (modem, châssis)', 'Mémoire du modem', 'Opérateur, fabricant, logiciel local'],
+        ['IMSI', 'L\'abonné SIM (identité réseau)', 'Carte SIM / eSIM', 'Opérateur mobile'],
+        ['ICCID', 'La carte SIM physique', 'Carte SIM', 'Opérateur, utilisateur'],
+        ['MSISDN', 'Le numéro de téléphone', 'Cœur de réseau', 'Opérateur, correspondants'],
+        ['EID', 'La puce eSIM', 'eUICC', 'Opérateur, fournisseur eSIM'],
+        ['IMEISV', 'Terminal + version logicielle', 'Modem', 'Opérateur, réseau']
+      ]
+    },
+    {
+      t: 'steps',
+      items: [
+        { h: "Étape 1 — Lire l'IMEI", p: "Sur votre propre appareil : composez <code>*#06#</code>, ou consultez Réglages → À propos → IMEI. Ne publiez jamais ce numéro : il peut servir à du clonage ou à du harcèlement." },
+        { h: "Étape 2 — Vérifier le format", p: "15 chiffres, éventuellement 16/17 pour un IMEISV. Un IMEI qui échoue au contrôle de Luhn est invalide ou mal saisi." },
+        { h: "Étape 3 — Identifier le TAC", p: "Les 8 premiers chiffres donnent le modèle. Les bases publiques sont partielles ; un TAC inconnu n'est pas forcément frauduleux." },
+        { h: "Étape 4 — Vérifier le statut", p: "Utilisez les canaux officiels du fabricant, de l'opérateur ou des autorités. Les sites « IMEI checker » gratuits collectent souvent vos données et revendent des résultats approximatifs." },
+        { h: "Étape 5 — En cas de vol", p: "Déclarez le vol à l'opérateur et aux autorités avec l'IMEI et l'ICCID. Le blocage s'effectue dans l'EIR de l'opérateur ; un simple changement de SIM ne suffit pas à réutiliser l'appareil." }
+      ]
+    },
+    {
+      t: 'code', lang: 'python', title: "Contrôle de Luhn d'un IMEI (exemple pédagogique)",
+      x: `def luhn_ok(number: str) -> bool:
+    total = 0
+    for i, ch in enumerate(reversed(number)):
+        d = int(ch)
+        if i % 2 == 1:          # on double un chiffre sur deux
+            d *= 2
+            if d > 9:
+                d -= 9
+        total += d
+    return total % 10 == 0
+
+for imei in ("356938035643809", "356938035643800"):
+    print(imei, "valide" if luhn_ok(imei) else "invalide")
+
+# 356938035643809 valide
+# 356938035643800 invalide`
+    },
+    {
+      t: 'p',
+      x: "Le réseau mobile voit l'IMEI à l'attachement, avec l'IMSI de la SIM et la cellule servante. L'opérateur peut donc relier un terminal à un abonnement, produire des <strong>CDR</strong> (Call Detail Records) et localiser approximativement l'appareil par la cellule et les mesures radio. Cette capacité est réservée à l'opérateur et aux autorités dans un cadre légal : elle n'est pas accessible depuis une simple page web."
+    },
+    {
+      t: 'table',
+      head: ['Acteur', 'IMEI', 'IMSI', 'Localisation', 'Cadre'],
+      rows: [
+        ['Utilisateur', 'Oui (son appareil)', 'Rarement visible', 'GPS / services', 'Consentement'],
+        ['Application', 'Parfois via API système', 'Non', 'GPS si autorisé', 'Permissions OS'],
+        ['Opérateur', 'Oui', 'Oui', 'Cellule, triangulation', 'Contrat + loi'],
+        ['Autorité judiciaire', 'Oui (réquisition)', 'Oui', 'Sur réquisition', 'Procédure pénale'],
+        ['Site web public', 'Non', 'Non', 'Non', 'Aucun'],
+        ['Fabricant / SAV', 'Oui (support)', 'Non', 'Non', 'Garantie / réparation']
+      ]
+    },
+    {
+      t: 'callout', v: 'danger', title: "Modifier un IMEI est illégal et dangereux",
+      x: "En France et dans de nombreux pays, falsifier ou modifier l'IMEI d'un terminal est interdit et peut constituer une infraction (fraude, contrefaçon, atteinte à un système de traitement automatisé). Techniquement, l'opération nécessite des outils spécialisés, peut rendre l'appareil inutilisable et ne procure <strong>aucune anonymisation</strong> : l'IMSI, la cellule et les métadonnées restent visibles. Ce cours ne fournit pas de méthode pour y parvenir."
+    },
+    {
+      t: 'p',
+      x: "Pour protéger sa vie privée mobile sans illégalité : désactiver le partage de localisation non nécessaire, vérifier les permissions des applications, désactiver la 2G si l'appareil le permet (protection contre certains IMSI catchers), utiliser un eSIM ou un forfait dédié pour un usage séparé, chiffrer l'appareil et ne pas publier son IMEI. En entreprise, un MDM inventorie les terminaux et peut effacer un appareil perdu, dans un cadre RH et légal clair."
+    },
+
+    { t: 'h', x: "13.6 Méthode commune : tracer sans se tromper" },
+    {
+      t: 'steps',
+      items: [
+        { h: "1. Qualifier l'identifiant", p: "IP, MAC ou IMEI ? Est-il public, privé, virtuel, aléatoire, invalide ? La première erreur est de traiter une adresse privée comme une adresse Internet." },
+        { h: "2. Délimiter la portée", p: "Une MAC ne sort pas du LAN ; une IP publique peut être partagée ; un IMEI n'est visible que du réseau mobile. Toute conclusion hors de cette portée est fausse." },
+        { h: "3. Choisir une source autorisée", p: "Registres publics pour l'IP, équipements de votre réseau pour la MAC, canaux officiels pour l'IMEI. Jamais de surveillance d'un tiers, de doxxing ou d'achat de données volées." },
+        { h: "4. Horodater la preuve", p: "Notez la date, l'heure, le fuseau, l'outil, la commande et la sortie brute. Synchronisez les horloges (NTP) : sans cela, la corrélation NAT/DHCP est impossible." },
+        { h: "5. Corréler au minimum deux sources", p: "IP + port + bail DHCP ; MAC + port de switch + journal 802.1X ; IMEI + IMSI + CDR. Une source unique reste une hypothèse." },
+        { h: "6. Conclure avec un niveau de certitude", p: "Fait observé, inférence technique, hypothèse à confirmer. Un rapport honnête distingue les trois et documente les limites." }
       ]
     },
     {
       t: 'table',
-      head: ['Type', 'Ce qu’il contient', 'Exemple'],
+      head: ['Vous pouvez affirmer', 'Vous ne pouvez pas affirmer sans réquisition'],
       rows: [
-        ['A', "Adresse IPv4 d'un nom", 'example.com → 192.0.2.10'],
-        ['AAAA', "Adresse IPv6 d'un nom", 'example.com → 2001:db8::10'],
-        ['CNAME', "Alias vers un autre nom", 'www → example.com'],
-        ['MX', "Serveur de messagerie du domaine", 'mail.example.com priorité 10'],
-        ['TXT', "Texte libre, souvent vérification ou SPF", 'v=spf1 -all'],
-        ['NS', "Serveurs autoritaires du domaine", 'ns1.example.com'],
-        ['PTR', "Résolution inverse IP → nom", '10.2.0.192.in-addr.arpa']
-      ]
-    },
-    { t: 'lab', id: 'dns' },
-    {
-      t: 'code', lang: 'bash', title: "Interroger le DNS",
-      x: `dig example.lab A +short
-dig example.lab MX +short
-dig @10.10.10.53 example.lab A +short
-getent hosts example.lab
-cat /etc/resolv.conf`
-    },
-    {
-      t: 'term',
-      title: "Réponses DNS simulées",
-      x: [
-        { c: "dig example.lab A +short", o: ["192.0.2.10"] },
-        { c: "dig example.lab MX +short", o: ["10 mail.example.lab."] },
-        { c: "cat /etc/resolv.conf", o: ["nameserver 10.10.10.53", "search lab.local"] }
+        ['Cette IP a envoyé une requête à telle heure', 'Cette personne physique était devant l\'écran'],
+        ['Cette MAC était vue sur le port 12 à 14:32', 'Cette MAC appartient à un utilisateur nommé'],
+        ['Cet IMEI est syntaxiquement valide et associé à ce TAC', 'Ce terminal se trouve à une adresse précise'],
+        ['Ce bloc IP appartient à cet opérateur', 'Ce client est coupable d\'un délit'],
+        ['Ce bail DHCP reliait cette IP à ce hostname', 'Cette preuve est suffisante devant un tribunal']
       ]
     },
     {
-      t: 'callout', v: 'tip', title: "DNS et sécurité",
-      x: "Le DNS est aussi une source d'information : les enregistrements MX révèlent le fournisseur de mail, les TXT peuvent exposer des services, et les sous-domaines oubliés élargissent la surface d'attaque. Côté défense, on surveille les requêtes anormales et on utilise DNSSEC quand c'est possible."
+      t: 'callout', v: 'tip', title: "Le réflexe du rapport",
+      x: "Écrivez trois colonnes : <strong>observé</strong>, <strong>déduit</strong>, <strong>hypothèse</strong>. Ajoutez la source, l'horodatage et la méthode. C'est ce qui distingue un analyste d'un détective amateur — et ce qui protège votre organisation en cas de contentieux."
     },
-    { t: 'h', x: "13.6 DHCP, NAT et routage : comment les paquets voyagent" },
+
+    { t: 'h', x: "13.7 Se défendre : vie privée, journalisation et moindre exposition" },
     {
-      t: 'p',
-      x: "<strong>DHCP</strong> attribue automatiquement une adresse IP à une machine qui arrive sur le réseau, comme un hôtel attribue une chambre à un client. Le serveur fournit une IP, un masque, une passerelle et des serveurs DNS, pour une durée limitée appelée <strong>bail</strong>."
+      t: 'table',
+      head: ['Risque', 'Mesure défensive', 'Identifiant concerné'],
+      rows: [
+        ['Corrélation entre sites', 'Navigateur dédié, cloisonnement des comptes, VPN légitime', 'IP, empreinte, cookies'],
+        ['Pistage Wi-Fi', 'Randomisation MAC activée, oublier les réseaux', 'MAC'],
+        ['Fuite d\'IP réelle', 'Kill switch, DNS chiffré, désactivation WebRTC/IPv6 non maîtrisée', 'IP'],
+        ['Surveillance réseau', '802.1X, segmentation, port-security, DHCP snooping', 'MAC'],
+        ['Vol de terminal', 'Verrouillage, chiffrement, MDM, déclaration IMEI', 'IMEI'],
+        ['Fuite de logs', 'Rétention limitée, accès restreint, pseudonymisation', 'IP, MAC, IMEI'],
+        ['Usurpation d\'identifiant', 'MFA, signatures, contrôle d\'accès, supervision', 'Tous']
+      ]
     },
     {
       t: 'p',
-      x: "<strong>NAT</strong> (Network Address Translation) permet à plusieurs appareils d'un réseau local de partager une seule adresse IP publique, comme un standard téléphonique qui fait sortir tous les appels sous un même numéro. Votre box fait du NAT : votre PC a une adresse privée, mais Internet voit l'adresse publique de la box."
+      x: "Les logs contenant des IP, des MAC ou des IMEI sont des <strong>données personnelles</strong> au sens du RGPD lorsqu'ils permettent d'identifier une personne, même indirectement. Appliquez minimisation, durée de conservation, contrôle d'accès, chiffrement et journalisation des accès aux journaux. Une IP seule n'est pas toujours identifiante, mais croisée avec un compte ou un bail DHCP, elle le devient."
     },
+    {
+      t: 'callout', v: 'legal', title: "Cadre français et européen",
+      x: "Le traitement d'identifiants techniques doit respecter le RGPD (base légale, proportionnalité, information, sécurité, durée). L'accès frauduleux à un système est réprimé par le Code pénal (art. 323-1 et suivants). La modification d'un IMEI, l'usurpation d'identité numérique et la collecte massive de données personnelles peuvent constituer des infractions distinctes. En cas de doute, consultez le DPO ou un juriste avant de tracer."
+    },
+
+    { t: 'h', x: "13.8 Atelier — Traceur IP, MAC & IMEI" },
     {
       t: 'p',
-      x: "Le <strong>routage</strong> est le choix du chemin. Chaque machine compare l'adresse de destination à son propre réseau : si la destination est locale, elle envoie directement ; sinon, elle passe par la <strong>passerelle par défaut</strong>. Les routeurs échangent ensuite les paquets de proche en proche, comme des relais postaux."
+      x: "Trois fiches interactives pour vérifier votre lecture des identifiants. Les données sont fictives et aucune requête réseau n'est émise. Analysez chaque cas, répondez à la question, puis validez les trois couches pour terminer l'atelier."
     },
-    {
-      t: 'code', lang: 'bash', title: "Lire la configuration réseau et le chemin",
-      x: `ip -br a
-ip route
-ip route get 8.8.8.8
-traceroute -n 10.10.10.10
-cat /etc/resolv.conf`
-    },
-    {
-      t: 'term',
-      title: "Configuration typique d'un lab",
-      x: [
-        { c: "ip -br a", o: [
-          "lo     UNKNOWN  127.0.0.1/8",
-          "eth0   UP       10.10.10.100/24"
-        ] },
-        { c: "ip route", o: [
-          "default via 10.10.10.1 dev eth0",
-          "10.10.10.0/24 dev eth0 proto kernel scope link src 10.10.10.100"
-        ] },
-        { c: "ip route get 8.8.8.8", o: ["8.8.8.8 via 10.10.10.1 dev eth0 src 10.10.10.100"] }
-      ]
-    },
-    { t: 'h', x: "13.7 Lab guidé — diagnostiquer une panne réseau" },
+    { t: 'lab', id: 'identity' },
+
+    { t: 'h', x: "13.9 CTF — 5 challenges IP, MAC & IMEI" },
     {
       t: 'p',
-      x: "Méthode simple, du plus proche au plus loin : vérifier l'interface, l'adresse, la passerelle, le DNS, puis le service distant. On ne commence pas par « Internet est cassé » : on teste chaque étage. Les commandes ci-dessous sont à exécuter dans l'ordre."
+      x: "Les challenges utilisent exclusivement des données de documentation (192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24, 192.168.56.0/24) et des identifiants fictifs. Objectif : produire le flag et justifier la démarche. Les réponses sont dans les blocs « Solution » ; cherchez d'abord sans les ouvrir."
     },
     {
-      t: 'code', lang: 'bash', title: "Checklist de diagnostic",
-      x: `ip -br a                              # 1. ai-je une adresse ?
-ip route                              # 2. ai-je une passerelle ?
-ping -c 2 10.10.10.1                  # 3. la passerelle répond-elle ?
-ping -c 2 1.1.1.1                     # 4. puis-je sortir en IP ?
-dig example.lab A +short              # 5. le DNS répond-il ?
-nc -zv 10.10.10.10 443                # 6. le port du service est-il ouvert ?
-curl -sI http://10.10.10.10           # 7. le service HTTP répond-il ?
-traceroute -n 10.10.10.10             # 8. où le chemin s'arrête-t-il ?`
-    },
-    {
-      t: 'term',
-      title: "Lecture d'un diagnostic",
-      x: [
-        { c: "ping -c 2 10.10.10.1", o: ["2 packets transmitted, 2 received, 0% packet loss"] },
-        { c: "ping -c 2 1.1.1.1", o: ["2 packets transmitted, 2 received, 0% packet loss"] },
-        { c: "dig example.lab A +short", o: ["192.0.2.10"] },
-        { c: "nc -zv 10.10.10.10 443", o: ["Connection to 10.10.10.10 443 port [tcp/https] succeeded!"] }
-      ]
-    },
-    {
-      t: 'callout', v: 'warn', title: "Ce que chaque échec signifie",
-      x: "<strong>Pas d'IP</strong> : problème DHCP ou interface. <strong>Pas de ping vers la passerelle</strong> : câble, Wi-Fi, VLAN ou routeur. <strong>Ping IP OK mais nom KO</strong> : DNS. <strong>DNS OK mais port fermé</strong> : service arrêté ou pare-feu. <strong>Port ouvert mais erreur HTTP</strong> : application en cause, pas le réseau."
-    },
-    { t: 'h', x: "13.8 Voir les paquets : tcpdump et Wireshark" },
-    {
-      t: 'p',
-      x: "Un <strong>sniffer</strong> capture les paquets qui passent sur une interface. C'est comme observer le trafic postal dans un bureau de tri. On y voit les adresses, les ports, les drapeaux TCP et parfois le contenu non chiffré. En lab, on l'utilise pour comprendre un handshake ou vérifier qu'une requête part bien."
-    },
-    {
-      t: 'code', lang: 'bash', title: "Captures ciblées",
-      x: `sudo tcpdump -i eth0 -c 5 port 53 -nn
-sudo tcpdump -i eth0 -c 10 tcp port 80 -nn
-sudo tcpdump -i eth0 -nn 'tcp[tcpflags] & tcp-syn != 0'
-sudo tcpdump -r evidence/dns.pcap -nn port 53`
-    },
-    {
-      t: 'term',
-      title: "Extrait de capture DNS",
-      x: [
-        { c: "tcpdump -i eth0 -c 5 port 53 -nn", o: [
-          "IP 10.10.10.100.53124 > 10.10.10.53.53: UDP, length 38",
-          "IP 10.10.10.53.53 > 10.10.10.100.53124: UDP, length 54"
-        ] }
-      ]
-    },
-    {
-      t: 'callout', v: 'danger', title: "Chiffrement et vie privée",
-      x: "Avec HTTPS, le contenu HTTP est chiffré, mais les métadonnées (IP, ports, nom de domaine via SNI/DNS) restent souvent visibles. Ne capturez jamais le trafic d'un réseau qui ne vous appartient pas : l'analyse de paquets est encadrée par la loi et par le respect de la vie privée."
-    },
-    { t: 'h', x: "13.9 Les erreurs de raisonnement les plus fréquentes" },
-    {
-      t: 'ul',
-      x: [
-        "Confondre <strong>IP</strong> et <strong>port</strong> : l'IP identifie la machine, le port identifie le service.",
-        "Croire que <strong>ping</strong> prouve qu'un service fonctionne : ping teste ICMP, pas HTTP ni SSH.",
-        "Croire qu'un <strong>port fermé</strong> signifie que la machine est éteinte : le pare-feu peut simplement bloquer.",
-        "Confondre <strong>DNS</strong> et <strong>DHCP</strong> : DNS traduit les noms, DHCP attribue les adresses.",
-        "Confondre <strong>TCP</strong> et <strong>UDP</strong> : TCP garantit l'ordre et la livraison, UDP non.",
-        "Oublier que <strong>localhost</strong> (127.0.0.1) ne sort jamais de la machine.",
-        "Lire une adresse <code>/24</code> comme un simple numéro : le suffixe indique la taille du réseau."
-      ]
-    },
-    { t: 'h', x: "13.10 Fiches commandes réseau" },
-    {
-      t: 'cmdref',
+      t: 'mini',
       items: [
-        {
-          cmd: 'ip -br a', tag: 'Interfaces',
-          what: "Affiche les interfaces réseau et leurs adresses de façon compacte.",
-          gives: "Le nom des interfaces, leur état (UP/DOWN), les adresses IPv4 et IPv6.",
-          use: "Vérifier qu'une machine a bien une adresse et sur quelle interface.",
-          syntax: 'ip -br a',
-          example: 'ip -br a',
-          read: "Si l'interface est DOWN, aucun paquet ne sortira. Une adresse en <code>169.254.x.x</code> indique souvent un échec DHCP."
-        },
-        {
-          cmd: 'ip route', tag: 'Routage',
-          what: "Affiche la table de routage et la passerelle par défaut.",
-          gives: "Le réseau local, la route par défaut et l'interface utilisée.",
-          use: "Vérifier comment la machine atteint Internet ou un autre sous-réseau.",
-          syntax: 'ip route ; ip route get 8.8.8.8',
-          example: 'ip route get 8.8.8.8',
-          read: "Sans ligne <code>default via …</code>, la machine ne peut pas sortir de son réseau local. <code>ip route get</code> montre la décision exacte pour une destination."
-        },
-        {
-          cmd: 'ping', tag: 'Connectivité',
-          what: "Envoie des paquets ICMP Echo pour tester la joignabilité.",
-          gives: "La réponse, la latence et le taux de perte.",
-          use: "Tester la boucle locale, la passerelle, une IP distante ou un nom.",
-          syntax: 'ping -c 4 destination',
-          example: 'ping -c 4 10.10.10.1',
-          read: "Un ping réussi prouve que la machine répond à ICMP, pas qu'un service web fonctionne. Un ping bloqué peut être filtré par un pare-feu."
-        },
-        {
-          cmd: 'dig', tag: 'DNS',
-          what: "Interroge un serveur DNS et affiche la réponse détaillée.",
-          gives: "Les enregistrements A, AAAA, MX, TXT, NS et le serveur qui a répondu.",
-          use: "Vérifier la résolution d'un nom, tester un serveur DNS précis ou diagnostiquer un cache.",
-          syntax: 'dig [@serveur] nom type [+short]',
-          example: 'dig @10.10.10.53 example.lab A +short',
-          read: "Une réponse <code>NXDOMAIN</code> signifie que le nom n'existe pas. <code>SERVFAIL</code> indique souvent un problème de résolution côté serveur. Le TTL indique combien de temps la réponse reste en cache."
-        },
-        {
-          cmd: 'traceroute', tag: 'Chemin',
-          what: "Affiche les routeurs traversés pour atteindre une destination.",
-          gives: "La liste des sauts, les adresses et les temps de réponse.",
-          use: "Localiser un point de blocage ou vérifier le chemin suivi.",
-          syntax: 'traceroute -n destination',
-          example: 'traceroute -n 10.10.10.10',
-          read: "Des <code>*</code> ne signifient pas forcément une panne : certains routeurs ne répondent pas aux sondes. Le dernier saut répondeur indique jusqu'où le chemin est connu."
-        },
-        {
-          cmd: 'ss -tulpn', tag: 'Ports',
-          what: "Liste les sockets TCP/UDP et les processus à l'écoute.",
-          gives: "Les ports ouverts, les adresses d'écoute et le nom des processus.",
-          use: "Savoir quels services tournent et s'ils sont exposés à toutes les interfaces.",
-          syntax: 'ss -tulpn',
-          example: 'sudo ss -tulpn | grep LISTEN',
-          read: "<code>0.0.0.0:80</code> écoute sur toutes les interfaces ; <code>127.0.0.1:3306</code> n'est accessible que localement. Un service exposé sans authentification est une cible."
-        },
-        {
-          cmd: 'nc -zv', tag: 'Test de port',
-          what: "Ouvre une connexion TCP vers un hôte et un port sans envoyer de données.",
-          gives: "Le succès ou l'échec de la connexion et le nom du service.",
-          use: "Vérifier qu'un port est joignable avant de tester l'application.",
-          syntax: 'nc -zv hôte port',
-          example: 'nc -zv 10.10.10.10 443',
-          read: "Un échec peut venir d'un port fermé, d'un pare-feu ou d'un service qui n'écoute pas sur cette interface. Ce n'est pas une preuve d'absence de service."
-        },
-        {
-          cmd: 'curl -sI', tag: 'HTTP',
-          what: "Envoie une requête HTTP et affiche les en-têtes de réponse.",
-          gives: "Le code HTTP, le serveur, les redirections, les cookies et les en-têtes de sécurité.",
-          use: "Vérifier qu'un service web répond et identifier sa pile technique.",
-          syntax: 'curl -sI URL',
-          example: 'curl -sI http://10.10.10.10',
-          read: "Un 200 indique une réponse valide ; un 301/302 une redirection ; un 403 un accès refusé ; un 500 une erreur applicative. L'en-tête <code>Server</code> révèle parfois la version."
-        },
-        {
-          cmd: 'tcpdump', tag: 'Capture',
-          what: "Capture et filtre les paquets sur une interface réseau.",
-          gives: "Les adresses, ports, drapeaux TCP et éventuellement le contenu non chiffré.",
-          use: "Comprendre un handshake, vérifier qu'une requête part ou analyser un problème réseau.",
-          syntax: 'tcpdump -i interface -nn [filtre]',
-          example: 'tcpdump -i eth0 -c 5 port 53 -nn',
-          read: "Utilisez <code>-nn</code> pour éviter les résolutions de noms. Filtrez toujours par port ou hôte : capturer tout le trafic est bruyant et peut exposer des données."
-        }
+        { v: 'cyan', h: 'Challenge 1 — Découpage', p: "Calculer réseau, broadcast et nombre d'hôtes d'un <code>/27</code>." },
+        { v: 'amber', h: 'Challenge 2 — MAC', p: "Lire les bits U/L et I/G d'une adresse locale." },
+        { v: 'lime', h: 'Challenge 3 — IMEI', p: "Valider un IMEI par l'algorithme de Luhn." },
+        { v: 'magenta', h: 'Challenge 4 — NAT', p: "Corréler un log web, une translation NAT et un bail DHCP." },
+        { v: 'violet', h: 'Challenge 5 — Fuite VPN', p: "Identifier la fuite qui révèle l'IP réelle." }
       ]
     },
-    { t: 'h', x: "13.11 Glossaire réseau" },
     {
-      t: 'glossary',
-      items: [
-        { term: 'Réseau', def: "Ensemble de machines capables de communiquer selon des règles communes.", use: "Un réseau local (LAN) relie des appareils proches ; Internet relie des réseaux du monde entier.", ex: 'LAN, WAN, Internet' },
-        { term: 'Adresse IP', def: "Identifiant numérique d'une machine sur un réseau.", use: "Indispensable pour router un paquet vers la bonne destination.", ex: '192.168.1.10' },
-        { term: 'Port', def: "Numéro qui identifie un service sur une machine.", use: "Une IP peut héberger plusieurs services : 80, 443, 22…", ex: '443' },
-        { term: 'Paquet', def: "Unité de données transportée sur un réseau, avec en-têtes et charge utile.", use: "Le message est découpé en paquets qui peuvent emprunter des chemins différents.", ex: 'paquet IP' },
-        { term: 'Protocole', def: "Ensemble de règles de communication entre machines.", use: "Deux machines doivent parler le même protocole pour se comprendre.", ex: 'HTTP, DNS, TCP' },
-        { term: 'OSI', full: 'Open Systems Interconnection', def: "Modèle théorique en 7 couches qui décrit les fonctions d'un réseau.", use: "Servir de grille de lecture pour localiser un problème.", ex: '7 couches' },
-        { term: 'TCP/IP', def: "Modèle pratique en 4 couches utilisé sur Internet.", use: "Comprendre comment les applications s'appuient sur IP et Ethernet.", ex: 'Application, Transport, Internet, Accès réseau' },
-        { term: 'TCP', full: 'Transmission Control Protocol', def: "Protocole de transport fiable, orienté connexion, avec accusés et retransmission.", use: "Utilisé quand chaque octet compte : web, SSH, mail.", ex: 'handshake SYN/SYN-ACK/ACK' },
-        { term: 'UDP', full: 'User Datagram Protocol', def: "Protocole de transport sans connexion ni garantie de livraison.", use: "Utilisé quand la latence prime : DNS, voix, jeux, streaming.", ex: 'DNS sur UDP/53' },
-        { term: 'DNS', full: 'Domain Name System', def: "Système qui traduit les noms de domaine en adresses IP.", use: "Rendre Internet utilisable sans mémoriser des adresses.", ex: 'example.com → 192.0.2.10' },
-        { term: 'DHCP', full: 'Dynamic Host Configuration Protocol', def: "Protocole qui attribue automatiquement une adresse IP et la configuration réseau.", use: "Éviter de configurer chaque machine à la main.", ex: 'bail DHCP' },
-        { term: 'NAT', full: 'Network Address Translation', def: "Traduction d'adresses qui permet à plusieurs machines de partager une IP publique.", use: "La box Internet fait du NAT entre le réseau local et Internet.", ex: '192.168.1.10 → 203.0.113.5' },
-        { term: 'Passerelle', def: "Routeur par lequel une machine envoie les paquets destinés à d'autres réseaux.", use: "Sans passerelle, une machine ne peut pas sortir de son réseau local.", ex: 'default via 192.168.1.1' },
-        { term: 'Latence', def: "Temps mis par un paquet pour aller et revenir.", use: "Mesurée par ping ; elle influence la sensation de rapidité.", ex: '12 ms' }
-      ]
-    }
-  ],
-  exos: [
-    {
-      id: 'm13-e1',
-      title: 'Afficher les interfaces réseau',
-      context: "Vous devez vérifier que la machine de lab possède bien une adresse.",
-      task: "Affichez les interfaces et leurs adresses avec <code>ip -br a</code>.",
-      hint: "La commande est simplement <code>ip -br a</code>.",
-      accept: [/^ip\s+-br\s+a$/i],
-      solution: 'ip -br a',
-      output: [
-        'lo     UNKNOWN  127.0.0.1/8',
-        'eth0   UP       10.10.10.100/24'
-      ],
-      read: "L'interface <code>eth0</code> est UP avec l'adresse 10.10.10.100/24. <code>lo</code> est la boucle locale, accessible uniquement depuis la machine.",
-      pivot: "Vérifiez maintenant la passerelle avec <code>ip route</code> : sans elle, la machine ne peut pas sortir de son réseau."
+      t: 'p',
+      x: "<strong>Challenge 1 — Le sous-réseau de la passerelle.</strong> Une VM de laboratoire possède l'adresse <code>192.168.56.42/27</code>. Le routeur de lab demande le réseau, le broadcast et le nombre d'hôtes utiles. Retrouvez-les sans outil, puis vérifiez avec <code>ipcalc</code>."
     },
     {
-      id: 'm13-e2',
-      title: 'Lire la passerelle par défaut',
-      context: "Une machine sans route par défaut ne peut pas joindre Internet.",
-      task: "Affichez la table de routage avec <code>ip route</code>.",
-      hint: "La commande est <code>ip route</code>.",
-      accept: [/^ip\s+route$/i],
-      solution: 'ip route',
-      output: [
-        'default via 10.10.10.1 dev eth0',
-        '10.10.10.0/24 dev eth0 proto kernel scope link src 10.10.10.100'
-      ],
-      read: "La ligne <code>default via 10.10.10.1</code> indique la passerelle. Le réseau local est <code>10.10.10.0/24</code>.",
-      pivot: "Testez la passerelle au ping avant de tester une destination Internet."
+      t: 'code', lang: 'text', title: "Challenge 1 — données",
+      x: `Adresse : 192.168.56.42
+Masque  : /27  (255.255.255.224)
+Bloc    : 32 adresses
+
+À trouver :
+- adresse de réseau
+- adresse de broadcast
+- nombre d'hôtes utilisables
+- flag : FLAG{IP_<réseau>_<hôtes>}`
     },
     {
-      id: 'm13-e3',
-      title: 'Tester la boucle locale',
-      context: "Avant de tester le réseau, on vérifie que la pile IP de la machine fonctionne.",
-      task: "Envoyez 4 paquets ICMP à <code>127.0.0.1</code>.",
-      hint: "Utilisez <code>ping -c 4 127.0.0.1</code>.",
-      accept: [/^ping\s+-c\s+4\s+127\.0\.0\.1$/i],
-      solution: 'ping -c 4 127.0.0.1',
-      output: [
-        '4 packets transmitted, 4 received, 0% packet loss',
-        'rtt min/avg/max/mdev = 0.041/0.052/0.061/0.008 ms'
-      ],
-      read: "La boucle locale répond : la pile réseau de la machine est fonctionnelle. Cela ne prouve pas encore que le câble ou le Wi-Fi fonctionne.",
-      pivot: "Passez à la passerelle, puis à une adresse IP externe, puis à un nom de domaine."
+      t: 'callout', v: 'tip', title: "Solution challenge 1",
+      x: "42 se situe dans le bloc 32–63. Réseau : <code>192.168.56.32</code>. Broadcast : <code>192.168.56.63</code>. Hôtes utiles : 32 − 2 = <strong>30</strong>. Flag : <code>FLAG{IP_192.168.56.32_30}</code>. Vérification : <code>ipcalc 192.168.56.42/27</code>."
     },
     {
-      id: 'm13-e4',
-      title: 'Tester la passerelle',
-      context: "La passerelle est le routeur qui relie votre réseau local au reste.",
-      task: "Envoyez 4 paquets à <code>10.10.10.1</code>.",
-      hint: "Utilisez <code>ping -c 4 10.10.10.1</code>.",
-      accept: [/^ping\s+-c\s+4\s+10\.10\.10\.1$/i],
-      solution: 'ping -c 4 10.10.10.1',
-      output: ['4 packets transmitted, 4 received, 0% packet loss'],
-      read: "La passerelle répond. Le problème réseau, s'il existe, est plus loin : DNS, sortie Internet ou service distant.",
-      pivot: "Testez une IP publique pour vérifier la sortie Internet, indépendamment du DNS."
+      t: 'p',
+      x: "<strong>Challenge 2 — Une MAC trop locale.</strong> La table ARP d'un poste de lab contient <code>02:1A:2B:3C:4D:5E</code>. Déterminez s'il s'agit d'une adresse unicast ou multicast, globale ou locale, et ce que cela implique pour l'identification du fabricant."
     },
     {
-      id: 'm13-e5',
-      title: 'Résoudre un nom avec getent',
-      context: "Vous devez vérifier la résolution d'un nom sans passer par un navigateur.",
-      task: "Résolvez <code>example.lab</code> avec la commande <code>getent hosts</code>.",
-      hint: "Utilisez <code>getent hosts example.lab</code>.",
-      accept: [/^getent\s+hosts\s+example\.lab$/i],
-      solution: 'getent hosts example.lab',
-      output: ['192.0.2.10    example.lab'],
-      read: "<code>getent</code> utilise la configuration système (fichiers hosts, DNS). Le nom est bien résolu en 192.0.2.10.",
-      pivot: "Comparez avec <code>dig</code> pour voir la réponse DNS détaillée et le serveur interrogé."
+      t: 'code', lang: 'text', title: "Challenge 2 — données",
+      x: `MAC : 02:1A:2B:3C:4D:5E
+Premier octet : 0x02 = 0000 0010
+
+Rappel :
+- bit 0 (I/G) : 0 unicast, 1 multicast
+- bit 1 (U/L) : 0 globale, 1 locale
+
+Flag : FLAG{MAC_<type>_<portée>}`
     },
     {
-      id: 'm13-e6',
-      title: 'Lire la configuration DNS',
-      context: "Le fichier <code>/etc/resolv.conf</code> indique les serveurs DNS utilisés.",
-      task: "Affichez son contenu.",
-      hint: "Utilisez <code>cat /etc/resolv.conf</code>.",
-      accept: [/^cat\s+\/etc\/resolv\.conf$/i],
-      solution: 'cat /etc/resolv.conf',
-      output: ['nameserver 10.10.10.53', 'search lab.local'],
-      read: "Le résolveur configuré est 10.10.10.53. Le domaine de recherche <code>lab.local</code> permet d'écrire un nom court.",
-      pivot: "Interrogez directement ce serveur avec <code>dig @10.10.10.53</code> pour vérifier qu'il répond."
+      t: 'callout', v: 'tip', title: "Solution challenge 2",
+      x: "Octet 0x02 = <code>0000 0010</code> : bit I/G = 0 (unicast), bit U/L = 1 (localement administrée). L'OUI <code>02:1A:2B</code> n'est pas un OUI fabricant : c'est typiquement une adresse de VM, de conteneur ou randomisée. Flag : <code>FLAG{MAC_LOCAL_UNICAST}</code>. Conclusion : le fabricant n'est pas identifiable, et l'adresse peut changer."
     },
     {
-      id: 'm13-e7',
-      title: 'Demander un enregistrement A',
-      context: "Un enregistrement A associe un nom à une adresse IPv4.",
-      task: "Demandez l'enregistrement A de <code>example.lab</code> en sortie courte.",
-      hint: "Utilisez <code>dig example.lab A +short</code>.",
-      accept: [/^dig\s+example\.lab\s+A\s+\+short$/i],
-      solution: 'dig example.lab A +short',
-      output: ['192.0.2.10'],
-      read: "La réponse contient l'adresse IPv4. Sans <code>+short</code>, dig affiche aussi la section QUESTION, AUTHORITY et les statistiques.",
-      pivot: "Testez un type MX pour voir le serveur de messagerie du domaine."
+      t: 'p',
+      x: "<strong>Challenge 3 — L'IMEI suspect.</strong> Un terminal de lab affiche le préfixe <code>35693803564380</code> suivi d'un chiffre de contrôle. Calculez ce chiffre avec Luhn, reconstruisez l'IMEI complet, puis expliquez pourquoi l'IMEI seul ne localise pas l'appareil."
     },
     {
-      id: 'm13-e8',
-      title: 'Lire les serveurs de messagerie',
-      context: "Les enregistrements MX indiquent où envoyer le courrier d'un domaine.",
-      task: "Demandez les enregistrements MX de <code>example.lab</code> en sortie courte.",
-      hint: "Utilisez <code>dig example.lab MX +short</code>.",
-      accept: [/^dig\s+example\.lab\s+MX\s+\+short$/i],
-      solution: 'dig example.lab MX +short',
-      output: ['10 mail.example.lab.'],
-      read: "Le nombre 10 est la priorité : plus il est petit, plus le serveur est préféré. <code>mail.example.lab</code> reçoit le courrier.",
-      pivot: "Les MX révèlent souvent le fournisseur de messagerie et des sous-domaines à surveiller."
+      t: 'code', lang: 'text', title: "Challenge 3 — données",
+      x: `Préfixe (14 chiffres) : 35693803564380
+Chiffre de contrôle   : ?
+
+Algorithme de Luhn :
+- parcourir les chiffres de droite à gauche
+- doubler un chiffre sur deux
+- si le double dépasse 9, soustraire 9
+- la somme doit être un multiple de 10
+
+Flag : FLAG{IMEI_<15 chiffres>}`
     },
     {
-      id: 'm13-e9',
-      title: 'Interroger un serveur DNS précis',
-      context: "Pour distinguer un problème de cache d'un problème de résolveur, on interroge directement le serveur.",
-      task: "Demandez l'enregistrement A de <code>example.lab</code> au serveur <code>10.10.10.53</code>.",
-      hint: "Utilisez <code>dig @10.10.10.53 example.lab A +short</code>.",
-      accept: [/^dig\s+@10\.10\.10\.53\s+example\.lab\s+A\s+\+short$/i],
-      solution: 'dig @10.10.10.53 example.lab A +short',
-      output: ['192.0.2.10'],
-      read: "Le serveur interrogé directement répond correctement. Si le nom échouait avec le résolveur par défaut mais fonctionne ici, le problème vient de la configuration ou du cache local.",
-      pivot: "En cas d'échec, vérifiez le port 53 et la connectivité vers le serveur."
+      t: 'callout', v: 'tip', title: "Solution challenge 3",
+      x: "Le chiffre de contrôle est <strong>9</strong> : l'IMEI complet est <code>356938035643809</code>, dont la somme de Luhn vaut 70. Flag : <code>FLAG{IMEI_356938035643809}</code>. L'IMEI identifie le terminal, pas sa position : seule l'infrastructure de l'opérateur (cellule, CDR, réquisition) peut fournir une localisation."
     },
     {
-      id: 'm13-e10',
-      title: 'Lister les ports en écoute',
-      context: "Vous devez identifier les services qui écoutent sur la machine.",
-      task: "Affichez les sockets TCP et UDP en écoute avec les processus.",
-      hint: "Utilisez <code>ss -tulpn</code>. Ajoutez <code>sudo</code> si les processus ne s'affichent pas.",
-      accept: [/^(sudo\s+)?ss\s+-tulpn$/i],
-      solution: 'ss -tulpn',
-      output: [
-        'udp UNCONN 0.0.0.0:53   systemd-resolve',
-        'tcp LISTEN 0.0.0.0:22   sshd',
-        'tcp LISTEN 0.0.0.0:80   nginx',
-        'tcp LISTEN 127.0.0.1:3306 mysqld'
-      ],
-      read: "SSH et nginx sont exposés sur toutes les interfaces. MySQL n'écoute que sur la boucle locale, donc inaccessible depuis le réseau.",
-      pivot: "Filtrez un port précis pour vérifier son exposition et son processus."
+      t: 'p',
+      x: "<strong>Challenge 4 — Derrière le NAT.</strong> Un serveur web de lab enregistre une requête provenant de <code>203.0.113.77:51422</code>. Le routeur NAT et le serveur DHCP fournissent les données ci-dessous. Quel poste interne a émis la requête ? Justifiez par le port, l'heure et le bail DHCP."
     },
     {
-      id: 'm13-e11',
-      title: 'Vérifier le port SSH',
-      context: "Vous voulez savoir si SSH écoute et sur quelle interface.",
-      task: "Filtrez la sortie de <code>ss -tulpn</code> sur le port 22.",
-      hint: "Utilisez <code>ss -tulpn | grep :22</code>.",
-      accept: [/^ss\s+-tulpn\s*\|\s*grep\s+:22$/i],
-      solution: 'ss -tulpn | grep :22',
-      output: ['tcp LISTEN 0.0.0.0:22 0.0.0.0:* users:(("sshd",pid=812,fd=3))'],
-      read: "SSH écoute sur 0.0.0.0:22, donc sur toutes les interfaces. C'est normal pour un serveur, mais à restreindre si l'administration passe par un VPN.",
-      pivot: "Testez la joignabilité du port avec <code>nc -zv</code> depuis une autre machine."
+      t: 'code', lang: 'text', title: "Challenge 4 — données",
+      x: `# Journal web (heure serveur, NTP synchronisé)
+203.0.113.77 - - [12/Mar/2026:14:32:07 +0100] "POST /admin/login" 401
+
+# Table NAT (routeur de lab)
+203.0.113.77:51422 -> 192.168.56.42:49812  (14:32:06 - 14:32:09)
+
+# Baux DHCP
+192.168.56.42  -> 08:00:27:AA:BB:CC  hostname: poste-compta
+192.168.56.43  -> 08:00:27:DD:EE:FF  hostname: poste-rh
+
+Flag : FLAG{NAT_<IP interne>}`
     },
     {
-      id: 'm13-e12',
-      title: 'Tester un port avec netcat',
-      context: "Un port ouvert ne signifie pas que le service répond correctement, mais c'est une première étape.",
-      task: "Testez la connexion TCP vers <code>10.10.10.10</code> sur le port <code>443</code>.",
-      hint: "Utilisez <code>nc -zv 10.10.10.10 443</code>.",
-      accept: [/^nc\s+-zv\s+10\.10\.10\.10\s+443$/i],
-      solution: 'nc -zv 10.10.10.10 443',
-      output: ['Connection to 10.10.10.10 443 port [tcp/https] succeeded!'],
-      read: "La connexion TCP s'établit : le port est ouvert et joignable. Cela ne garantit pas que le certificat ou l'application soient corrects.",
-      pivot: "Enchaînez avec <code>curl -sI https://…</code> pour tester la couche HTTP."
+      t: 'callout', v: 'tip', title: "Solution challenge 4",
+      x: "Le port source public <code>51422</code> est traduit vers <code>192.168.56.42:49812</code> pendant la fenêtre 14:32:06–14:32:09, qui contient l'horodatage du log. Le bail DHCP associe cette IP au hostname <code>poste-compta</code>. Flag : <code>FLAG{NAT_192.168.56.42}</code>. On peut affirmer le poste technique ; on ne peut pas encore affirmer la personne devant l'écran."
     },
     {
-      id: 'm13-e13',
-      title: 'Lire les en-têtes HTTP',
-      context: "Vous devez vérifier qu'un service web répond et identifier son serveur.",
-      task: "Affichez les en-têtes de <code>http://10.10.10.10</code>.",
-      hint: "Utilisez <code>curl -sI http://10.10.10.10</code>.",
-      accept: [/^curl\s+-sI\s+http:\/\/10\.10\.10\.10\/?$/i],
-      solution: 'curl -sI http://10.10.10.10',
-      output: [
-        'HTTP/1.1 200 OK',
-        'Server: nginx/1.18.0',
-        'Content-Type: text/html'
-      ],
-      read: "Le service répond en 200. L'en-tête <code>Server</code> révèle nginx 1.18.0. Une version exposée est une information utile pour un audit.",
-      pivot: "Comparez avec le port 443 et vérifiez la redirection HTTP vers HTTPS."
+      t: 'p',
+      x: "<strong>Challenge 5 — La fuite du tunnel.</strong> Un utilisateur pense être protégé par un VPN. Le site visité voit l'IP de sortie du VPN, mais un test révèle une adresse locale et une adresse publique différente. Identifiez la fuite et proposez deux corrections."
     },
     {
-      id: 'm13-e14',
-      title: 'Tracer le chemin réseau',
-      context: "Vous devez localiser où le trafic passe et où il pourrait s'arrêter.",
-      task: "Tracez le chemin vers <code>10.10.10.10</code> sans résolution DNS.",
-      hint: "Utilisez <code>traceroute -n 10.10.10.10</code>.",
-      accept: [/^traceroute\s+-n\s+10\.10\.10\.10$/i],
-      solution: 'traceroute -n 10.10.10.10',
-      output: [
-        'traceroute to 10.10.10.10, 30 hops max',
-        ' 1  10.10.10.1  1.102 ms  0.987 ms',
-        ' 2  10.10.10.10  2.311 ms  2.204 ms'
-      ],
-      read: "Deux sauts : la passerelle puis la cible. Les temps sont faibles, le chemin est direct.",
-      pivot: "Un <code>*</code> sur un saut ne prouve pas une panne : le routeur peut simplement ne pas répondre aux sondes."
+      t: 'code', lang: 'text', title: "Challenge 5 — données",
+      x: `# Sortie VPN annoncée
+198.51.100.20
+
+# Test navigateur (page de diagnostic)
+IP publique vue        : 203.0.113.77
+Candidat WebRTC        : 192.168.1.42
+Résolveur DNS utilisé  : 192.168.1.1
+
+# Question : quelle donnée révèle l'IP réelle hors tunnel ?
+Flag : FLAG{LEAK_<mécanisme>}`
     },
     {
-      id: 'm13-e15',
-      title: 'Capturer le DNS',
-      context: "Vous voulez prouver qu'une requête DNS part bien vers le résolveur.",
-      task: "Capturez 5 paquets sur le port 53 de l'interface <code>eth0</code>, sans résolution de noms.",
-      hint: "Utilisez <code>sudo tcpdump -i eth0 -c 5 port 53 -nn</code>.",
-      accept: [/^sudo\s+tcpdump\s+-i\s+eth0\s+-c\s+5\s+port\s+53\s+-nn$/i],
-      solution: 'sudo tcpdump -i eth0 -c 5 port 53 -nn',
-      output: [
-        'IP 10.10.10.100.53124 > 10.10.10.53.53: UDP, length 38',
-        'IP 10.10.10.53.53 > 10.10.10.100.53124: UDP, length 54'
-      ],
-      read: "La requête part vers le port 53 du résolveur et la réponse revient. Le port source 53124 est éphémère : il identifie la conversation côté client.",
-      pivot: "Filtrez sur <code>tcp port 80</code> pour observer une requête HTTP et son handshake."
+      t: 'callout', v: 'tip', title: "Solution challenge 5",
+      x: "Le candidat <strong>WebRTC</strong> expose l'adresse locale et peut révéler l'IP publique réelle malgré le VPN. Le DNS local (<code>192.168.1.1</code>) constitue une seconde fuite. Flag : <code>FLAG{LEAK_WEBRTC}</code>. Corrections : désactiver WebRTC ou utiliser un navigateur/profil dédié, forcer un DNS chiffré, activer un kill switch et bloquer IPv6 hors tunnel."
     },
     {
-      id: 'm13-e16',
-      title: 'Capturer un handshake TCP',
-      context: "Vous devez observer les drapeaux SYN et ACK d'une connexion.",
-      task: "Capturez 10 paquets TCP sur le port 80 de <code>eth0</code>.",
-      hint: "Utilisez <code>sudo tcpdump -i eth0 -c 10 tcp port 80 -nn</code>.",
-      accept: [/^sudo\s+tcpdump\s+-i\s+eth0\s+-c\s+10\s+tcp\s+port\s+80\s+-nn$/i],
-      solution: 'sudo tcpdump -i eth0 -c 10 tcp port 80 -nn',
-      output: [
-        'IP 10.10.10.100.51234 > 10.10.10.10.80: Flags [S], seq 1001',
-        'IP 10.10.10.10.80 > 10.10.10.100.51234: Flags [S.], seq 2001, ack 1002',
-        'IP 10.10.10.100.51234 > 10.10.10.10.80: Flags [.], ack 2002'
-      ],
-      read: "On voit SYN, SYN-ACK puis ACK : c'est le handshake TCP en trois étapes. Ensuite seulement, la requête HTTP peut être envoyée.",
-      pivot: "Le flag <code>[S.]</code> signifie SYN + ACK. Le point seul <code>[.]</code> signifie ACK."
+      t: 'callout', v: 'warn', title: "Règles des challenges",
+      x: "Ne testez jamais ces techniques sur une infrastructure qui ne vous appartient pas. Les adresses de documentation et les logs sont fictifs. Un flag se mérite par le raisonnement : dans un vrai rapport, la justification et les limites comptent autant que la réponse."
     },
     {
-      id: 'm13-e17',
-      title: 'Voir les interfaces en une ligne',
-      context: "Vous voulez un format compact pour un rapport ou un script.",
-      task: "Affichez les interfaces avec <code>ip -br a</code>.",
-      hint: "Utilisez <code>ip -br a</code>.",
-      accept: [/^ip\s+-br\s+a$/i],
-      solution: 'ip -br a',
-      output: ['lo UNKNOWN 127.0.0.1/8', 'eth0 UP 10.10.10.100/24'],
-      read: "Le format bref est pratique pour les scripts et les preuves. L'état UP/DOWN et le préfixe CIDR sont visibles d'un coup d'œil.",
-      pivot: "Combinez avec <code>grep UP</code> pour ne garder que les interfaces actives."
+      t: 'p',
+      x: "Pour valider le module, réussissez le test final avec au moins 70 %. Les questions portent sur la lecture des identifiants, les limites du tracing, les bonnes pratiques de masquage et le cadre légal."
     },
     {
-      id: 'm13-e18',
-      title: 'Retrouver les ports standards',
-      context: "Le fichier <code>/etc/services</code> associe les noms de services aux ports.",
-      task: "Affichez les lignes du fichier correspondant à <code>http</code> et <code>https</code>.",
-      hint: "Utilisez <code>grep -E '^http|^https' /etc/services</code>.",
-      accept: [/^grep\s+-E\s+["']?\^http\|\^https["']?\s+\/etc\/services$/i],
-      solution: "grep -E '^http|^https' /etc/services",
-      output: [
-        'http            80/tcp    www',
-        'https           443/tcp   https'
-      ],
-      read: "Le fichier confirme les ports standards. Un service peut néanmoins écouter sur un autre port : c'est la configuration réelle qui compte.",
-      pivot: "Vérifiez avec <code>ss -tulpn</code> le port réellement utilisé par le service."
-    },
-    {
-      id: 'm13-e19',
-      title: 'Scanner trois ports TCP',
-      context: "Vous devez vérifier quels services web sont exposés sur une cible de lab.",
-      task: "Lancez un scan TCP SYN sur les ports 22, 80 et 443 de <code>10.10.10.10</code>.",
-      hint: "Utilisez <code>nmap -sS -p 22,80,443 10.10.10.10</code>. Si vous n'avez pas les droits root, utilisez <code>-sT</code>.",
-      accept: [/^nmap\s+-s[ST]\s+-p\s*22,80,443\s+10\.10\.10\.10$/i],
-      solution: 'nmap -sS -p 22,80,443 10.10.10.10',
-      output: [
-        '22/tcp  open  ssh',
-        '80/tcp  open  http',
-        '443/tcp open  https'
-      ],
-      read: "Trois ports ouverts. Un scan SYN (<code>-sS</code>) est plus discret qu'un scan connecté (<code>-sT</code>), mais nécessite root.",
-      pivot: "Identifiez les versions avec <code>nmap -sV</code> avant de conclure à une vulnérabilité."
-    },
-    {
-      id: 'm13-e20',
-      title: 'Scanner le DNS en UDP',
-      context: "DNS utilise principalement UDP sur le port 53. Un scan TCP ne suffit pas.",
-      task: "Lancez un scan UDP du port 53 de <code>10.10.10.53</code>.",
-      hint: "Utilisez <code>nmap -sU -p 53 10.10.10.53</code>.",
-      accept: [/^nmap\s+-sU\s+-p\s*53\s+10\.10\.10\.53$/i],
-      solution: 'nmap -sU -p 53 10.10.10.53',
-      output: ['53/udp open domain'],
-      read: "Le port UDP 53 est ouvert. Un scan UDP est plus lent et moins fiable qu'un scan TCP, car l'absence de réponse peut signifier ouvert ou filtré.",
-      pivot: "Confirmez avec une vraie requête DNS : <code>dig @10.10.10.53 example.lab</code>."
-    },
-    {
-      id: 'm13-e21',
-      title: 'Tester une API HTTP',
-      context: "Le service web expose une route de santé sur <code>/api/health</code>.",
-      task: "Récupérez le contenu de <code>http://10.10.10.10/api/health</code>.",
-      hint: "Utilisez <code>curl -s http://10.10.10.10/api/health</code>.",
-      accept: [/^curl\s+-s\s+http:\/\/10\.10\.10\.10\/api\/health$/i],
-      solution: 'curl -s http://10.10.10.10/api/health',
-      output: ['{"status":"ok","service":"atlas-api","version":"2.3"}'],
-      read: "L'API répond en JSON et expose sa version. Une route de santé est utile pour le diagnostic, mais peut révéler des informations internes.",
-      pivot: "Vérifiez si la route est accessible sans authentification et si elle expose d'autres détails."
-    },
-    {
-      id: 'm13-e22',
-      title: 'Relire une capture DNS existante',
-      context: "Une capture <code>evidence/dns.pcap</code> a été enregistrée pendant le lab.",
-      task: "Lisez la capture et filtrez le port 53 sans résolution de noms.",
-      hint: "Utilisez <code>tcpdump -r evidence/dns.pcap -nn port 53</code>.",
-      accept: [/^tcpdump\s+-r\s+evidence\/dns\.pcap\s+-nn\s+port\s+53$/i],
-      solution: 'tcpdump -r evidence/dns.pcap -nn port 53',
-      output: [
-        'IP 10.10.10.100.53124 > 10.10.10.53.53: UDP, length 38',
-        'IP 10.10.10.53.53 > 10.10.10.100.53124: UDP, length 54'
-      ],
-      read: "La relecture d'une capture permet d'analyser après coup sans rejouer le trafic. C'est une preuve reproductible et un support pédagogique idéal.",
-      pivot: "Comparez l'heure des paquets avec les logs du serveur DNS pour corréler une panne."
+      t: 'callout', v: 'legal', title: "Checklist avant de conclure",
+      x: "<strong>1.</strong> Suis-je autorisé à analyser cet identifiant ? <strong>2.</strong> Ai-je vérifié sa portée (LAN, Internet, mobile) ? <strong>3.</strong> Mes sources sont-elles publiques ou internes et légitimes ? <strong>4.</strong> Mes horloges sont-elles synchronisées ? <strong>5.</strong> Ai-je au moins deux sources indépendantes ? <strong>6.</strong> Mon rapport distingue-t-il fait, inférence et hypothèse ? Si une réponse est « non », arrêtez et corrigez avant de publier la moindre conclusion."
     }
   ],
   quiz: 'q13'

@@ -3,7 +3,7 @@
  */
 import { QUIZ_EXTRA } from './quizzes-extra.js';
 import { CTF_QUIZZES } from './quizzes-ctf.js';
-import { RF_QUIZZES } from './quizzes-rf.js';
+import { QUIZ_M13 } from './quizzes-m13.js';
 
 export const QUIZZES = {
   q1: {
@@ -557,6 +557,6 @@ for (const [id, extra] of Object.entries(QUIZ_EXTRA)) {
 }
 
 Object.assign(QUIZZES, CTF_QUIZZES);
-Object.assign(QUIZZES, RF_QUIZZES);
+Object.assign(QUIZZES, QUIZ_M13);
 
 export const QUIZ_LIST = Object.entries(QUIZZES).map(([id, quiz]) => ({ id, ...quiz }));

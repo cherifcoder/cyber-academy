@@ -9,7 +9,7 @@ export function renderLabsPage() {
     <div class="mod-head">
       <div class="kicker">Pratique</div>
       <h1>Ateliers interactifs</h1>
-      <p class="mod-sub">${LABS.length} simulateurs pour manipuler les concepts sans risque : analyse Nmap, fuzzing, SQLi, XSS, falsification de requête, élévation de privilèges, CVSS, durcissement, résolution DNS, calcul de sous-réseaux et permissions Linux.</p>
+      <p class="mod-sub">Dix simulateurs pour manipuler les concepts sans risque : analyse Nmap, fuzzing, SQLi, XSS, falsification de requête, élévation de privilèges, CVSS, durcissement et identités réseau (IP, MAC, IMEI).</p>
       <div class="mod-meta">
         <span class="pill pill-lime">${doneCount}/${LABS.length} terminés</span>
         <span class="pill pill-amber">+20 XP par atelier</span>
