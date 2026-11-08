@@ -1,6 +1,10 @@
 /**
  * Quiz de fin de module. `answer` est l'index (0-based) de la bonne réponse.
  */
+import { QUIZ_EXTRA } from './quizzes-extra.js';
+import { CTF_QUIZZES } from './quizzes-ctf.js';
+import { RF_QUIZZES } from './quizzes-rf.js';
+
 export const QUIZZES = {
   q1: {
     moduleId: 'm1',
@@ -546,5 +550,13 @@ export const QUIZZES = {
     ]
   }
 };
+
+for (const [id, extra] of Object.entries(QUIZ_EXTRA)) {
+  const quiz = QUIZZES[id];
+  if (quiz && Array.isArray(extra)) quiz.questions.push(...extra);
+}
+
+Object.assign(QUIZZES, CTF_QUIZZES);
+Object.assign(QUIZZES, RF_QUIZZES);
 
 export const QUIZ_LIST = Object.entries(QUIZZES).map(([id, quiz]) => ({ id, ...quiz }));

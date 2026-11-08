@@ -2,6 +2,8 @@
  * Badges débloquables. Chaque `test` reçoit l'état complet du store.
  * `hint` est affiché tant que le badge est verrouillé.
  */
+import { MODULES } from './course.js';
+
 export const BADGES = [
   { id: 'identite', name: "Identité forgerée", icon: '🪪', desc: "Vous avez défini votre nom d'apprenti.", hint: "Renseignez votre nom dans le profil.", test: (s) => !!s.user.name.trim() },
 
@@ -16,12 +18,22 @@ export const BADGES = [
   { id: 'rapporteur', name: "Rapporteur", icon: '📊', desc: "Module 7 validé : vos constats deviennent des décisions.", hint: "Validez le module 7.", test: (s) => !!s.completed.m7 },
   { id: 'rempart', name: "Rempart", icon: '🛡️', desc: "Module 8 validé : la défense n'a plus de trou.", hint: "Validez le module 8.", test: (s) => !!s.completed.m8 },
 
+  { id: 'ctf-web', name: "Chasseur de flags web", icon: '🚩', desc: "CTF web terminé : de la reconnaissance au contrôle d'accès.", hint: "Validez le module 9 (CTF web).", test: (s) => !!s.completed.m9 },
+  { id: 'ctf-wordpress', name: "Briseur de WordPress", icon: '🧩', desc: "CTF WordPress terminé : énumération, plugin et RCE.", hint: "Validez le module 10 (CTF WordPress).", test: (s) => !!s.completed.m10 },
+  { id: 'ctf-sqli', name: "Maître de l'injection", icon: '💉', desc: "CTF SQLi terminé : de l'apostrophe au flag root.", hint: "Validez le module 11 (CTF injection SQL).", test: (s) => !!s.completed.m11 },
+  { id: 'ctf-privesc', name: "Ascension finale", icon: '🪜', desc: "CTF privesc terminé : de www-data à root.", hint: "Validez le module 12 (CTF élévation de privilèges).", test: (s) => !!s.completed.m12 },
+
+  { id: 'reseau', name: "Plombier réseau", icon: '🌐', desc: "Module 13 validé : ports, DNS, TCP/IP et couches n'ont plus de secret.", hint: "Validez le module 13 (fondamentaux réseau).", test: (s) => !!s.completed.m13 },
+  { id: 'sous-reseaux', name: "Architecte IP", icon: '🧮', desc: "Module 14 validé : masques, CIDR et sous-réseaux maîtrisés.", hint: "Validez le module 14 (adressage IP).", test: (s) => !!s.completed.m14 },
+  { id: 'linux', name: "Dompteur de terminal", icon: '🐧', desc: "Module 15 validé : les commandes Linux essentielles sont acquises.", hint: "Validez le module 15 (Linux fondamentaux).", test: (s) => !!s.completed.m15 },
+  { id: 'permissions', name: "Gardien des accès", icon: '🔐', desc: "Module 16 validé : utilisateurs, groupes et permissions maîtrisés.", hint: "Validez le module 16 (permissions Linux).", test: (s) => !!s.completed.m16 },
+
   { id: 'sans-faute', name: "Sans faute", icon: '🎯', desc: "Un quiz réussi à 100 %.", hint: "Obtenez 100 % à un quiz.", test: (s) => Object.values(s.quizzes).some((q) => q.total > 0 && q.best === q.total) },
 
   { id: 'operateur', name: "Opérateur", icon: '⚡', desc: "1 000 XP accumulés.", hint: "Atteignez 1 000 XP.", test: (s) => s.xp >= 1000 },
   { id: 'veteran', name: "Vétéran", icon: '🔥', desc: "2 000 XP accumulés.", hint: "Atteignez 2 000 XP.", test: (s) => s.xp >= 2000 },
 
-  { id: 'parcours-complet', name: "Parcours complet", icon: '🏆', desc: "Les 8 modules sont validés.", hint: "Validez les 8 modules.", test: (s) => Object.keys(s.completed).length >= 8 },
+  { id: 'parcours-complet', name: "Parcours complet", icon: '🏆', desc: `Les ${MODULES.length} modules sont validés.`, hint: `Validez les ${MODULES.length} modules.`, test: (s) => Object.keys(s.completed).length >= MODULES.length },
 
   { id: 'memoire', name: "Mémoire vive", icon: '🧠', desc: "20 flashcards maîtrisées.", hint: "Marquez 20 flashcards comme maîtrisées.", test: (s) => s.cards.known.length >= 20 },
 

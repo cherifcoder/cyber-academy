@@ -37,7 +37,10 @@ const LAB_META = [
   { id: 'burp', title: "Interception & falsification", tag: 'Burp Suite', icon: '🕵️', desc: "Modifiez une requête HTTP brute et observez l'impact côté serveur." },
   { id: 'privesc', title: "Élévation de privilèges", tag: 'Post-exploitation', icon: '🔺', desc: "Analysez une VM de lab et choisissez le bon chemin vers root." },
   { id: 'cvss', title: "Calculateur CVSS v3.1", tag: 'Reporting', icon: '📊', desc: "Scorez une vulnérabilité avec la formule officielle et générez son vecteur." },
-  { id: 'headers', title: "Durcissement HTTP", tag: 'Défense', icon: '🛡️', desc: "Activez les en-têtes de sécurité et faites grimper la note du serveur." }
+  { id: 'headers', title: "Durcissement HTTP", tag: 'Défense', icon: '🛡️', desc: "Activez les en-têtes de sécurité et faites grimper la note du serveur." },
+  { id: 'dns', title: "Résolveur DNS", tag: 'Réseau', icon: '🌐', desc: "Résolvez un nom pas à pas : cache, racine, TLD et serveur autoritaire." },
+  { id: 'subnet', title: "Calculateur de sous-réseaux", tag: 'Adressage IP', icon: '🧮', desc: "Calculez réseau, broadcast et plage utilisable, puis validez un découpage." },
+  { id: 'permissions', title: "Décodeur de permissions", tag: 'Linux', icon: '🔐', desc: "Composez des droits rwx, lisez l'octal et atteignez la configuration 640." }
 ];
 
 /* ------------------------------------------------------------------ */
@@ -902,6 +905,284 @@ function labHeaders(body, api) {
 }
 
 /* ------------------------------------------------------------------ */
+/* LAB 10 — résolveur DNS                                              */
+/* ------------------------------------------------------------------ */
+
+const DNS_ZONE = {
+  'example.lab': { A: '192.0.2.10', AAAA: '2001:db8::10', MX: '10 mail.example.lab.', TXT: '"v=spf1 -all"', NS: 'ns1.example.lab.' },
+  'www.example.lab': { CNAME: 'example.lab.', A: '192.0.2.10' },
+  'mail.example.lab': { A: '192.0.2.25', MX: '10 mail.example.lab.' },
+  'intranet.lab': { A: '10.10.10.20' },
+  'api.example.lab': { A: '192.0.2.30', TXT: '"owner=atlas-team"' }
+};
+
+function labDns(body, api) {
+  body.innerHTML = `
+    <div class="lab-grid">
+      <div>
+        <label class="field"><span>Nom à résoudre</span>
+          <input id="dns-name" value="example.lab" spellcheck="false">
+        </label>
+        <label class="field"><span>Type d'enregistrement</span>
+          <select id="dns-type">
+            <option value="A">A — adresse IPv4</option>
+            <option value="AAAA">AAAA — adresse IPv6</option>
+            <option value="MX">MX — serveur de messagerie</option>
+            <option value="TXT">TXT — texte libre (SPF, vérification)</option>
+            <option value="CNAME">CNAME — alias</option>
+            <option value="NS">NS — serveurs autoritaires</option>
+          </select>
+        </label>
+        <button class="btn btn-primary btn-block" id="dns-run" type="button">▶ Résoudre</button>
+        <p class="lab-note mt-2">Simulation locale : aucune requête DNS réelle n'est émise.</p>
+      </div>
+      <div>
+        <div class="term"><div class="term-head">dig — résolution pas à pas</div><div class="term-body" id="dns-out" style="min-height:250px"><span class="mut">Choisissez un nom et lancez la résolution…</span></div></div>
+      </div>
+    </div>
+    <div class="card pad-sm mt-2">
+      <div class="flex-between flex-wrap" style="gap:12px">
+        <div><b style="font-size:13.5px">Question rapide</b><br><span class="small muted">Quel type d'enregistrement indique où envoyer le courrier d'un domaine ?</span></div>
+        <div class="flex" style="gap:6px;flex-wrap:wrap" id="dns-quiz">
+          ${['A', 'MX', 'TXT', 'NS'].map((t) => `<button class="btn btn-sm btn-ghost" type="button" data-t="${t}">${t}</button>`).join('')}
+        </div>
+      </div>
+      <div id="dns-fb" class="small mt-2"></div>
+    </div>`;
+
+  const out = body.querySelector('#dns-out');
+
+  body.querySelector('#dns-run').addEventListener('click', () => {
+    runLab('dns');
+    const name = body.querySelector('#dns-name').value.trim().toLowerCase().replace(/\.$/, '');
+    const type = body.querySelector('#dns-type').value;
+    const rec = DNS_ZONE[name];
+    const value = rec ? rec[type] : null;
+    out.innerHTML = '';
+    const lines = [];
+    lines.push({ h: '<span class="p">$</span> <span class="cmd">' + esc(`dig ${name} ${type} +short`) + '</span>' });
+    lines.push({ h: '<span class="mut">[1/4] cache local : aucune entrée pour ' + esc(name) + '</span>' });
+    lines.push({ h: '<span class="mut">[2/4] résolveur 10.10.10.53 : interroge la racine</span>' });
+    lines.push({ h: '<span class="mut">[3/4] racine → TLD .' + esc(name.split('.').pop() || '?') + ' → serveur autoritaire</span>' });
+    if (!rec) {
+      lines.push({ h: '<span class="err">[4/4] NXDOMAIN — ce nom n\'existe pas dans la zone</span>' });
+      lines.push({ h: '<span class="err">;; status: NXDOMAIN</span>' });
+    } else if (!value) {
+      lines.push({ h: '<span class="warn">[4/4] le nom existe, mais aucun enregistrement de type ' + esc(type) + '</span>' });
+      lines.push({ h: '<span class="warn">;; status: NOERROR — ANSWER: 0</span>' });
+      lines.push({ h: '<span class="mut">Types disponibles : ' + esc(Object.keys(rec).join(', ')) + '</span>' });
+    } else {
+      lines.push({ h: '<span class="ok">[4/4] réponse autoritaire reçue (TTL 300)</span>' });
+      lines.push({ h: '<span class="ok">' + esc(value) + '</span>' });
+      lines.push({ h: '<span class="mut">;; status: NOERROR — ' + esc(type) + ' trouvé, mis en cache 300 s</span>' });
+    }
+    let i = 0;
+    const step = () => {
+      if (i >= lines.length) return;
+      out.insertAdjacentHTML('beforeend', `<div class="term-line">${lines[i++].h}</div>`);
+      out.scrollTop = out.scrollHeight;
+      setTimeout(step, 110);
+    };
+    step();
+  });
+
+  body.querySelectorAll('#dns-quiz button').forEach((b) => {
+    b.addEventListener('click', () => {
+      const t = b.dataset.t;
+      const fb = body.querySelector('#dns-fb');
+      if (t === 'MX') {
+        fb.innerHTML = '<span style="color:var(--lime)"><b>Correct.</b> MX (Mail eXchanger) désigne le serveur de messagerie, avec une priorité : plus le nombre est petit, plus il est préféré.</span>';
+        api.done('Résolution DNS');
+      } else {
+        fb.innerHTML = `<span style="color:var(--amber)"><b>Pas tout à fait.</b> ${esc(t)} a un autre rôle. Relisez le tableau des types d'enregistrements du module 13.`;
+      }
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* LAB 11 — calculateur de sous-réseaux                                */
+/* ------------------------------------------------------------------ */
+
+function ipToInt(ip) {
+  const p = ip.trim().split('.').map(Number);
+  if (p.length !== 4 || p.some((n) => !Number.isInteger(n) || n < 0 || n > 255)) return null;
+  return (((p[0] << 24) >>> 0) + (p[1] << 16) + (p[2] << 8) + p[3]) >>> 0;
+}
+
+function intToIp(n) {
+  return [(n >>> 24) & 255, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join('.');
+}
+
+function labSubnet(body, api) {
+  body.innerHTML = `
+    <div class="lab-grid">
+      <div>
+        <label class="field"><span>Adresse IPv4</span>
+          <input id="sn-ip" value="192.168.1.130" spellcheck="false">
+        </label>
+        <label class="field"><span>Préfixe CIDR</span>
+          <select id="sn-prefix">
+            ${[24, 25, 26, 27, 28, 29, 30].map((p) => `<option value="${p}" ${p === 25 ? 'selected' : ''}>/${p}</option>`).join('')}
+          </select>
+        </label>
+        <button class="btn btn-primary btn-block" id="sn-run" type="button">▶ Calculer</button>
+        <p class="lab-note mt-2">Calcul local, sans aucune requête réseau.</p>
+      </div>
+      <div>
+        <div class="term"><div class="term-head">ipcalc — résultat</div><div class="term-body" id="sn-out" style="min-height:230px"><span class="mut">Cliquez sur Calculer…</span></div></div>
+      </div>
+    </div>
+    <div class="card pad-sm mt-2">
+      <div class="flex-between flex-wrap" style="gap:12px">
+        <div><b style="font-size:13.5px">Challenge</b><br><span class="small muted">Un segment doit accueillir 50 hôtes. Quel préfixe choisir pour ne pas gaspiller d'adresses ?</span></div>
+        <div class="flex" style="gap:6px;flex-wrap:wrap" id="sn-quiz">
+          ${['/25', '/26', '/27', '/30'].map((t) => `<button class="btn btn-sm btn-ghost" type="button" data-t="${t}">${t}</button>`).join('')}
+        </div>
+      </div>
+      <div id="sn-fb" class="small mt-2"></div>
+    </div>`;
+
+  const out = body.querySelector('#sn-out');
+
+  body.querySelector('#sn-run').addEventListener('click', () => {
+    runLab('subnet');
+    const ip = body.querySelector('#sn-ip').value;
+    const prefix = Number(body.querySelector('#sn-prefix').value);
+    const n = ipToInt(ip);
+    if (n === null) {
+      out.innerHTML = '<span class="err">Adresse IPv4 invalide. Quatre octets entre 0 et 255, séparés par des points.</span>';
+      return;
+    }
+    const mask = prefix === 0 ? 0 : (0xffffffff << (32 - prefix)) >>> 0;
+    const net = (n & mask) >>> 0;
+    const bcast = (net | (~mask >>> 0)) >>> 0;
+    const size = 2 ** (32 - prefix);
+    const usable = prefix >= 31 ? (prefix === 31 ? 2 : 1) : size - 2;
+    const first = prefix >= 31 ? net : (net + 1) >>> 0;
+    const last = prefix >= 31 ? bcast : (bcast - 1) >>> 0;
+
+    out.innerHTML = [
+      `<span class="p">$</span> <span class="cmd">ipcalc ${esc(ip)}/${prefix}</span>`,
+      `Address:   <span class="hl">${esc(ip)}</span>`,
+      `Netmask:   <span class="hl">${intToIp(mask)}</span> = ${prefix}`,
+      `Network:   <span class="ok">${intToIp(net)}/${prefix}</span>`,
+      `Broadcast: <span class="warn">${intToIp(bcast)}</span>`,
+      `HostMin:   <span class="ok">${intToIp(first)}</span>`,
+      `HostMax:   <span class="ok">${intToIp(last)}</span>`,
+      `Hosts/Net: <span class="hl">${usable}</span>`,
+      '',
+      `<span class="mut">Bloc de ${size} adresses : ${usable} utilisables après retrait du réseau et du broadcast.</span>`,
+      `<span class="mut">Rappel : ${esc(intToIp(net))} et ${esc(intToIp(bcast))} ne doivent jamais être attribuées à une machine.</span>`
+    ].map((l) => `<div class="term-line">${l}</div>`).join('');
+    out.scrollTop = out.scrollHeight;
+  });
+
+  body.querySelectorAll('#sn-quiz button').forEach((b) => {
+    b.addEventListener('click', () => {
+      const t = b.dataset.t;
+      const fb = body.querySelector('#sn-fb');
+      if (t === '/26') {
+        fb.innerHTML = '<span style="color:var(--lime)"><b>Correct.</b> Un /26 offre 62 hôtes utilisables : assez pour 50, sans gaspiller un /25 de 126 adresses.</span>';
+        api.done('Calcul de sous-réseau');
+      } else {
+        fb.innerHTML = `<span style="color:var(--amber)"><b>Pas le meilleur choix.</b> ${esc(t)} ne couvre pas 50 hôtes ou en gaspille trop. Comptez 2^h − 2.`;
+      }
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* LAB 12 — décodeur de permissions                                    */
+/* ------------------------------------------------------------------ */
+
+function labPermissions(body, api) {
+  const rows = [
+    { k: 'u', label: 'Propriétaire', start: { r: true, w: true, x: false } },
+    { k: 'g', label: 'Groupe', start: { r: true, w: false, x: false } },
+    { k: 'o', label: 'Autres', start: { r: true, w: false, x: false } }
+  ];
+
+  body.innerHTML = `
+    <p class="lab-note">Cochez les droits et observez la conversion en symbolique et en octal. Objectif : atteindre <b>640</b> pour un rapport interne.</p>
+    <div class="lab-grid">
+      <div>
+        ${rows.map((r) => `
+          <div class="card pad-sm mb-2">
+            <b style="font-size:13.5px">${r.label}</b>
+            <div class="flex mt-1" style="gap:14px;flex-wrap:wrap">
+              ${['r', 'w', 'x'].map((p) => `
+                <label class="check" style="gap:6px">
+                  <input type="checkbox" data-k="${r.k}" data-p="${p}" ${r.start[p] ? 'checked' : ''}>
+                  <span class="mono">${p}</span>
+                </label>`).join('')}
+            </div>
+          </div>`).join('')}
+        <button class="btn btn-primary btn-block" id="pm-check" type="button">✓ Vérifier l'objectif 640</button>
+      </div>
+      <div>
+        <div class="panel-mock">
+          <div class="pm-head"><span class="ok">●</span> ls -l — rapport.md</div>
+          <div class="pm-body" id="pm-ls">-rw-r--r-- 1 dev analysts 412 rapport.md</div>
+        </div>
+        <div class="card pad-sm mt-2" style="text-align:center">
+          <small class="dim" style="letter-spacing:.14em;text-transform:uppercase">Permission octale</small>
+          <div class="mono" id="pm-octal" style="font-size:42px;line-height:1.3;color:var(--lime)">644</div>
+          <div class="small muted">Propriétaire · Groupe · Autres</div>
+        </div>
+        <div id="pm-explain" class="small muted mt-2"></div>
+        <div id="pm-fb" class="mt-2"></div>
+      </div>
+    </div>`;
+
+  const boxes = Array.from(body.querySelectorAll('input[data-k]'));
+  const stateOf = () => {
+    const s = { u: {}, g: {}, o: {} };
+    boxes.forEach((b) => { s[b.dataset.k][b.dataset.p] = b.checked; });
+    return s;
+  };
+  const symbol = (c) => `${c.r ? 'r' : '-'}${c.w ? 'w' : '-'}${c.x ? 'x' : '-'}`;
+  const digit = (c) => (c.r ? 4 : 0) + (c.w ? 2 : 0) + (c.x ? 1 : 0);
+
+  const update = () => {
+    const s = stateOf();
+    const sym = symbol(s.u) + symbol(s.g) + symbol(s.o);
+    const oct = `${digit(s.u)}${digit(s.g)}${digit(s.o)}`;
+    body.querySelector('#pm-ls').textContent = `-${sym} 1 dev analysts 412 rapport.md`;
+    body.querySelector('#pm-octal').textContent = oct;
+    const parts = [
+      `Propriétaire : ${symbol(s.u)} → ${digit(s.u)}`,
+      `Groupe : ${symbol(s.g)} → ${digit(s.g)}`,
+      `Autres : ${symbol(s.o)} → ${digit(s.o)}`
+    ];
+    body.querySelector('#pm-explain').innerHTML = parts.map((p) => `<div class="mono">${p}</div>`).join('');
+    return oct;
+  };
+
+  boxes.forEach((b) => b.addEventListener('change', update));
+  update();
+
+  body.querySelector('#pm-check').addEventListener('click', () => {
+    runLab('permissions');
+    const oct = update();
+    const fb = body.querySelector('#pm-fb');
+    if (oct === '640') {
+      fb.innerHTML = '<div class="callout tip" style="margin:0"><span class="co-ico">🛡️</span><div><b class="co-title">640 — configuration correcte</b>Le propriétaire lit et écrit, le groupe lit, les autres n\'ont aucun accès. C\'est le bon réglage pour un rapport interne partagé avec une équipe.</div></div>';
+      api.done('Permissions 640');
+      return;
+    }
+    const advice = oct === '777'
+      ? 'Tout le monde peut lire, écrire et exécuter : c\'est une faille, pas une solution.'
+      : oct === '644'
+        ? 'Les autres peuvent encore lire le rapport. Retirez le r de la colonne « Autres ».'
+        : oct === '600'
+          ? 'Le groupe ne peut pas lire le rapport. Ajoutez le r au groupe.'
+          : 'Reprenez : le propriétaire doit avoir rw, le groupe r, et les autres rien.';
+    fb.innerHTML = `<div class="callout warn" style="margin:0"><span class="co-ico">⚠</span><div><b class="co-title">Permission ${esc(oct)} — objectif 640</b>${esc(advice)}</div></div>`;
+  });
+}
+
+/* ------------------------------------------------------------------ */
 /* registre & montage                                                  */
 /* ------------------------------------------------------------------ */
 
@@ -914,7 +1195,10 @@ const REGISTRY = {
   burp: { meta: LAB_META[5], render: labBurp },
   privesc: { meta: LAB_META[6], render: labPrivesc },
   cvss: { meta: LAB_META[7], render: labCvss },
-  headers: { meta: LAB_META[8], render: labHeaders }
+  headers: { meta: LAB_META[8], render: labHeaders },
+  dns: { meta: LAB_META[9], render: labDns },
+  subnet: { meta: LAB_META[10], render: labSubnet },
+  permissions: { meta: LAB_META[11], render: labPermissions }
 };
 
 export const LABS = Object.values(REGISTRY).map((l) => l.meta);
