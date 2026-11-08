@@ -1,10 +1,10 @@
 /**
- * Évaluation du module 13 — Identités réseau (IP, MAC, IMEI).
+ * Évaluation du module 17 — Identités réseau (IP, MAC, IMEI).
  * `answer` est l'index (0-based) de la bonne réponse.
  */
-export const QUIZ_M13 = {
-  q13: {
-    moduleId: 'm13',
+export const QUIZ_M17 = {
+  q17: {
+    moduleId: 'm17',
     title: "Évaluation — Identités réseau : IP, MAC et IMEI",
     pass: 70,
     questions: [

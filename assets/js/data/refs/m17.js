@@ -108,7 +108,7 @@ export default {
         }
       ]
     },
-    { t: 'h', x: "13.10 Exercices pas à pas" },
+    { t: 'h', x: "17.10 Exercices pas à pas" },
     {
       t: 'p',
       x: "Les exercices ci-dessous sont générés à la fin du module. Chaque commande est simulée localement : <code>ipcalc</code>, <code>ip</code>, <code>dig</code>, <code>whois</code>, <code>traceroute</code> et <code>macchanger</code>. Saisissez la commande demandée, lisez la sortie, puis analysez ce que vous pouvez réellement conclure."
@@ -120,7 +120,7 @@ export default {
   ],
   exos: [
     {
-      id: 'm13-e1',
+      id: 'm17-e1',
       title: "Calculer un sous-réseau",
       context: "Une VM de laboratoire utilise <code>192.168.56.42/27</code>. Vous devez connaître le réseau, la plage utilisable et le broadcast avant de configurer un service.",
       task: "Calculez le sous-réseau avec <code>ipcalc</code>.",
@@ -143,7 +143,7 @@ export default {
       pivot: "Ce calcul évite les erreurs de scan : scanner 192.168.56.42/24 au lieu de /27 sort du périmètre du laboratoire. Notez toujours le réseau exact dans vos règles d'engagement."
     },
     {
-      id: 'm13-e2',
+      id: 'm17-e2',
       title: "Lire les interfaces locales",
       context: "Avant de tracer quoi que ce soit, il faut savoir quelles interfaces existent, lesquelles sont actives et quelles adresses elles portent.",
       task: "Affichez les adresses de toutes les interfaces en format court.",
@@ -160,7 +160,7 @@ export default {
       pivot: "Sur un poste réel, une adresse 192.168.x.x indique un réseau privé derrière un routeur. L'adresse publique visible depuis Internet est celle du NAT, pas celle de la carte."
     },
     {
-      id: 'm13-e3',
+      id: 'm17-e3',
       title: "Identifier la passerelle",
       context: "Le poste doit joindre un service de laboratoire sur un autre réseau. Vous vérifiez la route par défaut avant de lancer le moindre test.",
       task: "Affichez la table de routage.",
@@ -176,7 +176,7 @@ export default {
       pivot: "La passerelle est souvent le routeur du lab, pas la cible. La scanner sans autorisation serait une erreur de périmètre : elle n'est pas forcément dans le scope."
     },
     {
-      id: 'm13-e4',
+      id: 'm17-e4',
       title: "Résolution DNS inverse",
       context: "Vous analysez l'adresse de documentation <code>203.0.113.42</code>. Le registre indique un bloc TEST-NET ; vous cherchez un éventuel nom d'hôte.",
       task: "Interrogez le DNS inverse et affichez uniquement la réponse courte.",
@@ -192,7 +192,7 @@ export default {
       pivot: "Dans un rapport, notez le PTR comme un indice technique. Ne concluez jamais « cette IP appartient à la société X » sur la seule base d'un nom d'hôte."
     },
     {
-      id: 'm13-e5',
+      id: 'm17-e5',
       title: "Consulter le registre IP",
       context: "Vous devez identifier le titulaire du bloc qui contient <code>203.0.113.42</code> et vérifier s'il s'agit d'une adresse réelle.",
       task: "Interrogez le whois de l'adresse et limitez la sortie aux premières lignes.",
@@ -215,7 +215,7 @@ export default {
       pivot: "Le whois donne le titulaire du bloc, souvent un FAI. Pour remonter à un abonné, il faut la table NAT de l'opérateur et une réquisition : ce n'est pas une recherche publique."
     },
     {
-      id: 'm13-e6',
+      id: 'm17-e6',
       title: "Observer le chemin réseau",
       context: "Une cible de laboratoire autorisée répond sur <code>203.0.113.42</code>. Vous voulez visualiser les sauts sans résolution DNS pour éviter des requêtes inutiles.",
       task: "Lancez un traceroute numérique vers la cible.",
@@ -235,7 +235,7 @@ export default {
       pivot: "Ne scannez jamais les routeurs intermédiaires : ils sont hors périmètre. Le traceroute sert à diagnostiquer, pas à cartographier l'infrastructure d'un tiers."
     },
     {
-      id: 'm13-e7',
+      id: 'm17-e7',
       title: "Lire la table ARP",
       context: "Vous devez relier une adresse IP locale à une adresse MAC sur le segment de laboratoire.",
       task: "Affichez la table des voisins IP/MAC.",
@@ -252,7 +252,7 @@ export default {
       pivot: "La table ARP ne voit que votre segment. Pour relier une MAC à un port de switch, il faut consulter la table CAM du switch, puis le bail DHCP — dans un cadre autorisé."
     },
     {
-      id: 'm13-e8',
+      id: 'm17-e8',
       title: "Randomiser sa propre MAC",
       context: "Sur votre poste de laboratoire, vous testez la randomisation MAC pour vérifier son effet sur le réseau local. L'interface est <code>eth0</code> et vous êtes propriétaire de la machine.",
       task: "Demandez à macchanger une adresse aléatoire sur <code>eth0</code>.",
@@ -269,7 +269,7 @@ export default {
       pivot: "Cette opération est légitime sur votre propre matériel. Sur un réseau d'entreprise, elle peut déclencher le NAC ou le port-security. Ne l'utilisez jamais pour contourner une exclusion."
     },
     {
-      id: 'm13-e9',
+      id: 'm17-e9',
       title: "Détecter une fuite IPv6",
       context: "Vous vérifiez qu'un tunnel VPN ne laisse pas sortir une adresse IPv6 publique hors du tunnel. Vous inspectez les adresses globales de votre poste.",
       task: "Affichez uniquement les adresses IPv6 globales.",

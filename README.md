@@ -10,19 +10,23 @@ Plateforme d'apprentissage interactive entièrement en français, consacrée au 
 - **Vulnérabilités web** — SQLi, XSS, CSRF, SSRF, LFI/RFI, XXE, IDOR, open redirect, contrôle d'accès, upload de fichiers, avec mécanisme, impact, détection, exploitation en lab et remédiation.
 - **Burp Suite** — Proxy, Repeater, Intruder, Decoder, Sequencer, Logger, FoxyProxy.
 - **Post-exploitation** — Élévation de privilèges Linux/Windows, persistance, nettoyage de traces et analyse de logs.
+- **Fondamentaux réseau** — Ports, DNS, TCP/UDP, couches OSI et TCP/IP, DHCP, NAT, adressage IPv4/IPv6, masques, CIDR, sous-réseaux et VLSM, avec des analogies du quotidien.
+- **Linux** — Shell, arborescence, fichiers, recherche, pipes, processus, services, disques, archives, utilisateurs, groupes, permissions, SUID, sticky bit et ACL.
 - **Reporting** — CVSS v3.1 (formule officielle), générateur de rapport professionnel, export PDF/impression et Markdown.
 - **Défense** — Secure coding, WAF, en-têtes de sécurité, sessions/MFA et checklist de durcissement téléchargeable.
 - **Identités réseau** — IP, MAC et IMEI : structure, portée réelle, traçage dans un cadre autorisé, masquage légitime, corrélation NAT/DHCP et défense.
 
 ## Fonctionnalités
 
-- **Parcours structuré** — 13 modules progressifs avec objectifs, blocs pédagogiques, quiz par module et validation par seuil de 70 %.
-- **Modules Capture The Flag** — 4 parcours guidés pas à pas (application web, WordPress, injection SQL, élévation de privilèges Linux) avec flags, preuves, exercices et remédiation, plus 5 challenges IP/MAC/IMEI dans le module 13.
+- **Parcours structuré** — 17 modules progressifs avec objectifs, blocs pédagogiques, quiz par module et validation par seuil de 70 %, soit 248 exercices guidés au total.
+- **Fondamentaux réseau** — 2 modules dédiés (ports, DNS, TCP/IP, couches OSI, DHCP, NAT, adressage IPv4/IPv6, masques, CIDR, sous-réseaux et VLSM), expliqués avec des analogies accessibles aux non-informaticiens.
+- **Fondamentaux Linux** — 2 modules dédiés (shell, arborescence, fichiers, pipes, processus, services, disques, utilisateurs, groupes, permissions, SUID et ACL).
+- **Modules Capture The Flag** — 4 parcours guidés pas à pas (application web, WordPress, injection SQL, élévation de privilèges Linux) avec flags, preuves, exercices et remédiation, plus 5 challenges IP/MAC/IMEI dans le module 17.
 - **Tableau de bord** — Progression globale, XP, niveau (Recrue → Expert), temps d'étude cumulé, activité récente et badges.
-- **Ateliers interactifs** — 10 simulateurs pédagogiques (cadre d'autorisation, Nmap, fuzzing, SQLi, XSS, falsification de requête Burp, élévation de privilèges, calculateur CVSS v3.1, durcissement HTTP, traceur IP/MAC/IMEI). **Aucune requête réseau réelle**.
+- **Ateliers interactifs** — 13 simulateurs pédagogiques (cadre d'autorisation, Nmap, fuzzing, SQLi, XSS, falsification de requête Burp, élévation de privilèges, calculateur CVSS v3.1, durcissement HTTP, résolveur DNS, calculateur de sous-réseaux, décodeur de permissions et traceur IP/MAC/IMEI). **Aucune requête réseau réelle**.
 - **Boîte à outils** — Fiches outils filtrables, cheatsheet commandes, checklist de durcissement téléchargeable/imprimable.
 - **Flashcards** — 7 decks (termes, HTTP, statuts, Burp, OWASP, privesc, identité réseau) avec suivi « maîtrisé ».
-- **Badges** — 25 badges débloquables en fonction de la progression, des XP, du temps d'étude et de la pratique.
+- **Badges** — 29 badges débloquables en fonction de la progression, des XP, du temps d'étude et de la pratique.
 - **Certificat** — Généré localement en Canvas (PNG, 1600×1131) et imprimable/PDF, personnalisé au nom de l'apprenti.
 - **Rapport d'audit** — Générateur avec formulaire dynamique, aperçu en direct, brouillons locaux (jusqu'à 20), export Markdown et impression/PDF.
 - **Thème sombre/clair** — Persistance dans `localStorage`.
@@ -33,7 +37,7 @@ Plateforme d'apprentissage interactive entièrement en français, consacrée au 
 
 | Action | XP |
 | --- | --- |
-| Valider un module | +250 à +450 selon le module |
+| Valider un module | +250 à +600 selon le module |
 | Quiz — amélioration du meilleur score | +5 par bonne réponse supplémentaire |
 | Atelier terminé | +20 |
 | Flashcard maîtrisée | +2 |
@@ -57,7 +61,7 @@ Plateforme d'apprentissage interactive entièrement en français, consacrée au 
 │       ├── store.js       # État, progression, XP, badges, LocalStorage
 │       ├── ui.js          # Helpers UI, toasts, modales, copie, impression
 │       ├── cvss.js        # Calcul CVSS v3.1 (formule officielle)
-│       ├── data/          # Contenu pédagogique (m1–m13), quiz, outils, flashcards, badges
+│       ├── data/          # Contenu pédagogique (m1–m17), quiz, outils, flashcards, badges
 │       └── views/         # Vues (dashboard, module, quiz, labs, toolbox, flashcards, badges, certificate, report)
 ```
 
