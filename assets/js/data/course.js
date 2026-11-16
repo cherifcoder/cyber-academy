@@ -28,8 +28,9 @@ import m27 from './m27.js';
 import m28 from './m28.js';
 import m29 from './m29.js';
 import m30 from './m30.js';
+import m31 from './m31.js';
 
-export const MODULES = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17, m18, m19, m20, m21, m22, m23, m24, m25, m26, m27, m28, m29, m30];
+export const MODULES = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17, m18, m19, m20, m21, m22, m23, m24, m25, m26, m27, m28, m29, m30, m31];
 export const MODULE_BY_ID = Object.fromEntries(MODULES.map((m) => [m.id, m]));
 export const TOTAL_XP = MODULES.reduce((sum, m) => sum + m.xp, 0);
 export const TOTAL_DURATION = MODULES.reduce((sum, m) => sum + m.duration, 0);

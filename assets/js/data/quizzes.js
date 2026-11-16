@@ -3508,5 +3508,122 @@ export const QUIZZES = {
         "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Reporting final basé sur le risque ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       }
     ]
+  },
+  "q31": {
+    "moduleId": "m31",
+    "title": "Évaluation — Clonage local d’un site web et pentest avancé",
+    "pass": 70,
+    "questions": [
+      {
+        "q": "Quel est le cadre correct pour cloner un site web dans ce module ?",
+        "options": [
+          "Un site que vous possédez, un site avec autorisation écrite, ou une application de lab prévue pour l'entraînement",
+          "N'importe quel site public, car les données sont accessibles",
+          "Un site concurrent, pour analyser sa sécurité sans le prévenir",
+          "Un site de production, à condition de ne pas modifier les données"
+        ],
+        "answer": 0,
+        "explain": "Le clonage n'est autorisé que dans un cadre légal : propriété, autorisation écrite ou application de laboratoire. L'accessibilité publique ne vaut pas autorisation."
+      },
+      {
+        "q": "Quelle option de wget permet de télécharger un site en miroir avec conversion des liens ?",
+        "options": [
+          "--mirror --convert-links",
+          "--recursive --delete",
+          "--clone --rewrite",
+          "--copy --links"
+        ],
+        "answer": 0,
+        "explain": "wget --mirror active la récursion et les horodatages, et --convert-links réécrit les liens pour une consultation locale."
+      },
+      {
+        "q": "Quelle est la principale limite d’HTTrack pour un site moderne ?",
+        "options": [
+          "Il ne capture pas correctement les applications JavaScript et les appels API dynamiques",
+          "Il ne fonctionne que sous Linux",
+          "Il ne peut pas télécharger d’images",
+          "Il modifie automatiquement la base de données du site"
+        ],
+        "answer": 0,
+        "explain": "HTTrack excelle sur les sites statiques mais ne rend pas le JavaScript comme un navigateur et ne capture pas les API dynamiques."
+      },
+      {
+        "q": "Dans Docker Compose, à quoi sert le service de base de données dans le lab ?",
+        "options": [
+          "À stocker les tables et les données du clone pour reproduire le comportement dynamique",
+          "À servir les fichiers statiques à la place du serveur web",
+          "À remplacer le proxy Burp",
+          "À générer automatiquement les certificats TLS"
+        ],
+        "answer": 0,
+        "explain": "La base de données permet d'importer le dump de lab et de reproduire les fonctionnalités dynamiques du site."
+      },
+      {
+        "q": "Quel est le rôle du fichier hosts dans un lab de clonage ?",
+        "options": [
+          "Faire résoudre un nom de domaine de lab vers une adresse locale",
+          "Chiffrer les communications HTTPS",
+          "Bloquer les scanners de ports",
+          "Sauvegarder automatiquement la base de données"
+        ],
+        "answer": 0,
+        "explain": "Le fichier hosts permet de faire pointer site.local vers 127.0.0.1 pour reproduire le domaine d'origine dans le lab."
+      },
+      {
+        "q": "À quoi sert ffuf dans la phase de reconnaissance ?",
+        "options": [
+          "À découvrir des chemins et fichiers exposés à partir d’une wordlist",
+          "À déchiffrer les mots de passe des utilisateurs",
+          "À compiler le code PHP du clone",
+          "À remplacer le serveur web"
+        ],
+        "answer": 0,
+        "explain": "ffuf est un fuzzer web utilisé pour découvrir des répertoires, fichiers, paramètres ou sous-domaines à partir d'une wordlist."
+      },
+      {
+        "q": "Qu’est-ce qu’une fixation de session ?",
+        "options": [
+          "Un défaut où l’attaquant impose un identifiant de session avant la connexion de la victime",
+          "Un cookie qui expire trop vite",
+          "Une session chiffrée avec TLS",
+          "Un identifiant de session généré aléatoirement"
+        ],
+        "answer": 0,
+        "explain": "La fixation de session consiste à forcer un identifiant connu avant l'authentification ; si l'application ne le régénère pas, l'attaquant réutilise la session."
+      },
+      {
+        "q": "Quelle est la correction principale d’une injection SQL ?",
+        "options": [
+          "Utiliser des requêtes paramétrées et valider les entrées",
+          "Masquer les messages d’erreur uniquement",
+          "Ajouter un captcha",
+          "Changer le nom des tables"
+        ],
+        "answer": 0,
+        "explain": "Les requêtes paramétrées séparent le code des données. La validation et le moindre privilège DB sont des défenses complémentaires."
+      },
+      {
+        "q": "Qu’est-ce qu’un IDOR ?",
+        "options": [
+          "Un accès à l’objet d’un autre utilisateur par modification d’un identifiant, sans contrôle d’autorisation serveur",
+          "Une injection de commande dans le système d’exploitation",
+          "Un cookie de session trop long",
+          "Un algorithme de chiffrement obsolète"
+        ],
+        "answer": 0,
+        "explain": "IDOR (Insecure Direct Object Reference) survient lorsque l'application expose une référence d'objet sans vérifier que l'utilisateur y est autorisé."
+      },
+      {
+        "q": "Que doit contenir un bon rapport de pentest ?",
+        "options": [
+          "Périmètre, méthodologie, constats prouvés, impact, remédiations priorisées et annexes",
+          "Uniquement la liste des outils utilisés",
+          "Les mots de passe trouvés en clair, sans contexte",
+          "Une capture d’écran de la page d’accueil"
+        ],
+        "answer": 0,
+        "explain": "Un rapport professionnel est reproductible, contextualisé, prouvé et orienté remédiation. Il évite d'exposer inutilement des secrets."
+      }
+    ]
   }
 };
