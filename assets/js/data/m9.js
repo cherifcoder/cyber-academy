@@ -6,7 +6,7 @@ export default {
   "icon": "📶",
   "xp": 290,
   "duration": 65,
-  "summary": "Cours en français sur « Scan réseau » avec 6 chapitres, 10 exercices par chapitre et un défi CTF.",
+  "summary": "Cours en français enrichi sur « Scan réseau » : 6 chapitres, 10 exercices par chapitre, labs guidés pas à pas, payloads de lab isolé et 5 CTF détaillés par chapitre.",
   "objectives": [
     "Comprendre et appliquer : Découverte d'hôtes et cartographie réseau.",
     "Comprendre et appliquer : Scan de ports et détection de services.",
@@ -903,10 +903,6 @@ export default {
       ]
     },
     {
-      "t": "h",
-      "x": "CTF — Module 9"
-    },
-    {
       "t": "callout",
       "v": "tip",
       "title": "Défi CTF (lab autorisé)",
@@ -932,6 +928,1482 @@ export default {
           "p": "Proposez des correctifs concrets et priorisés selon le risque."
         }
       ]
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 9.1 : Découverte d'hôtes et cartographie réseau"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Scan réseau",
+      "x": "Mettre en pratique « Découverte d'hôtes et cartographie réseau » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Scan réseau » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier la plage réseau du lab (ex. 192.168.56.0/24) et vérifier l'autorisation."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lancer une découverte d'hôtes sans scan agressif."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Scanner les ports TCP ouverts sur les hôtes identifiés."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Détecter les versions de services et les bannières."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Prioriser les services exposés et documenter les preuves."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nnmap -sn 192.168.56.0/24\nnmap -sT -p- --min-rate 500 192.168.56.10\nnmap -sV -sC -p 22,80,443 192.168.56.10\nnmap -Pn -p 80 --script http-headers 192.168.56.10\nnc -nv 192.168.56.10 80"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "Exemple de sortie attendue :\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 8.9\n80/tcp open  http    nginx 1.18.0\n443/tcp open ssl/http nginx 1.18.0\nAnalyse : surface exposée, versions à vérifier, services à durcir."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 9.1 : Découverte d'hôtes et cartographie réseau"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Scan réseau », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Port caché",
+      "x": "<strong>Objectif :</strong> Un service de lab écoute sur un port non standard. Le découvrir et récupérer le flag.<br><strong>Contexte :</strong> Découverte d'hôtes et cartographie réseau (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c1_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner tous les ports TCP de la cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Repérer le port ouvert inhabituel."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Se connecter avec netcat."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Lire la bannière et le message."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag affiché."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Port caché)",
+      "x": "CTF 1/5 — Port caché\nChapitre : 9.1 — Découverte d'hôtes et cartographie réseau\nFlag : flag{m9_c1_ctf1}\n\nIndices :\n  1. Utiliser un scan complet des ports TCP.\n  2. Vérifier les ports hauts.\n  3. Lire la bannière du service.\n\nProcédure pas à pas :\n  1. Scanner tous les ports TCP de la cible de lab.\n  2. Repérer le port ouvert inhabituel.\n  3. Se connecter avec netcat.\n  4. Lire la bannière et le message.\n  5. Récupérer le flag affiché.\n\nRemédiation : Fermer les ports non nécessaires et appliquer un filtrage réseau.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Version vulnérable",
+      "x": "<strong>Objectif :</strong> Identifier la version d'un service de lab et associer un risque connu.<br><strong>Contexte :</strong> Découverte d'hôtes et cartographie réseau (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c1_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lancer nmap -sV sur la cible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Relever la version du service."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher les CVE correspondantes."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Évaluer la pertinence dans le lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le fichier de version."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Version vulnérable)",
+      "x": "CTF 2/5 — Version vulnérable\nChapitre : 9.1 — Découverte d'hôtes et cartographie réseau\nFlag : flag{m9_c1_ctf2}\n\nIndices :\n  1. Utiliser la détection de version.\n  2. Comparer à une base CVE.\n  3. Ne pas exploiter hors lab.\n\nProcédure pas à pas :\n  1. Lancer nmap -sV sur la cible.\n  2. Relever la version du service.\n  3. Rechercher les CVE correspondantes.\n  4. Évaluer la pertinence dans le lab.\n  5. Récupérer le flag dans le fichier de version.\n\nRemédiation : Mettre à jour le service et masquer la version dans les bannières.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Hôte oublié",
+      "x": "<strong>Objectif :</strong> Un hôte du réseau de lab ne répond pas au ping mais expose un service. Le trouver.<br><strong>Contexte :</strong> Découverte d'hôtes et cartographie réseau (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c1_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner la plage avec nmap -sn."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Constater l'absence de l'hôte."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relancer avec -Pn sur la plage."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte qui répond en TCP."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder au service et récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Hôte oublié)",
+      "x": "CTF 3/5 — Hôte oublié\nChapitre : 9.1 — Découverte d'hôtes et cartographie réseau\nFlag : flag{m9_c1_ctf3}\n\nIndices :\n  1. Utiliser -Pn.\n  2. Scanner la plage en TCP.\n  3. Vérifier les réponses SYN.\n\nProcédure pas à pas :\n  1. Scanner la plage avec nmap -sn.\n  2. Constater l'absence de l'hôte.\n  3. Relancer avec -Pn sur la plage.\n  4. Identifier l'hôte qui répond en TCP.\n  5. Accéder au service et récupérer le flag.\n\nRemédiation : Inventorier les actifs et surveiller les nouveaux hôtes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Filtrage contourné",
+      "x": "<strong>Objectif :</strong> Un pare-feu de lab bloque certains scans. Identifier une méthode de découverte autorisée.<br><strong>Contexte :</strong> Découverte d'hôtes et cartographie réseau (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c1_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Tester un scan SYN."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester un scan connect."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer les résultats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les ports filtrés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de statut du lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Filtrage contourné)",
+      "x": "CTF 4/5 — Filtrage contourné\nChapitre : 9.1 — Découverte d'hôtes et cartographie réseau\nFlag : flag{m9_c1_ctf4}\n\nIndices :\n  1. Tester différents types de scan.\n  2. Comparer les réponses.\n  3. Rester dans le périmètre.\n\nProcédure pas à pas :\n  1. Tester un scan SYN.\n  2. Tester un scan connect.\n  3. Comparer les résultats.\n  4. Identifier les ports filtrés.\n  5. Récupérer le flag dans la page de statut du lab.\n\nRemédiation : Configurer le pare-feu pour journaliser et bloquer les scans non autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Priorisation des résultats",
+      "x": "<strong>Objectif :</strong> À partir d'un scan de lab, classer les services par risque.<br><strong>Contexte :</strong> Découverte d'hôtes et cartographie réseau (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c1_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les services ouverts."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier les services sensibles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier les versions et configurations."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Classer par criticité."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Priorisation des résultats)",
+      "x": "CTF 5/5 — Priorisation des résultats\nChapitre : 9.1 — Découverte d'hôtes et cartographie réseau\nFlag : flag{m9_c1_ctf5}\n\nIndices :\n  1. Évaluer l'exposition.\n  2. Vérifier les versions.\n  3. Pondérer par l'impact métier.\n\nProcédure pas à pas :\n  1. Lister les services ouverts.\n  2. Identifier les services sensibles.\n  3. Vérifier les versions et configurations.\n  4. Classer par criticité.\n  5. Récupérer le flag dans le rapport de lab.\n\nRemédiation : Utiliser une matrice de risque et un processus de remédiation priorisé.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 9.2 : Scan de ports et détection de services"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Scan réseau",
+      "x": "Mettre en pratique « Scan de ports et détection de services » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Scan réseau » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier la plage réseau du lab (ex. 192.168.56.0/24) et vérifier l'autorisation."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lancer une découverte d'hôtes sans scan agressif."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Scanner les ports TCP ouverts sur les hôtes identifiés."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Détecter les versions de services et les bannières."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Prioriser les services exposés et documenter les preuves."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nnmap -sn 192.168.56.0/24\nnmap -sT -p- --min-rate 500 192.168.56.10\nnmap -sV -sC -p 22,80,443 192.168.56.10\nnmap -Pn -p 80 --script http-headers 192.168.56.10\nnc -nv 192.168.56.10 80"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "Exemple de sortie attendue :\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 8.9\n80/tcp open  http    nginx 1.18.0\n443/tcp open ssl/http nginx 1.18.0\nAnalyse : surface exposée, versions à vérifier, services à durcir."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 9.2 : Scan de ports et détection de services"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Scan réseau », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Port caché",
+      "x": "<strong>Objectif :</strong> Un service de lab écoute sur un port non standard. Le découvrir et récupérer le flag.<br><strong>Contexte :</strong> Scan de ports et détection de services (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c2_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner tous les ports TCP de la cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Repérer le port ouvert inhabituel."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Se connecter avec netcat."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Lire la bannière et le message."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag affiché."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Port caché)",
+      "x": "CTF 1/5 — Port caché\nChapitre : 9.2 — Scan de ports et détection de services\nFlag : flag{m9_c2_ctf1}\n\nIndices :\n  1. Utiliser un scan complet des ports TCP.\n  2. Vérifier les ports hauts.\n  3. Lire la bannière du service.\n\nProcédure pas à pas :\n  1. Scanner tous les ports TCP de la cible de lab.\n  2. Repérer le port ouvert inhabituel.\n  3. Se connecter avec netcat.\n  4. Lire la bannière et le message.\n  5. Récupérer le flag affiché.\n\nRemédiation : Fermer les ports non nécessaires et appliquer un filtrage réseau.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Version vulnérable",
+      "x": "<strong>Objectif :</strong> Identifier la version d'un service de lab et associer un risque connu.<br><strong>Contexte :</strong> Scan de ports et détection de services (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c2_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lancer nmap -sV sur la cible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Relever la version du service."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher les CVE correspondantes."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Évaluer la pertinence dans le lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le fichier de version."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Version vulnérable)",
+      "x": "CTF 2/5 — Version vulnérable\nChapitre : 9.2 — Scan de ports et détection de services\nFlag : flag{m9_c2_ctf2}\n\nIndices :\n  1. Utiliser la détection de version.\n  2. Comparer à une base CVE.\n  3. Ne pas exploiter hors lab.\n\nProcédure pas à pas :\n  1. Lancer nmap -sV sur la cible.\n  2. Relever la version du service.\n  3. Rechercher les CVE correspondantes.\n  4. Évaluer la pertinence dans le lab.\n  5. Récupérer le flag dans le fichier de version.\n\nRemédiation : Mettre à jour le service et masquer la version dans les bannières.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Hôte oublié",
+      "x": "<strong>Objectif :</strong> Un hôte du réseau de lab ne répond pas au ping mais expose un service. Le trouver.<br><strong>Contexte :</strong> Scan de ports et détection de services (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c2_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner la plage avec nmap -sn."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Constater l'absence de l'hôte."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relancer avec -Pn sur la plage."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte qui répond en TCP."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder au service et récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Hôte oublié)",
+      "x": "CTF 3/5 — Hôte oublié\nChapitre : 9.2 — Scan de ports et détection de services\nFlag : flag{m9_c2_ctf3}\n\nIndices :\n  1. Utiliser -Pn.\n  2. Scanner la plage en TCP.\n  3. Vérifier les réponses SYN.\n\nProcédure pas à pas :\n  1. Scanner la plage avec nmap -sn.\n  2. Constater l'absence de l'hôte.\n  3. Relancer avec -Pn sur la plage.\n  4. Identifier l'hôte qui répond en TCP.\n  5. Accéder au service et récupérer le flag.\n\nRemédiation : Inventorier les actifs et surveiller les nouveaux hôtes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Filtrage contourné",
+      "x": "<strong>Objectif :</strong> Un pare-feu de lab bloque certains scans. Identifier une méthode de découverte autorisée.<br><strong>Contexte :</strong> Scan de ports et détection de services (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c2_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Tester un scan SYN."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester un scan connect."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer les résultats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les ports filtrés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de statut du lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Filtrage contourné)",
+      "x": "CTF 4/5 — Filtrage contourné\nChapitre : 9.2 — Scan de ports et détection de services\nFlag : flag{m9_c2_ctf4}\n\nIndices :\n  1. Tester différents types de scan.\n  2. Comparer les réponses.\n  3. Rester dans le périmètre.\n\nProcédure pas à pas :\n  1. Tester un scan SYN.\n  2. Tester un scan connect.\n  3. Comparer les résultats.\n  4. Identifier les ports filtrés.\n  5. Récupérer le flag dans la page de statut du lab.\n\nRemédiation : Configurer le pare-feu pour journaliser et bloquer les scans non autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Priorisation des résultats",
+      "x": "<strong>Objectif :</strong> À partir d'un scan de lab, classer les services par risque.<br><strong>Contexte :</strong> Scan de ports et détection de services (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c2_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les services ouverts."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier les services sensibles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier les versions et configurations."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Classer par criticité."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Priorisation des résultats)",
+      "x": "CTF 5/5 — Priorisation des résultats\nChapitre : 9.2 — Scan de ports et détection de services\nFlag : flag{m9_c2_ctf5}\n\nIndices :\n  1. Évaluer l'exposition.\n  2. Vérifier les versions.\n  3. Pondérer par l'impact métier.\n\nProcédure pas à pas :\n  1. Lister les services ouverts.\n  2. Identifier les services sensibles.\n  3. Vérifier les versions et configurations.\n  4. Classer par criticité.\n  5. Récupérer le flag dans le rapport de lab.\n\nRemédiation : Utiliser une matrice de risque et un processus de remédiation priorisé.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 9.3 : Identification de versions et bannières"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Scan réseau",
+      "x": "Mettre en pratique « Identification de versions et bannières » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Scan réseau » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier la plage réseau du lab (ex. 192.168.56.0/24) et vérifier l'autorisation."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lancer une découverte d'hôtes sans scan agressif."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Scanner les ports TCP ouverts sur les hôtes identifiés."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Détecter les versions de services et les bannières."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Prioriser les services exposés et documenter les preuves."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nnmap -sn 192.168.56.0/24\nnmap -sT -p- --min-rate 500 192.168.56.10\nnmap -sV -sC -p 22,80,443 192.168.56.10\nnmap -Pn -p 80 --script http-headers 192.168.56.10\nnc -nv 192.168.56.10 80"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "Exemple de sortie attendue :\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 8.9\n80/tcp open  http    nginx 1.18.0\n443/tcp open ssl/http nginx 1.18.0\nAnalyse : surface exposée, versions à vérifier, services à durcir."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 9.3 : Identification de versions et bannières"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Scan réseau », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Port caché",
+      "x": "<strong>Objectif :</strong> Un service de lab écoute sur un port non standard. Le découvrir et récupérer le flag.<br><strong>Contexte :</strong> Identification de versions et bannières (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c3_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner tous les ports TCP de la cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Repérer le port ouvert inhabituel."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Se connecter avec netcat."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Lire la bannière et le message."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag affiché."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Port caché)",
+      "x": "CTF 1/5 — Port caché\nChapitre : 9.3 — Identification de versions et bannières\nFlag : flag{m9_c3_ctf1}\n\nIndices :\n  1. Utiliser un scan complet des ports TCP.\n  2. Vérifier les ports hauts.\n  3. Lire la bannière du service.\n\nProcédure pas à pas :\n  1. Scanner tous les ports TCP de la cible de lab.\n  2. Repérer le port ouvert inhabituel.\n  3. Se connecter avec netcat.\n  4. Lire la bannière et le message.\n  5. Récupérer le flag affiché.\n\nRemédiation : Fermer les ports non nécessaires et appliquer un filtrage réseau.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Version vulnérable",
+      "x": "<strong>Objectif :</strong> Identifier la version d'un service de lab et associer un risque connu.<br><strong>Contexte :</strong> Identification de versions et bannières (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c3_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lancer nmap -sV sur la cible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Relever la version du service."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher les CVE correspondantes."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Évaluer la pertinence dans le lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le fichier de version."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Version vulnérable)",
+      "x": "CTF 2/5 — Version vulnérable\nChapitre : 9.3 — Identification de versions et bannières\nFlag : flag{m9_c3_ctf2}\n\nIndices :\n  1. Utiliser la détection de version.\n  2. Comparer à une base CVE.\n  3. Ne pas exploiter hors lab.\n\nProcédure pas à pas :\n  1. Lancer nmap -sV sur la cible.\n  2. Relever la version du service.\n  3. Rechercher les CVE correspondantes.\n  4. Évaluer la pertinence dans le lab.\n  5. Récupérer le flag dans le fichier de version.\n\nRemédiation : Mettre à jour le service et masquer la version dans les bannières.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Hôte oublié",
+      "x": "<strong>Objectif :</strong> Un hôte du réseau de lab ne répond pas au ping mais expose un service. Le trouver.<br><strong>Contexte :</strong> Identification de versions et bannières (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c3_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner la plage avec nmap -sn."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Constater l'absence de l'hôte."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relancer avec -Pn sur la plage."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte qui répond en TCP."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder au service et récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Hôte oublié)",
+      "x": "CTF 3/5 — Hôte oublié\nChapitre : 9.3 — Identification de versions et bannières\nFlag : flag{m9_c3_ctf3}\n\nIndices :\n  1. Utiliser -Pn.\n  2. Scanner la plage en TCP.\n  3. Vérifier les réponses SYN.\n\nProcédure pas à pas :\n  1. Scanner la plage avec nmap -sn.\n  2. Constater l'absence de l'hôte.\n  3. Relancer avec -Pn sur la plage.\n  4. Identifier l'hôte qui répond en TCP.\n  5. Accéder au service et récupérer le flag.\n\nRemédiation : Inventorier les actifs et surveiller les nouveaux hôtes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Filtrage contourné",
+      "x": "<strong>Objectif :</strong> Un pare-feu de lab bloque certains scans. Identifier une méthode de découverte autorisée.<br><strong>Contexte :</strong> Identification de versions et bannières (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c3_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Tester un scan SYN."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester un scan connect."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer les résultats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les ports filtrés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de statut du lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Filtrage contourné)",
+      "x": "CTF 4/5 — Filtrage contourné\nChapitre : 9.3 — Identification de versions et bannières\nFlag : flag{m9_c3_ctf4}\n\nIndices :\n  1. Tester différents types de scan.\n  2. Comparer les réponses.\n  3. Rester dans le périmètre.\n\nProcédure pas à pas :\n  1. Tester un scan SYN.\n  2. Tester un scan connect.\n  3. Comparer les résultats.\n  4. Identifier les ports filtrés.\n  5. Récupérer le flag dans la page de statut du lab.\n\nRemédiation : Configurer le pare-feu pour journaliser et bloquer les scans non autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Priorisation des résultats",
+      "x": "<strong>Objectif :</strong> À partir d'un scan de lab, classer les services par risque.<br><strong>Contexte :</strong> Identification de versions et bannières (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c3_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les services ouverts."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier les services sensibles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier les versions et configurations."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Classer par criticité."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Priorisation des résultats)",
+      "x": "CTF 5/5 — Priorisation des résultats\nChapitre : 9.3 — Identification de versions et bannières\nFlag : flag{m9_c3_ctf5}\n\nIndices :\n  1. Évaluer l'exposition.\n  2. Vérifier les versions.\n  3. Pondérer par l'impact métier.\n\nProcédure pas à pas :\n  1. Lister les services ouverts.\n  2. Identifier les services sensibles.\n  3. Vérifier les versions et configurations.\n  4. Classer par criticité.\n  5. Récupérer le flag dans le rapport de lab.\n\nRemédiation : Utiliser une matrice de risque et un processus de remédiation priorisé.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 9.4 : Concepts de scan furtif et sensible à la détection"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Scan réseau",
+      "x": "Mettre en pratique « Concepts de scan furtif et sensible à la détection » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Scan réseau » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier la plage réseau du lab (ex. 192.168.56.0/24) et vérifier l'autorisation."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lancer une découverte d'hôtes sans scan agressif."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Scanner les ports TCP ouverts sur les hôtes identifiés."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Détecter les versions de services et les bannières."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Prioriser les services exposés et documenter les preuves."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nnmap -sn 192.168.56.0/24\nnmap -sT -p- --min-rate 500 192.168.56.10\nnmap -sV -sC -p 22,80,443 192.168.56.10\nnmap -Pn -p 80 --script http-headers 192.168.56.10\nnc -nv 192.168.56.10 80"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "Exemple de sortie attendue :\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 8.9\n80/tcp open  http    nginx 1.18.0\n443/tcp open ssl/http nginx 1.18.0\nAnalyse : surface exposée, versions à vérifier, services à durcir."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 9.4 : Concepts de scan furtif et sensible à la détection"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Scan réseau », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Port caché",
+      "x": "<strong>Objectif :</strong> Un service de lab écoute sur un port non standard. Le découvrir et récupérer le flag.<br><strong>Contexte :</strong> Concepts de scan furtif et sensible à la détection (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c4_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner tous les ports TCP de la cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Repérer le port ouvert inhabituel."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Se connecter avec netcat."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Lire la bannière et le message."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag affiché."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Port caché)",
+      "x": "CTF 1/5 — Port caché\nChapitre : 9.4 — Concepts de scan furtif et sensible à la détection\nFlag : flag{m9_c4_ctf1}\n\nIndices :\n  1. Utiliser un scan complet des ports TCP.\n  2. Vérifier les ports hauts.\n  3. Lire la bannière du service.\n\nProcédure pas à pas :\n  1. Scanner tous les ports TCP de la cible de lab.\n  2. Repérer le port ouvert inhabituel.\n  3. Se connecter avec netcat.\n  4. Lire la bannière et le message.\n  5. Récupérer le flag affiché.\n\nRemédiation : Fermer les ports non nécessaires et appliquer un filtrage réseau.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Version vulnérable",
+      "x": "<strong>Objectif :</strong> Identifier la version d'un service de lab et associer un risque connu.<br><strong>Contexte :</strong> Concepts de scan furtif et sensible à la détection (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c4_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lancer nmap -sV sur la cible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Relever la version du service."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher les CVE correspondantes."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Évaluer la pertinence dans le lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le fichier de version."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Version vulnérable)",
+      "x": "CTF 2/5 — Version vulnérable\nChapitre : 9.4 — Concepts de scan furtif et sensible à la détection\nFlag : flag{m9_c4_ctf2}\n\nIndices :\n  1. Utiliser la détection de version.\n  2. Comparer à une base CVE.\n  3. Ne pas exploiter hors lab.\n\nProcédure pas à pas :\n  1. Lancer nmap -sV sur la cible.\n  2. Relever la version du service.\n  3. Rechercher les CVE correspondantes.\n  4. Évaluer la pertinence dans le lab.\n  5. Récupérer le flag dans le fichier de version.\n\nRemédiation : Mettre à jour le service et masquer la version dans les bannières.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Hôte oublié",
+      "x": "<strong>Objectif :</strong> Un hôte du réseau de lab ne répond pas au ping mais expose un service. Le trouver.<br><strong>Contexte :</strong> Concepts de scan furtif et sensible à la détection (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c4_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner la plage avec nmap -sn."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Constater l'absence de l'hôte."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relancer avec -Pn sur la plage."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte qui répond en TCP."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder au service et récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Hôte oublié)",
+      "x": "CTF 3/5 — Hôte oublié\nChapitre : 9.4 — Concepts de scan furtif et sensible à la détection\nFlag : flag{m9_c4_ctf3}\n\nIndices :\n  1. Utiliser -Pn.\n  2. Scanner la plage en TCP.\n  3. Vérifier les réponses SYN.\n\nProcédure pas à pas :\n  1. Scanner la plage avec nmap -sn.\n  2. Constater l'absence de l'hôte.\n  3. Relancer avec -Pn sur la plage.\n  4. Identifier l'hôte qui répond en TCP.\n  5. Accéder au service et récupérer le flag.\n\nRemédiation : Inventorier les actifs et surveiller les nouveaux hôtes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Filtrage contourné",
+      "x": "<strong>Objectif :</strong> Un pare-feu de lab bloque certains scans. Identifier une méthode de découverte autorisée.<br><strong>Contexte :</strong> Concepts de scan furtif et sensible à la détection (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c4_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Tester un scan SYN."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester un scan connect."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer les résultats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les ports filtrés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de statut du lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Filtrage contourné)",
+      "x": "CTF 4/5 — Filtrage contourné\nChapitre : 9.4 — Concepts de scan furtif et sensible à la détection\nFlag : flag{m9_c4_ctf4}\n\nIndices :\n  1. Tester différents types de scan.\n  2. Comparer les réponses.\n  3. Rester dans le périmètre.\n\nProcédure pas à pas :\n  1. Tester un scan SYN.\n  2. Tester un scan connect.\n  3. Comparer les résultats.\n  4. Identifier les ports filtrés.\n  5. Récupérer le flag dans la page de statut du lab.\n\nRemédiation : Configurer le pare-feu pour journaliser et bloquer les scans non autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Priorisation des résultats",
+      "x": "<strong>Objectif :</strong> À partir d'un scan de lab, classer les services par risque.<br><strong>Contexte :</strong> Concepts de scan furtif et sensible à la détection (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c4_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les services ouverts."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier les services sensibles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier les versions et configurations."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Classer par criticité."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Priorisation des résultats)",
+      "x": "CTF 5/5 — Priorisation des résultats\nChapitre : 9.4 — Concepts de scan furtif et sensible à la détection\nFlag : flag{m9_c4_ctf5}\n\nIndices :\n  1. Évaluer l'exposition.\n  2. Vérifier les versions.\n  3. Pondérer par l'impact métier.\n\nProcédure pas à pas :\n  1. Lister les services ouverts.\n  2. Identifier les services sensibles.\n  3. Vérifier les versions et configurations.\n  4. Classer par criticité.\n  5. Récupérer le flag dans le rapport de lab.\n\nRemédiation : Utiliser une matrice de risque et un processus de remédiation priorisé.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 9.5 : Priorisation des résultats de scan et analyse de risque"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Scan réseau",
+      "x": "Mettre en pratique « Priorisation des résultats de scan et analyse de risque » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Scan réseau » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier la plage réseau du lab (ex. 192.168.56.0/24) et vérifier l'autorisation."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lancer une découverte d'hôtes sans scan agressif."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Scanner les ports TCP ouverts sur les hôtes identifiés."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Détecter les versions de services et les bannières."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Prioriser les services exposés et documenter les preuves."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nnmap -sn 192.168.56.0/24\nnmap -sT -p- --min-rate 500 192.168.56.10\nnmap -sV -sC -p 22,80,443 192.168.56.10\nnmap -Pn -p 80 --script http-headers 192.168.56.10\nnc -nv 192.168.56.10 80"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "Exemple de sortie attendue :\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 8.9\n80/tcp open  http    nginx 1.18.0\n443/tcp open ssl/http nginx 1.18.0\nAnalyse : surface exposée, versions à vérifier, services à durcir."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 9.5 : Priorisation des résultats de scan et analyse de risque"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Scan réseau », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Port caché",
+      "x": "<strong>Objectif :</strong> Un service de lab écoute sur un port non standard. Le découvrir et récupérer le flag.<br><strong>Contexte :</strong> Priorisation des résultats de scan et analyse de risque (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c5_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner tous les ports TCP de la cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Repérer le port ouvert inhabituel."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Se connecter avec netcat."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Lire la bannière et le message."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag affiché."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Port caché)",
+      "x": "CTF 1/5 — Port caché\nChapitre : 9.5 — Priorisation des résultats de scan et analyse de risque\nFlag : flag{m9_c5_ctf1}\n\nIndices :\n  1. Utiliser un scan complet des ports TCP.\n  2. Vérifier les ports hauts.\n  3. Lire la bannière du service.\n\nProcédure pas à pas :\n  1. Scanner tous les ports TCP de la cible de lab.\n  2. Repérer le port ouvert inhabituel.\n  3. Se connecter avec netcat.\n  4. Lire la bannière et le message.\n  5. Récupérer le flag affiché.\n\nRemédiation : Fermer les ports non nécessaires et appliquer un filtrage réseau.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Version vulnérable",
+      "x": "<strong>Objectif :</strong> Identifier la version d'un service de lab et associer un risque connu.<br><strong>Contexte :</strong> Priorisation des résultats de scan et analyse de risque (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c5_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lancer nmap -sV sur la cible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Relever la version du service."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher les CVE correspondantes."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Évaluer la pertinence dans le lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le fichier de version."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Version vulnérable)",
+      "x": "CTF 2/5 — Version vulnérable\nChapitre : 9.5 — Priorisation des résultats de scan et analyse de risque\nFlag : flag{m9_c5_ctf2}\n\nIndices :\n  1. Utiliser la détection de version.\n  2. Comparer à une base CVE.\n  3. Ne pas exploiter hors lab.\n\nProcédure pas à pas :\n  1. Lancer nmap -sV sur la cible.\n  2. Relever la version du service.\n  3. Rechercher les CVE correspondantes.\n  4. Évaluer la pertinence dans le lab.\n  5. Récupérer le flag dans le fichier de version.\n\nRemédiation : Mettre à jour le service et masquer la version dans les bannières.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Hôte oublié",
+      "x": "<strong>Objectif :</strong> Un hôte du réseau de lab ne répond pas au ping mais expose un service. Le trouver.<br><strong>Contexte :</strong> Priorisation des résultats de scan et analyse de risque (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c5_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner la plage avec nmap -sn."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Constater l'absence de l'hôte."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relancer avec -Pn sur la plage."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte qui répond en TCP."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder au service et récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Hôte oublié)",
+      "x": "CTF 3/5 — Hôte oublié\nChapitre : 9.5 — Priorisation des résultats de scan et analyse de risque\nFlag : flag{m9_c5_ctf3}\n\nIndices :\n  1. Utiliser -Pn.\n  2. Scanner la plage en TCP.\n  3. Vérifier les réponses SYN.\n\nProcédure pas à pas :\n  1. Scanner la plage avec nmap -sn.\n  2. Constater l'absence de l'hôte.\n  3. Relancer avec -Pn sur la plage.\n  4. Identifier l'hôte qui répond en TCP.\n  5. Accéder au service et récupérer le flag.\n\nRemédiation : Inventorier les actifs et surveiller les nouveaux hôtes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Filtrage contourné",
+      "x": "<strong>Objectif :</strong> Un pare-feu de lab bloque certains scans. Identifier une méthode de découverte autorisée.<br><strong>Contexte :</strong> Priorisation des résultats de scan et analyse de risque (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c5_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Tester un scan SYN."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester un scan connect."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer les résultats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les ports filtrés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de statut du lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Filtrage contourné)",
+      "x": "CTF 4/5 — Filtrage contourné\nChapitre : 9.5 — Priorisation des résultats de scan et analyse de risque\nFlag : flag{m9_c5_ctf4}\n\nIndices :\n  1. Tester différents types de scan.\n  2. Comparer les réponses.\n  3. Rester dans le périmètre.\n\nProcédure pas à pas :\n  1. Tester un scan SYN.\n  2. Tester un scan connect.\n  3. Comparer les résultats.\n  4. Identifier les ports filtrés.\n  5. Récupérer le flag dans la page de statut du lab.\n\nRemédiation : Configurer le pare-feu pour journaliser et bloquer les scans non autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Priorisation des résultats",
+      "x": "<strong>Objectif :</strong> À partir d'un scan de lab, classer les services par risque.<br><strong>Contexte :</strong> Priorisation des résultats de scan et analyse de risque (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c5_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les services ouverts."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier les services sensibles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier les versions et configurations."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Classer par criticité."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Priorisation des résultats)",
+      "x": "CTF 5/5 — Priorisation des résultats\nChapitre : 9.5 — Priorisation des résultats de scan et analyse de risque\nFlag : flag{m9_c5_ctf5}\n\nIndices :\n  1. Évaluer l'exposition.\n  2. Vérifier les versions.\n  3. Pondérer par l'impact métier.\n\nProcédure pas à pas :\n  1. Lister les services ouverts.\n  2. Identifier les services sensibles.\n  3. Vérifier les versions et configurations.\n  4. Classer par criticité.\n  5. Récupérer le flag dans le rapport de lab.\n\nRemédiation : Utiliser une matrice de risque et un processus de remédiation priorisé.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 9.6 : Interprétation des scans assistée par IA"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Scan réseau",
+      "x": "Mettre en pratique « Interprétation des scans assistée par IA » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Scan réseau » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier la plage réseau du lab (ex. 192.168.56.0/24) et vérifier l'autorisation."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lancer une découverte d'hôtes sans scan agressif."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Scanner les ports TCP ouverts sur les hôtes identifiés."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Détecter les versions de services et les bannières."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Prioriser les services exposés et documenter les preuves."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nnmap -sn 192.168.56.0/24\nnmap -sT -p- --min-rate 500 192.168.56.10\nnmap -sV -sC -p 22,80,443 192.168.56.10\nnmap -Pn -p 80 --script http-headers 192.168.56.10\nnc -nv 192.168.56.10 80"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Découvrir les hôtes et services d'un réseau de laboratoire",
+      "x": "Exemple de sortie attendue :\nPORT   STATE SERVICE VERSION\n22/tcp open  ssh     OpenSSH 8.9\n80/tcp open  http    nginx 1.18.0\n443/tcp open ssl/http nginx 1.18.0\nAnalyse : surface exposée, versions à vérifier, services à durcir."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 9.6 : Interprétation des scans assistée par IA"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Scan réseau », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Port caché",
+      "x": "<strong>Objectif :</strong> Un service de lab écoute sur un port non standard. Le découvrir et récupérer le flag.<br><strong>Contexte :</strong> Interprétation des scans assistée par IA (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c6_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner tous les ports TCP de la cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Repérer le port ouvert inhabituel."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Se connecter avec netcat."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Lire la bannière et le message."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag affiché."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Port caché)",
+      "x": "CTF 1/5 — Port caché\nChapitre : 9.6 — Interprétation des scans assistée par IA\nFlag : flag{m9_c6_ctf1}\n\nIndices :\n  1. Utiliser un scan complet des ports TCP.\n  2. Vérifier les ports hauts.\n  3. Lire la bannière du service.\n\nProcédure pas à pas :\n  1. Scanner tous les ports TCP de la cible de lab.\n  2. Repérer le port ouvert inhabituel.\n  3. Se connecter avec netcat.\n  4. Lire la bannière et le message.\n  5. Récupérer le flag affiché.\n\nRemédiation : Fermer les ports non nécessaires et appliquer un filtrage réseau.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Version vulnérable",
+      "x": "<strong>Objectif :</strong> Identifier la version d'un service de lab et associer un risque connu.<br><strong>Contexte :</strong> Interprétation des scans assistée par IA (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c6_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lancer nmap -sV sur la cible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Relever la version du service."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher les CVE correspondantes."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Évaluer la pertinence dans le lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le fichier de version."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Version vulnérable)",
+      "x": "CTF 2/5 — Version vulnérable\nChapitre : 9.6 — Interprétation des scans assistée par IA\nFlag : flag{m9_c6_ctf2}\n\nIndices :\n  1. Utiliser la détection de version.\n  2. Comparer à une base CVE.\n  3. Ne pas exploiter hors lab.\n\nProcédure pas à pas :\n  1. Lancer nmap -sV sur la cible.\n  2. Relever la version du service.\n  3. Rechercher les CVE correspondantes.\n  4. Évaluer la pertinence dans le lab.\n  5. Récupérer le flag dans le fichier de version.\n\nRemédiation : Mettre à jour le service et masquer la version dans les bannières.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Hôte oublié",
+      "x": "<strong>Objectif :</strong> Un hôte du réseau de lab ne répond pas au ping mais expose un service. Le trouver.<br><strong>Contexte :</strong> Interprétation des scans assistée par IA (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c6_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner la plage avec nmap -sn."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Constater l'absence de l'hôte."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relancer avec -Pn sur la plage."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte qui répond en TCP."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder au service et récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Hôte oublié)",
+      "x": "CTF 3/5 — Hôte oublié\nChapitre : 9.6 — Interprétation des scans assistée par IA\nFlag : flag{m9_c6_ctf3}\n\nIndices :\n  1. Utiliser -Pn.\n  2. Scanner la plage en TCP.\n  3. Vérifier les réponses SYN.\n\nProcédure pas à pas :\n  1. Scanner la plage avec nmap -sn.\n  2. Constater l'absence de l'hôte.\n  3. Relancer avec -Pn sur la plage.\n  4. Identifier l'hôte qui répond en TCP.\n  5. Accéder au service et récupérer le flag.\n\nRemédiation : Inventorier les actifs et surveiller les nouveaux hôtes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Filtrage contourné",
+      "x": "<strong>Objectif :</strong> Un pare-feu de lab bloque certains scans. Identifier une méthode de découverte autorisée.<br><strong>Contexte :</strong> Interprétation des scans assistée par IA (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c6_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Tester un scan SYN."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester un scan connect."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer les résultats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les ports filtrés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de statut du lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Filtrage contourné)",
+      "x": "CTF 4/5 — Filtrage contourné\nChapitre : 9.6 — Interprétation des scans assistée par IA\nFlag : flag{m9_c6_ctf4}\n\nIndices :\n  1. Tester différents types de scan.\n  2. Comparer les réponses.\n  3. Rester dans le périmètre.\n\nProcédure pas à pas :\n  1. Tester un scan SYN.\n  2. Tester un scan connect.\n  3. Comparer les résultats.\n  4. Identifier les ports filtrés.\n  5. Récupérer le flag dans la page de statut du lab.\n\nRemédiation : Configurer le pare-feu pour journaliser et bloquer les scans non autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Priorisation des résultats",
+      "x": "<strong>Objectif :</strong> À partir d'un scan de lab, classer les services par risque.<br><strong>Contexte :</strong> Interprétation des scans assistée par IA (Scan réseau).<br><strong>Flag attendu (lab) :</strong> flag{m9_c6_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les services ouverts."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier les services sensibles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier les versions et configurations."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Classer par criticité."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Priorisation des résultats)",
+      "x": "CTF 5/5 — Priorisation des résultats\nChapitre : 9.6 — Interprétation des scans assistée par IA\nFlag : flag{m9_c6_ctf5}\n\nIndices :\n  1. Évaluer l'exposition.\n  2. Vérifier les versions.\n  3. Pondérer par l'impact métier.\n\nProcédure pas à pas :\n  1. Lister les services ouverts.\n  2. Identifier les services sensibles.\n  3. Vérifier les versions et configurations.\n  4. Classer par criticité.\n  5. Récupérer le flag dans le rapport de lab.\n\nRemédiation : Utiliser une matrice de risque et un processus de remédiation priorisé.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
     }
   ],
   "quiz": "q9"

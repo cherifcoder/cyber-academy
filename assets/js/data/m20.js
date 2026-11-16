@@ -6,7 +6,7 @@ export default {
   "icon": "📶",
   "xp": 300,
   "duration": 65,
-  "summary": "Cours en français sur « Sécurité des réseaux sans fil » avec 6 chapitres, 10 exercices par chapitre et un défi CTF.",
+  "summary": "Cours en français enrichi sur « Sécurité des réseaux sans fil » : 6 chapitres, 10 exercices par chapitre, labs guidés pas à pas, payloads de lab isolé et 5 CTF détaillés par chapitre.",
   "objectives": [
     "Comprendre et appliquer : Normes sans fil et mécanismes de sécurité.",
     "Comprendre et appliquer : Modèles d'authentification et de chiffrement Wi-Fi.",
@@ -903,10 +903,6 @@ export default {
       ]
     },
     {
-      "t": "h",
-      "x": "CTF — Module 20"
-    },
-    {
       "t": "callout",
       "v": "tip",
       "title": "Défi CTF (lab autorisé)",
@@ -932,6 +928,1482 @@ export default {
           "p": "Proposez des correctifs concrets et priorisés selon le risque."
         }
       ]
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 20.1 : Normes sans fil et mécanismes de sécurité"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Sans fil",
+      "x": "Mettre en pratique « Normes sans fil et mécanismes de sécurité » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Sans fil » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Configurer un point d'accès de lab et une carte Wi-Fi en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le trafic de gestion et un handshake de test."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Analyser les mécanismes d'authentification et de chiffrement."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les faiblesses de configuration (WEP, WPS, SSID ouvert)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer des mesures de durcissement."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nsudo airmon-ng start wlan0\nsudo airodump-ng wlan0mon\nsudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w lab/capture wlan0mon\nsudo aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon\nsudo aircrack-ng lab/capture-01.cap"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "Points de contrôle :\n- Chiffrement WEP ou WPA/TKIP obsolète.\n- WPS activé.\n- SSID ouvert ou mot de passe faible.\n- Point d'accès malveillant avec SSID proche.\n- Absence de 802.1X en entreprise."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 20.1 : Normes sans fil et mécanismes de sécurité"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Sans fil », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Chiffrement faible",
+      "x": "<strong>Objectif :</strong> Un réseau de lab utilise WEP. Prouver la faiblesse.<br><strong>Contexte :</strong> Normes sans fil et mécanismes de sécurité (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c1_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer des paquets."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Obtenir la clé de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Chiffrement faible)",
+      "x": "CTF 1/5 — Chiffrement faible\nChapitre : 20.1 — Normes sans fil et mécanismes de sécurité\nFlag : flag{m20_c1_ctf1}\n\nIndices :\n  1. Capturer le trafic.\n  2. Utiliser aircrack-ng.\n  3. Documenter le temps de cassage.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer des paquets.\n  3. Lancer aircrack-ng.\n  4. Obtenir la clé de lab.\n  5. Récupérer le flag.\n\nRemédiation : Remplacer WEP par WPA2/WPA3-Enterprise.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Rogue AP",
+      "x": "<strong>Objectif :</strong> Un point d'accès malveillant de lab imite le SSID légitime. L'identifier.<br><strong>Contexte :</strong> Normes sans fil et mécanismes de sécurité (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c1_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner les réseaux."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer les SSID."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le BSSID suspect."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'usurpation."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Rogue AP)",
+      "x": "CTF 2/5 — Rogue AP\nChapitre : 20.1 — Normes sans fil et mécanismes de sécurité\nFlag : flag{m20_c1_ctf2}\n\nIndices :\n  1. Comparer les BSSID.\n  2. Analyser les canaux.\n  3. Vérifier la sécurité.\n\nProcédure pas à pas :\n  1. Scanner les réseaux.\n  2. Comparer les SSID.\n  3. Identifier le BSSID suspect.\n  4. Documenter l'usurpation.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser la détection de rogue AP et 802.1X.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Handshake",
+      "x": "<strong>Objectif :</strong> Capturer un handshake WPA2 de lab et évaluer la robustesse du mot de passe.<br><strong>Contexte :</strong> Normes sans fil et mécanismes de sécurité (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c1_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le handshake."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng avec un dictionnaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Trouver le mot de passe faible."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Handshake)",
+      "x": "CTF 3/5 — Handshake\nChapitre : 20.1 — Normes sans fil et mécanismes de sécurité\nFlag : flag{m20_c1_ctf3}\n\nIndices :\n  1. Capturer le handshake.\n  2. Utiliser un dictionnaire de lab.\n  3. Mesurer le temps.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer le handshake.\n  3. Lancer aircrack-ng avec un dictionnaire.\n  4. Trouver le mot de passe faible.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser WPA3, des mots de passe forts et la rotation.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — WPS",
+      "x": "<strong>Objectif :</strong> Un routeur de lab active WPS. Expliquer le risque.<br><strong>Contexte :</strong> Normes sans fil et mécanismes de sécurité (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c1_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner le réseau."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier WPS activé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester un PIN de lab."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter la faiblesse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (WPS)",
+      "x": "CTF 4/5 — WPS\nChapitre : 20.1 — Normes sans fil et mécanismes de sécurité\nFlag : flag{m20_c1_ctf4}\n\nIndices :\n  1. Scanner WPS.\n  2. Tester les PIN.\n  3. Documenter.\n\nProcédure pas à pas :\n  1. Scanner le réseau.\n  2. Identifier WPS activé.\n  3. Tester un PIN de lab.\n  4. Documenter la faiblesse.\n  5. Récupérer le flag.\n\nRemédiation : Désactiver WPS et mettre à jour le firmware.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Entreprise",
+      "x": "<strong>Objectif :</strong> Un réseau Wi-Fi d'entreprise de lab utilise 802.1X. Vérifier la configuration.<br><strong>Contexte :</strong> Normes sans fil et mécanismes de sécurité (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c1_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser la configuration."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier EAP-TLS."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Contrôler les certificats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les risques."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Entreprise)",
+      "x": "CTF 5/5 — Entreprise\nChapitre : 20.1 — Normes sans fil et mécanismes de sécurité\nFlag : flag{m20_c1_ctf5}\n\nIndices :\n  1. Identifier le serveur RADIUS.\n  2. Vérifier les certificats.\n  3. Tester un client de lab.\n\nProcédure pas à pas :\n  1. Analyser la configuration.\n  2. Vérifier EAP-TLS.\n  3. Contrôler les certificats.\n  4. Documenter les risques.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser EAP-TLS avec certificats et isolation des VLAN.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 20.2 : Modèles d'authentification et de chiffrement Wi-Fi"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Système Windows",
+      "x": "Mettre en pratique « Modèles d'authentification et de chiffrement Wi-Fi » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Système Windows » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les comptes locaux, groupes et politiques de mots de passe."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Inspecter les services, tâches planifiées et clés Run du registre."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier les configurations à risque (droits excessifs, chemins non cités)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Tester la robustesse des mots de passe de lab avec des dictionnaires de test."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter les constats et proposer des mesures de durcissement."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Auditer les comptes, permissions et mécanismes de persistance Windows",
+      "x": "# LAB AUTORISÉ UNIQUEMENT (PowerShell)\nnet user\nnet localgroup administrators\nnet accounts\nGet-Service | Where-Object {$_.StartType -eq 'Auto'}\nGet-ScheduledTask | Select TaskName,State\nreg query HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\nsc qc VulnService"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Auditer les comptes, permissions et mécanismes de persistance Windows",
+      "x": "Points de contrôle :\n- Comptes inutilisés ou sans mot de passe.\n- Membres excessifs du groupe Administrateurs.\n- Services avec chemin non cité ou permissions faibles.\n- Clés Run et tâches planifiées inconnues.\n- Politique de mot de passe trop permissive."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 20.2 : Modèles d'authentification et de chiffrement Wi-Fi"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Système Windows », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Identifiant dans le registre",
+      "x": "<strong>Objectif :</strong> Un lab Windows stocke un identifiant dans une clé de registre. Le retrouver.<br><strong>Contexte :</strong> Modèles d'authentification et de chiffrement Wi-Fi (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m20_c2_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir une session de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rechercher les clés de registre suspectes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la clé contenant le mot de passe."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Lire la valeur."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag associé."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Identifiant dans le registre)",
+      "x": "CTF 1/5 — Identifiant dans le registre\nChapitre : 20.2 — Modèles d'authentification et de chiffrement Wi-Fi\nFlag : flag{m20_c2_ctf1}\n\nIndices :\n  1. Chercher les clés Run et les clés applicatives.\n  2. Utiliser reg query.\n  3. Ne pas exposer le secret réel.\n\nProcédure pas à pas :\n  1. Ouvrir une session de lab.\n  2. Rechercher les clés de registre suspectes.\n  3. Identifier la clé contenant le mot de passe.\n  4. Lire la valeur.\n  5. Récupérer le flag associé.\n\nRemédiation : Ne jamais stocker de secrets en clair dans le registre ; utiliser un coffre-fort.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Droits excessifs",
+      "x": "<strong>Objectif :</strong> Un compte de lab appartient à un groupe trop privilégié. Identifier le risque.<br><strong>Contexte :</strong> Modèles d'authentification et de chiffrement Wi-Fi (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m20_c2_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les groupes locaux."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le compte de test."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier son appartenance."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Évaluer l'impact."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport d'audit."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Droits excessifs)",
+      "x": "CTF 2/5 — Droits excessifs\nChapitre : 20.2 — Modèles d'authentification et de chiffrement Wi-Fi\nFlag : flag{m20_c2_ctf2}\n\nIndices :\n  1. Lister les groupes.\n  2. Vérifier les membres.\n  3. Comparer aux besoins.\n\nProcédure pas à pas :\n  1. Énumérer les groupes locaux.\n  2. Identifier le compte de test.\n  3. Vérifier son appartenance.\n  4. Évaluer l'impact.\n  5. Récupérer le flag dans le rapport d'audit.\n\nRemédiation : Appliquer le moindre privilège et revoir régulièrement les adhésions.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Service non cité",
+      "x": "<strong>Objectif :</strong> Un service Windows de lab utilise un chemin non cité. Expliquer le risque.<br><strong>Contexte :</strong> Modèles d'authentification et de chiffrement Wi-Fi (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m20_c2_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les services."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le service vulnérable."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Afficher sa configuration."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier les droits d'écriture."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le dossier de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Service non cité)",
+      "x": "CTF 3/5 — Service non cité\nChapitre : 20.2 — Modèles d'authentification et de chiffrement Wi-Fi\nFlag : flag{m20_c2_ctf3}\n\nIndices :\n  1. Utiliser sc qc.\n  2. Chercher les espaces dans le chemin.\n  3. Vérifier les permissions du dossier.\n\nProcédure pas à pas :\n  1. Lister les services.\n  2. Identifier le service vulnérable.\n  3. Afficher sa configuration.\n  4. Vérifier les droits d'écriture.\n  5. Récupérer le flag dans le dossier de lab.\n\nRemédiation : Citer les chemins de service et restreindre les permissions des répertoires.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Tâche planifiée",
+      "x": "<strong>Objectif :</strong> Une tâche planifiée de lab exécute un script modifiable. Identifier la persistance.<br><strong>Contexte :</strong> Modèles d'authentification et de chiffrement Wi-Fi (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m20_c2_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir le planificateur de tâches."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lister les tâches non standard."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le script utilisé."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier les droits d'écriture."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le script."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Tâche planifiée)",
+      "x": "CTF 4/5 — Tâche planifiée\nChapitre : 20.2 — Modèles d'authentification et de chiffrement Wi-Fi\nFlag : flag{m20_c2_ctf4}\n\nIndices :\n  1. Lister les tâches planifiées.\n  2. Vérifier les scripts exécutés.\n  3. Contrôler les permissions.\n\nProcédure pas à pas :\n  1. Ouvrir le planificateur de tâches.\n  2. Lister les tâches non standard.\n  3. Identifier le script utilisé.\n  4. Vérifier les droits d'écriture.\n  5. Récupérer le flag dans le script.\n\nRemédiation : Protéger les scripts et restreindre la création de tâches planifiées.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Politique de mot de passe",
+      "x": "<strong>Objectif :</strong> La politique de mot de passe d'un lab est trop faible. Prouver le risque.<br><strong>Contexte :</strong> Modèles d'authentification et de chiffrement Wi-Fi (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m20_c2_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Afficher la politique."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier la longueur et la complexité."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester un petit dictionnaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Constater la faiblesse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Politique de mot de passe)",
+      "x": "CTF 5/5 — Politique de mot de passe\nChapitre : 20.2 — Modèles d'authentification et de chiffrement Wi-Fi\nFlag : flag{m20_c2_ctf5}\n\nIndices :\n  1. Utiliser net accounts.\n  2. Tester un dictionnaire de lab.\n  3. Mesurer le temps de cassage.\n\nProcédure pas à pas :\n  1. Afficher la politique.\n  2. Identifier la longueur et la complexité.\n  3. Tester un petit dictionnaire.\n  4. Constater la faiblesse.\n  5. Récupérer le flag dans le rapport.\n\nRemédiation : Imposer une longueur minimale, la complexité et une protection contre les mots de passe compromis.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 20.3 : Concepts de points d'accès malveillants (rogue AP)"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Sans fil",
+      "x": "Mettre en pratique « Concepts de points d'accès malveillants (rogue AP) » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Sans fil » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Configurer un point d'accès de lab et une carte Wi-Fi en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le trafic de gestion et un handshake de test."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Analyser les mécanismes d'authentification et de chiffrement."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les faiblesses de configuration (WEP, WPS, SSID ouvert)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer des mesures de durcissement."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nsudo airmon-ng start wlan0\nsudo airodump-ng wlan0mon\nsudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w lab/capture wlan0mon\nsudo aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon\nsudo aircrack-ng lab/capture-01.cap"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "Points de contrôle :\n- Chiffrement WEP ou WPA/TKIP obsolète.\n- WPS activé.\n- SSID ouvert ou mot de passe faible.\n- Point d'accès malveillant avec SSID proche.\n- Absence de 802.1X en entreprise."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 20.3 : Concepts de points d'accès malveillants (rogue AP)"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Sans fil », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Chiffrement faible",
+      "x": "<strong>Objectif :</strong> Un réseau de lab utilise WEP. Prouver la faiblesse.<br><strong>Contexte :</strong> Concepts de points d'accès malveillants (rogue AP) (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c3_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer des paquets."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Obtenir la clé de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Chiffrement faible)",
+      "x": "CTF 1/5 — Chiffrement faible\nChapitre : 20.3 — Concepts de points d'accès malveillants (rogue AP)\nFlag : flag{m20_c3_ctf1}\n\nIndices :\n  1. Capturer le trafic.\n  2. Utiliser aircrack-ng.\n  3. Documenter le temps de cassage.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer des paquets.\n  3. Lancer aircrack-ng.\n  4. Obtenir la clé de lab.\n  5. Récupérer le flag.\n\nRemédiation : Remplacer WEP par WPA2/WPA3-Enterprise.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Rogue AP",
+      "x": "<strong>Objectif :</strong> Un point d'accès malveillant de lab imite le SSID légitime. L'identifier.<br><strong>Contexte :</strong> Concepts de points d'accès malveillants (rogue AP) (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c3_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner les réseaux."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer les SSID."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le BSSID suspect."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'usurpation."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Rogue AP)",
+      "x": "CTF 2/5 — Rogue AP\nChapitre : 20.3 — Concepts de points d'accès malveillants (rogue AP)\nFlag : flag{m20_c3_ctf2}\n\nIndices :\n  1. Comparer les BSSID.\n  2. Analyser les canaux.\n  3. Vérifier la sécurité.\n\nProcédure pas à pas :\n  1. Scanner les réseaux.\n  2. Comparer les SSID.\n  3. Identifier le BSSID suspect.\n  4. Documenter l'usurpation.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser la détection de rogue AP et 802.1X.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Handshake",
+      "x": "<strong>Objectif :</strong> Capturer un handshake WPA2 de lab et évaluer la robustesse du mot de passe.<br><strong>Contexte :</strong> Concepts de points d'accès malveillants (rogue AP) (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c3_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le handshake."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng avec un dictionnaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Trouver le mot de passe faible."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Handshake)",
+      "x": "CTF 3/5 — Handshake\nChapitre : 20.3 — Concepts de points d'accès malveillants (rogue AP)\nFlag : flag{m20_c3_ctf3}\n\nIndices :\n  1. Capturer le handshake.\n  2. Utiliser un dictionnaire de lab.\n  3. Mesurer le temps.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer le handshake.\n  3. Lancer aircrack-ng avec un dictionnaire.\n  4. Trouver le mot de passe faible.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser WPA3, des mots de passe forts et la rotation.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — WPS",
+      "x": "<strong>Objectif :</strong> Un routeur de lab active WPS. Expliquer le risque.<br><strong>Contexte :</strong> Concepts de points d'accès malveillants (rogue AP) (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c3_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner le réseau."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier WPS activé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester un PIN de lab."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter la faiblesse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (WPS)",
+      "x": "CTF 4/5 — WPS\nChapitre : 20.3 — Concepts de points d'accès malveillants (rogue AP)\nFlag : flag{m20_c3_ctf4}\n\nIndices :\n  1. Scanner WPS.\n  2. Tester les PIN.\n  3. Documenter.\n\nProcédure pas à pas :\n  1. Scanner le réseau.\n  2. Identifier WPS activé.\n  3. Tester un PIN de lab.\n  4. Documenter la faiblesse.\n  5. Récupérer le flag.\n\nRemédiation : Désactiver WPS et mettre à jour le firmware.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Entreprise",
+      "x": "<strong>Objectif :</strong> Un réseau Wi-Fi d'entreprise de lab utilise 802.1X. Vérifier la configuration.<br><strong>Contexte :</strong> Concepts de points d'accès malveillants (rogue AP) (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c3_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser la configuration."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier EAP-TLS."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Contrôler les certificats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les risques."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Entreprise)",
+      "x": "CTF 5/5 — Entreprise\nChapitre : 20.3 — Concepts de points d'accès malveillants (rogue AP)\nFlag : flag{m20_c3_ctf5}\n\nIndices :\n  1. Identifier le serveur RADIUS.\n  2. Vérifier les certificats.\n  3. Tester un client de lab.\n\nProcédure pas à pas :\n  1. Analyser la configuration.\n  2. Vérifier EAP-TLS.\n  3. Contrôler les certificats.\n  4. Documenter les risques.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser EAP-TLS avec certificats et isolation des VLAN.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 20.4 : Stratégies de détection d'attaques sans fil"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Sans fil",
+      "x": "Mettre en pratique « Stratégies de détection d'attaques sans fil » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Sans fil » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Configurer un point d'accès de lab et une carte Wi-Fi en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le trafic de gestion et un handshake de test."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Analyser les mécanismes d'authentification et de chiffrement."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les faiblesses de configuration (WEP, WPS, SSID ouvert)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer des mesures de durcissement."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nsudo airmon-ng start wlan0\nsudo airodump-ng wlan0mon\nsudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w lab/capture wlan0mon\nsudo aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon\nsudo aircrack-ng lab/capture-01.cap"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "Points de contrôle :\n- Chiffrement WEP ou WPA/TKIP obsolète.\n- WPS activé.\n- SSID ouvert ou mot de passe faible.\n- Point d'accès malveillant avec SSID proche.\n- Absence de 802.1X en entreprise."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 20.4 : Stratégies de détection d'attaques sans fil"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Sans fil », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Chiffrement faible",
+      "x": "<strong>Objectif :</strong> Un réseau de lab utilise WEP. Prouver la faiblesse.<br><strong>Contexte :</strong> Stratégies de détection d'attaques sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c4_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer des paquets."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Obtenir la clé de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Chiffrement faible)",
+      "x": "CTF 1/5 — Chiffrement faible\nChapitre : 20.4 — Stratégies de détection d'attaques sans fil\nFlag : flag{m20_c4_ctf1}\n\nIndices :\n  1. Capturer le trafic.\n  2. Utiliser aircrack-ng.\n  3. Documenter le temps de cassage.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer des paquets.\n  3. Lancer aircrack-ng.\n  4. Obtenir la clé de lab.\n  5. Récupérer le flag.\n\nRemédiation : Remplacer WEP par WPA2/WPA3-Enterprise.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Rogue AP",
+      "x": "<strong>Objectif :</strong> Un point d'accès malveillant de lab imite le SSID légitime. L'identifier.<br><strong>Contexte :</strong> Stratégies de détection d'attaques sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c4_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner les réseaux."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer les SSID."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le BSSID suspect."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'usurpation."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Rogue AP)",
+      "x": "CTF 2/5 — Rogue AP\nChapitre : 20.4 — Stratégies de détection d'attaques sans fil\nFlag : flag{m20_c4_ctf2}\n\nIndices :\n  1. Comparer les BSSID.\n  2. Analyser les canaux.\n  3. Vérifier la sécurité.\n\nProcédure pas à pas :\n  1. Scanner les réseaux.\n  2. Comparer les SSID.\n  3. Identifier le BSSID suspect.\n  4. Documenter l'usurpation.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser la détection de rogue AP et 802.1X.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Handshake",
+      "x": "<strong>Objectif :</strong> Capturer un handshake WPA2 de lab et évaluer la robustesse du mot de passe.<br><strong>Contexte :</strong> Stratégies de détection d'attaques sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c4_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le handshake."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng avec un dictionnaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Trouver le mot de passe faible."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Handshake)",
+      "x": "CTF 3/5 — Handshake\nChapitre : 20.4 — Stratégies de détection d'attaques sans fil\nFlag : flag{m20_c4_ctf3}\n\nIndices :\n  1. Capturer le handshake.\n  2. Utiliser un dictionnaire de lab.\n  3. Mesurer le temps.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer le handshake.\n  3. Lancer aircrack-ng avec un dictionnaire.\n  4. Trouver le mot de passe faible.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser WPA3, des mots de passe forts et la rotation.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — WPS",
+      "x": "<strong>Objectif :</strong> Un routeur de lab active WPS. Expliquer le risque.<br><strong>Contexte :</strong> Stratégies de détection d'attaques sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c4_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner le réseau."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier WPS activé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester un PIN de lab."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter la faiblesse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (WPS)",
+      "x": "CTF 4/5 — WPS\nChapitre : 20.4 — Stratégies de détection d'attaques sans fil\nFlag : flag{m20_c4_ctf4}\n\nIndices :\n  1. Scanner WPS.\n  2. Tester les PIN.\n  3. Documenter.\n\nProcédure pas à pas :\n  1. Scanner le réseau.\n  2. Identifier WPS activé.\n  3. Tester un PIN de lab.\n  4. Documenter la faiblesse.\n  5. Récupérer le flag.\n\nRemédiation : Désactiver WPS et mettre à jour le firmware.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Entreprise",
+      "x": "<strong>Objectif :</strong> Un réseau Wi-Fi d'entreprise de lab utilise 802.1X. Vérifier la configuration.<br><strong>Contexte :</strong> Stratégies de détection d'attaques sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c4_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser la configuration."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier EAP-TLS."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Contrôler les certificats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les risques."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Entreprise)",
+      "x": "CTF 5/5 — Entreprise\nChapitre : 20.4 — Stratégies de détection d'attaques sans fil\nFlag : flag{m20_c4_ctf5}\n\nIndices :\n  1. Identifier le serveur RADIUS.\n  2. Vérifier les certificats.\n  3. Tester un client de lab.\n\nProcédure pas à pas :\n  1. Analyser la configuration.\n  2. Vérifier EAP-TLS.\n  3. Contrôler les certificats.\n  4. Documenter les risques.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser EAP-TLS avec certificats et isolation des VLAN.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 20.5 : Aperçu de la sécurité sans fil en entreprise"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Sans fil",
+      "x": "Mettre en pratique « Aperçu de la sécurité sans fil en entreprise » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Sans fil » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Configurer un point d'accès de lab et une carte Wi-Fi en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le trafic de gestion et un handshake de test."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Analyser les mécanismes d'authentification et de chiffrement."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les faiblesses de configuration (WEP, WPS, SSID ouvert)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer des mesures de durcissement."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nsudo airmon-ng start wlan0\nsudo airodump-ng wlan0mon\nsudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w lab/capture wlan0mon\nsudo aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon\nsudo aircrack-ng lab/capture-01.cap"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "Points de contrôle :\n- Chiffrement WEP ou WPA/TKIP obsolète.\n- WPS activé.\n- SSID ouvert ou mot de passe faible.\n- Point d'accès malveillant avec SSID proche.\n- Absence de 802.1X en entreprise."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 20.5 : Aperçu de la sécurité sans fil en entreprise"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Sans fil », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Chiffrement faible",
+      "x": "<strong>Objectif :</strong> Un réseau de lab utilise WEP. Prouver la faiblesse.<br><strong>Contexte :</strong> Aperçu de la sécurité sans fil en entreprise (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c5_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer des paquets."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Obtenir la clé de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Chiffrement faible)",
+      "x": "CTF 1/5 — Chiffrement faible\nChapitre : 20.5 — Aperçu de la sécurité sans fil en entreprise\nFlag : flag{m20_c5_ctf1}\n\nIndices :\n  1. Capturer le trafic.\n  2. Utiliser aircrack-ng.\n  3. Documenter le temps de cassage.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer des paquets.\n  3. Lancer aircrack-ng.\n  4. Obtenir la clé de lab.\n  5. Récupérer le flag.\n\nRemédiation : Remplacer WEP par WPA2/WPA3-Enterprise.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Rogue AP",
+      "x": "<strong>Objectif :</strong> Un point d'accès malveillant de lab imite le SSID légitime. L'identifier.<br><strong>Contexte :</strong> Aperçu de la sécurité sans fil en entreprise (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c5_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner les réseaux."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer les SSID."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le BSSID suspect."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'usurpation."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Rogue AP)",
+      "x": "CTF 2/5 — Rogue AP\nChapitre : 20.5 — Aperçu de la sécurité sans fil en entreprise\nFlag : flag{m20_c5_ctf2}\n\nIndices :\n  1. Comparer les BSSID.\n  2. Analyser les canaux.\n  3. Vérifier la sécurité.\n\nProcédure pas à pas :\n  1. Scanner les réseaux.\n  2. Comparer les SSID.\n  3. Identifier le BSSID suspect.\n  4. Documenter l'usurpation.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser la détection de rogue AP et 802.1X.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Handshake",
+      "x": "<strong>Objectif :</strong> Capturer un handshake WPA2 de lab et évaluer la robustesse du mot de passe.<br><strong>Contexte :</strong> Aperçu de la sécurité sans fil en entreprise (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c5_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le handshake."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng avec un dictionnaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Trouver le mot de passe faible."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Handshake)",
+      "x": "CTF 3/5 — Handshake\nChapitre : 20.5 — Aperçu de la sécurité sans fil en entreprise\nFlag : flag{m20_c5_ctf3}\n\nIndices :\n  1. Capturer le handshake.\n  2. Utiliser un dictionnaire de lab.\n  3. Mesurer le temps.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer le handshake.\n  3. Lancer aircrack-ng avec un dictionnaire.\n  4. Trouver le mot de passe faible.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser WPA3, des mots de passe forts et la rotation.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — WPS",
+      "x": "<strong>Objectif :</strong> Un routeur de lab active WPS. Expliquer le risque.<br><strong>Contexte :</strong> Aperçu de la sécurité sans fil en entreprise (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c5_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner le réseau."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier WPS activé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester un PIN de lab."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter la faiblesse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (WPS)",
+      "x": "CTF 4/5 — WPS\nChapitre : 20.5 — Aperçu de la sécurité sans fil en entreprise\nFlag : flag{m20_c5_ctf4}\n\nIndices :\n  1. Scanner WPS.\n  2. Tester les PIN.\n  3. Documenter.\n\nProcédure pas à pas :\n  1. Scanner le réseau.\n  2. Identifier WPS activé.\n  3. Tester un PIN de lab.\n  4. Documenter la faiblesse.\n  5. Récupérer le flag.\n\nRemédiation : Désactiver WPS et mettre à jour le firmware.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Entreprise",
+      "x": "<strong>Objectif :</strong> Un réseau Wi-Fi d'entreprise de lab utilise 802.1X. Vérifier la configuration.<br><strong>Contexte :</strong> Aperçu de la sécurité sans fil en entreprise (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c5_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser la configuration."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier EAP-TLS."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Contrôler les certificats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les risques."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Entreprise)",
+      "x": "CTF 5/5 — Entreprise\nChapitre : 20.5 — Aperçu de la sécurité sans fil en entreprise\nFlag : flag{m20_c5_ctf5}\n\nIndices :\n  1. Identifier le serveur RADIUS.\n  2. Vérifier les certificats.\n  3. Tester un client de lab.\n\nProcédure pas à pas :\n  1. Analyser la configuration.\n  2. Vérifier EAP-TLS.\n  3. Contrôler les certificats.\n  4. Documenter les risques.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser EAP-TLS avec certificats et isolation des VLAN.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 20.6 : Techniques de durcissement des réseaux sans fil"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Sans fil",
+      "x": "Mettre en pratique « Techniques de durcissement des réseaux sans fil » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Sans fil » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Configurer un point d'accès de lab et une carte Wi-Fi en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le trafic de gestion et un handshake de test."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Analyser les mécanismes d'authentification et de chiffrement."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier les faiblesses de configuration (WEP, WPS, SSID ouvert)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer des mesures de durcissement."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nsudo airmon-ng start wlan0\nsudo airodump-ng wlan0mon\nsudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w lab/capture wlan0mon\nsudo aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon\nsudo aircrack-ng lab/capture-01.cap"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser la sécurité d'un réseau Wi-Fi de laboratoire",
+      "x": "Points de contrôle :\n- Chiffrement WEP ou WPA/TKIP obsolète.\n- WPS activé.\n- SSID ouvert ou mot de passe faible.\n- Point d'accès malveillant avec SSID proche.\n- Absence de 802.1X en entreprise."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 20.6 : Techniques de durcissement des réseaux sans fil"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Sans fil », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Chiffrement faible",
+      "x": "<strong>Objectif :</strong> Un réseau de lab utilise WEP. Prouver la faiblesse.<br><strong>Contexte :</strong> Techniques de durcissement des réseaux sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c6_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer des paquets."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Obtenir la clé de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Chiffrement faible)",
+      "x": "CTF 1/5 — Chiffrement faible\nChapitre : 20.6 — Techniques de durcissement des réseaux sans fil\nFlag : flag{m20_c6_ctf1}\n\nIndices :\n  1. Capturer le trafic.\n  2. Utiliser aircrack-ng.\n  3. Documenter le temps de cassage.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer des paquets.\n  3. Lancer aircrack-ng.\n  4. Obtenir la clé de lab.\n  5. Récupérer le flag.\n\nRemédiation : Remplacer WEP par WPA2/WPA3-Enterprise.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Rogue AP",
+      "x": "<strong>Objectif :</strong> Un point d'accès malveillant de lab imite le SSID légitime. L'identifier.<br><strong>Contexte :</strong> Techniques de durcissement des réseaux sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c6_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner les réseaux."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer les SSID."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le BSSID suspect."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'usurpation."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Rogue AP)",
+      "x": "CTF 2/5 — Rogue AP\nChapitre : 20.6 — Techniques de durcissement des réseaux sans fil\nFlag : flag{m20_c6_ctf2}\n\nIndices :\n  1. Comparer les BSSID.\n  2. Analyser les canaux.\n  3. Vérifier la sécurité.\n\nProcédure pas à pas :\n  1. Scanner les réseaux.\n  2. Comparer les SSID.\n  3. Identifier le BSSID suspect.\n  4. Documenter l'usurpation.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser la détection de rogue AP et 802.1X.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Handshake",
+      "x": "<strong>Objectif :</strong> Capturer un handshake WPA2 de lab et évaluer la robustesse du mot de passe.<br><strong>Contexte :</strong> Techniques de durcissement des réseaux sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c6_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Passer en mode monitor."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Capturer le handshake."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lancer aircrack-ng avec un dictionnaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Trouver le mot de passe faible."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Handshake)",
+      "x": "CTF 3/5 — Handshake\nChapitre : 20.6 — Techniques de durcissement des réseaux sans fil\nFlag : flag{m20_c6_ctf3}\n\nIndices :\n  1. Capturer le handshake.\n  2. Utiliser un dictionnaire de lab.\n  3. Mesurer le temps.\n\nProcédure pas à pas :\n  1. Passer en mode monitor.\n  2. Capturer le handshake.\n  3. Lancer aircrack-ng avec un dictionnaire.\n  4. Trouver le mot de passe faible.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser WPA3, des mots de passe forts et la rotation.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — WPS",
+      "x": "<strong>Objectif :</strong> Un routeur de lab active WPS. Expliquer le risque.<br><strong>Contexte :</strong> Techniques de durcissement des réseaux sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c6_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Scanner le réseau."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier WPS activé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester un PIN de lab."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter la faiblesse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (WPS)",
+      "x": "CTF 4/5 — WPS\nChapitre : 20.6 — Techniques de durcissement des réseaux sans fil\nFlag : flag{m20_c6_ctf4}\n\nIndices :\n  1. Scanner WPS.\n  2. Tester les PIN.\n  3. Documenter.\n\nProcédure pas à pas :\n  1. Scanner le réseau.\n  2. Identifier WPS activé.\n  3. Tester un PIN de lab.\n  4. Documenter la faiblesse.\n  5. Récupérer le flag.\n\nRemédiation : Désactiver WPS et mettre à jour le firmware.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Entreprise",
+      "x": "<strong>Objectif :</strong> Un réseau Wi-Fi d'entreprise de lab utilise 802.1X. Vérifier la configuration.<br><strong>Contexte :</strong> Techniques de durcissement des réseaux sans fil (Sans fil).<br><strong>Flag attendu (lab) :</strong> flag{m20_c6_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser la configuration."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier EAP-TLS."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Contrôler les certificats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les risques."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Entreprise)",
+      "x": "CTF 5/5 — Entreprise\nChapitre : 20.6 — Techniques de durcissement des réseaux sans fil\nFlag : flag{m20_c6_ctf5}\n\nIndices :\n  1. Identifier le serveur RADIUS.\n  2. Vérifier les certificats.\n  3. Tester un client de lab.\n\nProcédure pas à pas :\n  1. Analyser la configuration.\n  2. Vérifier EAP-TLS.\n  3. Contrôler les certificats.\n  4. Documenter les risques.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser EAP-TLS avec certificats et isolation des VLAN.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
     }
   ],
   "quiz": "q20"

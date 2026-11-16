@@ -6,7 +6,7 @@ export default {
   "icon": "🦠",
   "xp": 310,
   "duration": 70,
-  "summary": "Cours en français sur « Concepts et analyse de malwares » avec 6 chapitres, 10 exercices par chapitre et un défi CTF.",
+  "summary": "Cours en français enrichi sur « Concepts et analyse de malwares » : 6 chapitres, 10 exercices par chapitre, labs guidés pas à pas, payloads de lab isolé et 5 CTF détaillés par chapitre.",
   "objectives": [
     "Comprendre et appliquer : Types de malwares et vecteurs d'infection.",
     "Comprendre et appliquer : Flux de livraison et d'exécution des malwares.",
@@ -903,10 +903,6 @@ export default {
       ]
     },
     {
-      "t": "h",
-      "x": "CTF — Module 14"
-    },
-    {
       "t": "callout",
       "v": "tip",
       "title": "Défi CTF (lab autorisé)",
@@ -932,6 +928,1482 @@ export default {
           "p": "Proposez des correctifs concrets et priorisés selon le risque."
         }
       ]
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 14.1 : Types de malwares et vecteurs d'infection"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Malware",
+      "x": "Mettre en pratique « Types de malwares et vecteurs d'infection » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Malware » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Isoler la VM d'analyse (réseau host-only, snapshots)."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer le hash de l'échantillon et rechercher les informations publiques."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Effectuer une analyse statique (strings, en-têtes, imports)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Observer le comportement dynamique (processus, fichiers, réseau)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Extraire les IOC et rédiger une règle de détection."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "# LAB ISOLÉ UNIQUEMENT\nsha256sum sample.bin\nstrings -n 6 sample.bin | head -80\nfile sample.bin\nobjdump -x sample.bin | head -60\ntcpdump -i eth0 -w lab/capture.pcap\nvolatility3 -f memory.raw windows.pslist"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "IOC à rechercher :\n- Hash SHA-256.\n- Domaines et adresses IP de callback.\n- Clés de registre de persistance.\n- Noms de fichiers et chemins.\n- Mutex et services créés."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 14.1 : Types de malwares et vecteurs d'infection"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Malware », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Extraction d'IOC",
+      "x": "<strong>Objectif :</strong> Extraire les indicateurs de compromission d'un échantillon de lab.<br><strong>Contexte :</strong> Types de malwares et vecteurs d'infection (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c1_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Calculer le hash."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Extraire les chaînes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier les IOC."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les artefacts."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Extraction d'IOC)",
+      "x": "CTF 1/5 — Extraction d'IOC\nChapitre : 14.1 — Types de malwares et vecteurs d'infection\nFlag : flag{m14_c1_ctf1}\n\nIndices :\n  1. Utiliser strings.\n  2. Chercher les URL et IP.\n  3. Corréler avec le comportement.\n\nProcédure pas à pas :\n  1. Calculer le hash.\n  2. Extraire les chaînes.\n  3. Identifier les IOC.\n  4. Documenter les artefacts.\n  5. Récupérer le flag dans le rapport.\n\nRemédiation : Bloquer les IOC et surveiller les journaux.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Mécanisme de persistance",
+      "x": "<strong>Objectif :</strong> Identifier comment un malware de lab survit au redémarrage.<br><strong>Contexte :</strong> Types de malwares et vecteurs d'infection (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c1_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser le comportement."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier la clé de persistance."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Documenter le chemin."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Nettoyer l'artefact."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Mécanisme de persistance)",
+      "x": "CTF 2/5 — Mécanisme de persistance\nChapitre : 14.1 — Types de malwares et vecteurs d'infection\nFlag : flag{m14_c1_ctf2}\n\nIndices :\n  1. Inspecter les clés Run.\n  2. Vérifier les services.\n  3. Observer les tâches planifiées.\n\nProcédure pas à pas :\n  1. Analyser le comportement.\n  2. Identifier la clé de persistance.\n  3. Documenter le chemin.\n  4. Nettoyer l'artefact.\n  5. Lire le flag.\n\nRemédiation : Surveiller les points de persistance et appliquer le moindre privilège.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Callback réseau",
+      "x": "<strong>Objectif :</strong> Un malware de lab contacte un serveur C2. Identifier le trafic.<br><strong>Contexte :</strong> Types de malwares et vecteurs d'infection (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c1_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir la capture."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer les requêtes sortantes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le domaine C2."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la requête."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Callback réseau)",
+      "x": "CTF 3/5 — Callback réseau\nChapitre : 14.1 — Types de malwares et vecteurs d'infection\nFlag : flag{m14_c1_ctf3}\n\nIndices :\n  1. Analyser le pcap.\n  2. Chercher les requêtes DNS/HTTP.\n  3. Isoler le réseau.\n\nProcédure pas à pas :\n  1. Ouvrir la capture.\n  2. Filtrer les requêtes sortantes.\n  3. Identifier le domaine C2.\n  4. Extraire la requête.\n  5. Lire le flag.\n\nRemédiation : Bloquer les domaines malveillants et inspecter le trafic sortant.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Binaire packé",
+      "x": "<strong>Objectif :</strong> Un échantillon de lab est packé. Détecter l'indice et expliquer.<br><strong>Contexte :</strong> Types de malwares et vecteurs d'infection (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c1_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser l'en-tête."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer l'entropie."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la section suspecte."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'indice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Binaire packé)",
+      "x": "CTF 4/5 — Binaire packé\nChapitre : 14.1 — Types de malwares et vecteurs d'infection\nFlag : flag{m14_c1_ctf4}\n\nIndices :\n  1. Vérifier l'entropie.\n  2. Comparer les sections.\n  3. Observer les imports.\n\nProcédure pas à pas :\n  1. Analyser l'en-tête.\n  2. Calculer l'entropie.\n  3. Identifier la section suspecte.\n  4. Documenter l'indice.\n  5. Récupérer le flag.\n\nRemédiation : Analyser en sandbox et utiliser la détection comportementale.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Règle YARA",
+      "x": "<strong>Objectif :</strong> Écrire une règle YARA pour détecter un échantillon de lab.<br><strong>Contexte :</strong> Types de malwares et vecteurs d'infection (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c1_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Extraire une chaîne caractéristique."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger la règle."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester sur l'échantillon."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier l'absence de faux positif."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Règle YARA)",
+      "x": "CTF 5/5 — Règle YARA\nChapitre : 14.1 — Types de malwares et vecteurs d'infection\nFlag : flag{m14_c1_ctf5}\n\nIndices :\n  1. Choisir une chaîne unique.\n  2. Vérifier les faux positifs.\n  3. Tester la règle.\n\nProcédure pas à pas :\n  1. Extraire une chaîne caractéristique.\n  2. Rédiger la règle.\n  3. Tester sur l'échantillon.\n  4. Vérifier l'absence de faux positif.\n  5. Récupérer le flag.\n\nRemédiation : Maintenir et tester les règles de détection régulièrement.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 14.2 : Flux de livraison et d'exécution des malwares"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Malware",
+      "x": "Mettre en pratique « Flux de livraison et d'exécution des malwares » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Malware » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Isoler la VM d'analyse (réseau host-only, snapshots)."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer le hash de l'échantillon et rechercher les informations publiques."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Effectuer une analyse statique (strings, en-têtes, imports)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Observer le comportement dynamique (processus, fichiers, réseau)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Extraire les IOC et rédiger une règle de détection."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "# LAB ISOLÉ UNIQUEMENT\nsha256sum sample.bin\nstrings -n 6 sample.bin | head -80\nfile sample.bin\nobjdump -x sample.bin | head -60\ntcpdump -i eth0 -w lab/capture.pcap\nvolatility3 -f memory.raw windows.pslist"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "IOC à rechercher :\n- Hash SHA-256.\n- Domaines et adresses IP de callback.\n- Clés de registre de persistance.\n- Noms de fichiers et chemins.\n- Mutex et services créés."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 14.2 : Flux de livraison et d'exécution des malwares"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Malware », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Extraction d'IOC",
+      "x": "<strong>Objectif :</strong> Extraire les indicateurs de compromission d'un échantillon de lab.<br><strong>Contexte :</strong> Flux de livraison et d'exécution des malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c2_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Calculer le hash."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Extraire les chaînes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier les IOC."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les artefacts."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Extraction d'IOC)",
+      "x": "CTF 1/5 — Extraction d'IOC\nChapitre : 14.2 — Flux de livraison et d'exécution des malwares\nFlag : flag{m14_c2_ctf1}\n\nIndices :\n  1. Utiliser strings.\n  2. Chercher les URL et IP.\n  3. Corréler avec le comportement.\n\nProcédure pas à pas :\n  1. Calculer le hash.\n  2. Extraire les chaînes.\n  3. Identifier les IOC.\n  4. Documenter les artefacts.\n  5. Récupérer le flag dans le rapport.\n\nRemédiation : Bloquer les IOC et surveiller les journaux.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Mécanisme de persistance",
+      "x": "<strong>Objectif :</strong> Identifier comment un malware de lab survit au redémarrage.<br><strong>Contexte :</strong> Flux de livraison et d'exécution des malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c2_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser le comportement."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier la clé de persistance."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Documenter le chemin."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Nettoyer l'artefact."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Mécanisme de persistance)",
+      "x": "CTF 2/5 — Mécanisme de persistance\nChapitre : 14.2 — Flux de livraison et d'exécution des malwares\nFlag : flag{m14_c2_ctf2}\n\nIndices :\n  1. Inspecter les clés Run.\n  2. Vérifier les services.\n  3. Observer les tâches planifiées.\n\nProcédure pas à pas :\n  1. Analyser le comportement.\n  2. Identifier la clé de persistance.\n  3. Documenter le chemin.\n  4. Nettoyer l'artefact.\n  5. Lire le flag.\n\nRemédiation : Surveiller les points de persistance et appliquer le moindre privilège.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Callback réseau",
+      "x": "<strong>Objectif :</strong> Un malware de lab contacte un serveur C2. Identifier le trafic.<br><strong>Contexte :</strong> Flux de livraison et d'exécution des malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c2_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir la capture."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer les requêtes sortantes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le domaine C2."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la requête."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Callback réseau)",
+      "x": "CTF 3/5 — Callback réseau\nChapitre : 14.2 — Flux de livraison et d'exécution des malwares\nFlag : flag{m14_c2_ctf3}\n\nIndices :\n  1. Analyser le pcap.\n  2. Chercher les requêtes DNS/HTTP.\n  3. Isoler le réseau.\n\nProcédure pas à pas :\n  1. Ouvrir la capture.\n  2. Filtrer les requêtes sortantes.\n  3. Identifier le domaine C2.\n  4. Extraire la requête.\n  5. Lire le flag.\n\nRemédiation : Bloquer les domaines malveillants et inspecter le trafic sortant.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Binaire packé",
+      "x": "<strong>Objectif :</strong> Un échantillon de lab est packé. Détecter l'indice et expliquer.<br><strong>Contexte :</strong> Flux de livraison et d'exécution des malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c2_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser l'en-tête."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer l'entropie."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la section suspecte."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'indice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Binaire packé)",
+      "x": "CTF 4/5 — Binaire packé\nChapitre : 14.2 — Flux de livraison et d'exécution des malwares\nFlag : flag{m14_c2_ctf4}\n\nIndices :\n  1. Vérifier l'entropie.\n  2. Comparer les sections.\n  3. Observer les imports.\n\nProcédure pas à pas :\n  1. Analyser l'en-tête.\n  2. Calculer l'entropie.\n  3. Identifier la section suspecte.\n  4. Documenter l'indice.\n  5. Récupérer le flag.\n\nRemédiation : Analyser en sandbox et utiliser la détection comportementale.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Règle YARA",
+      "x": "<strong>Objectif :</strong> Écrire une règle YARA pour détecter un échantillon de lab.<br><strong>Contexte :</strong> Flux de livraison et d'exécution des malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c2_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Extraire une chaîne caractéristique."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger la règle."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester sur l'échantillon."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier l'absence de faux positif."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Règle YARA)",
+      "x": "CTF 5/5 — Règle YARA\nChapitre : 14.2 — Flux de livraison et d'exécution des malwares\nFlag : flag{m14_c2_ctf5}\n\nIndices :\n  1. Choisir une chaîne unique.\n  2. Vérifier les faux positifs.\n  3. Tester la règle.\n\nProcédure pas à pas :\n  1. Extraire une chaîne caractéristique.\n  2. Rédiger la règle.\n  3. Tester sur l'échantillon.\n  4. Vérifier l'absence de faux positif.\n  5. Récupérer le flag.\n\nRemédiation : Maintenir et tester les règles de détection régulièrement.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 14.3 : Fondamentaux de l'analyse statique et dynamique"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Malware",
+      "x": "Mettre en pratique « Fondamentaux de l'analyse statique et dynamique » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Malware » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Isoler la VM d'analyse (réseau host-only, snapshots)."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer le hash de l'échantillon et rechercher les informations publiques."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Effectuer une analyse statique (strings, en-têtes, imports)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Observer le comportement dynamique (processus, fichiers, réseau)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Extraire les IOC et rédiger une règle de détection."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "# LAB ISOLÉ UNIQUEMENT\nsha256sum sample.bin\nstrings -n 6 sample.bin | head -80\nfile sample.bin\nobjdump -x sample.bin | head -60\ntcpdump -i eth0 -w lab/capture.pcap\nvolatility3 -f memory.raw windows.pslist"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "IOC à rechercher :\n- Hash SHA-256.\n- Domaines et adresses IP de callback.\n- Clés de registre de persistance.\n- Noms de fichiers et chemins.\n- Mutex et services créés."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 14.3 : Fondamentaux de l'analyse statique et dynamique"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Malware », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Extraction d'IOC",
+      "x": "<strong>Objectif :</strong> Extraire les indicateurs de compromission d'un échantillon de lab.<br><strong>Contexte :</strong> Fondamentaux de l'analyse statique et dynamique (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c3_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Calculer le hash."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Extraire les chaînes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier les IOC."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les artefacts."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Extraction d'IOC)",
+      "x": "CTF 1/5 — Extraction d'IOC\nChapitre : 14.3 — Fondamentaux de l'analyse statique et dynamique\nFlag : flag{m14_c3_ctf1}\n\nIndices :\n  1. Utiliser strings.\n  2. Chercher les URL et IP.\n  3. Corréler avec le comportement.\n\nProcédure pas à pas :\n  1. Calculer le hash.\n  2. Extraire les chaînes.\n  3. Identifier les IOC.\n  4. Documenter les artefacts.\n  5. Récupérer le flag dans le rapport.\n\nRemédiation : Bloquer les IOC et surveiller les journaux.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Mécanisme de persistance",
+      "x": "<strong>Objectif :</strong> Identifier comment un malware de lab survit au redémarrage.<br><strong>Contexte :</strong> Fondamentaux de l'analyse statique et dynamique (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c3_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser le comportement."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier la clé de persistance."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Documenter le chemin."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Nettoyer l'artefact."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Mécanisme de persistance)",
+      "x": "CTF 2/5 — Mécanisme de persistance\nChapitre : 14.3 — Fondamentaux de l'analyse statique et dynamique\nFlag : flag{m14_c3_ctf2}\n\nIndices :\n  1. Inspecter les clés Run.\n  2. Vérifier les services.\n  3. Observer les tâches planifiées.\n\nProcédure pas à pas :\n  1. Analyser le comportement.\n  2. Identifier la clé de persistance.\n  3. Documenter le chemin.\n  4. Nettoyer l'artefact.\n  5. Lire le flag.\n\nRemédiation : Surveiller les points de persistance et appliquer le moindre privilège.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Callback réseau",
+      "x": "<strong>Objectif :</strong> Un malware de lab contacte un serveur C2. Identifier le trafic.<br><strong>Contexte :</strong> Fondamentaux de l'analyse statique et dynamique (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c3_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir la capture."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer les requêtes sortantes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le domaine C2."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la requête."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Callback réseau)",
+      "x": "CTF 3/5 — Callback réseau\nChapitre : 14.3 — Fondamentaux de l'analyse statique et dynamique\nFlag : flag{m14_c3_ctf3}\n\nIndices :\n  1. Analyser le pcap.\n  2. Chercher les requêtes DNS/HTTP.\n  3. Isoler le réseau.\n\nProcédure pas à pas :\n  1. Ouvrir la capture.\n  2. Filtrer les requêtes sortantes.\n  3. Identifier le domaine C2.\n  4. Extraire la requête.\n  5. Lire le flag.\n\nRemédiation : Bloquer les domaines malveillants et inspecter le trafic sortant.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Binaire packé",
+      "x": "<strong>Objectif :</strong> Un échantillon de lab est packé. Détecter l'indice et expliquer.<br><strong>Contexte :</strong> Fondamentaux de l'analyse statique et dynamique (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c3_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser l'en-tête."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer l'entropie."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la section suspecte."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'indice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Binaire packé)",
+      "x": "CTF 4/5 — Binaire packé\nChapitre : 14.3 — Fondamentaux de l'analyse statique et dynamique\nFlag : flag{m14_c3_ctf4}\n\nIndices :\n  1. Vérifier l'entropie.\n  2. Comparer les sections.\n  3. Observer les imports.\n\nProcédure pas à pas :\n  1. Analyser l'en-tête.\n  2. Calculer l'entropie.\n  3. Identifier la section suspecte.\n  4. Documenter l'indice.\n  5. Récupérer le flag.\n\nRemédiation : Analyser en sandbox et utiliser la détection comportementale.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Règle YARA",
+      "x": "<strong>Objectif :</strong> Écrire une règle YARA pour détecter un échantillon de lab.<br><strong>Contexte :</strong> Fondamentaux de l'analyse statique et dynamique (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c3_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Extraire une chaîne caractéristique."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger la règle."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester sur l'échantillon."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier l'absence de faux positif."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Règle YARA)",
+      "x": "CTF 5/5 — Règle YARA\nChapitre : 14.3 — Fondamentaux de l'analyse statique et dynamique\nFlag : flag{m14_c3_ctf5}\n\nIndices :\n  1. Choisir une chaîne unique.\n  2. Vérifier les faux positifs.\n  3. Tester la règle.\n\nProcédure pas à pas :\n  1. Extraire une chaîne caractéristique.\n  2. Rédiger la règle.\n  3. Tester sur l'échantillon.\n  4. Vérifier l'absence de faux positif.\n  5. Récupérer le flag.\n\nRemédiation : Maintenir et tester les règles de détection régulièrement.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 14.4 : Concepts de persistance et d'évasion des malwares"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Système Windows",
+      "x": "Mettre en pratique « Concepts de persistance et d'évasion des malwares » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Système Windows » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les comptes locaux, groupes et politiques de mots de passe."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Inspecter les services, tâches planifiées et clés Run du registre."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier les configurations à risque (droits excessifs, chemins non cités)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Tester la robustesse des mots de passe de lab avec des dictionnaires de test."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter les constats et proposer des mesures de durcissement."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Auditer les comptes, permissions et mécanismes de persistance Windows",
+      "x": "# LAB AUTORISÉ UNIQUEMENT (PowerShell)\nnet user\nnet localgroup administrators\nnet accounts\nGet-Service | Where-Object {$_.StartType -eq 'Auto'}\nGet-ScheduledTask | Select TaskName,State\nreg query HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\nsc qc VulnService"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Auditer les comptes, permissions et mécanismes de persistance Windows",
+      "x": "Points de contrôle :\n- Comptes inutilisés ou sans mot de passe.\n- Membres excessifs du groupe Administrateurs.\n- Services avec chemin non cité ou permissions faibles.\n- Clés Run et tâches planifiées inconnues.\n- Politique de mot de passe trop permissive."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 14.4 : Concepts de persistance et d'évasion des malwares"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Système Windows », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Identifiant dans le registre",
+      "x": "<strong>Objectif :</strong> Un lab Windows stocke un identifiant dans une clé de registre. Le retrouver.<br><strong>Contexte :</strong> Concepts de persistance et d'évasion des malwares (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m14_c4_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir une session de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rechercher les clés de registre suspectes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la clé contenant le mot de passe."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Lire la valeur."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag associé."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Identifiant dans le registre)",
+      "x": "CTF 1/5 — Identifiant dans le registre\nChapitre : 14.4 — Concepts de persistance et d'évasion des malwares\nFlag : flag{m14_c4_ctf1}\n\nIndices :\n  1. Chercher les clés Run et les clés applicatives.\n  2. Utiliser reg query.\n  3. Ne pas exposer le secret réel.\n\nProcédure pas à pas :\n  1. Ouvrir une session de lab.\n  2. Rechercher les clés de registre suspectes.\n  3. Identifier la clé contenant le mot de passe.\n  4. Lire la valeur.\n  5. Récupérer le flag associé.\n\nRemédiation : Ne jamais stocker de secrets en clair dans le registre ; utiliser un coffre-fort.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Droits excessifs",
+      "x": "<strong>Objectif :</strong> Un compte de lab appartient à un groupe trop privilégié. Identifier le risque.<br><strong>Contexte :</strong> Concepts de persistance et d'évasion des malwares (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m14_c4_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les groupes locaux."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le compte de test."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier son appartenance."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Évaluer l'impact."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport d'audit."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Droits excessifs)",
+      "x": "CTF 2/5 — Droits excessifs\nChapitre : 14.4 — Concepts de persistance et d'évasion des malwares\nFlag : flag{m14_c4_ctf2}\n\nIndices :\n  1. Lister les groupes.\n  2. Vérifier les membres.\n  3. Comparer aux besoins.\n\nProcédure pas à pas :\n  1. Énumérer les groupes locaux.\n  2. Identifier le compte de test.\n  3. Vérifier son appartenance.\n  4. Évaluer l'impact.\n  5. Récupérer le flag dans le rapport d'audit.\n\nRemédiation : Appliquer le moindre privilège et revoir régulièrement les adhésions.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Service non cité",
+      "x": "<strong>Objectif :</strong> Un service Windows de lab utilise un chemin non cité. Expliquer le risque.<br><strong>Contexte :</strong> Concepts de persistance et d'évasion des malwares (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m14_c4_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les services."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le service vulnérable."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Afficher sa configuration."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier les droits d'écriture."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le dossier de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Service non cité)",
+      "x": "CTF 3/5 — Service non cité\nChapitre : 14.4 — Concepts de persistance et d'évasion des malwares\nFlag : flag{m14_c4_ctf3}\n\nIndices :\n  1. Utiliser sc qc.\n  2. Chercher les espaces dans le chemin.\n  3. Vérifier les permissions du dossier.\n\nProcédure pas à pas :\n  1. Lister les services.\n  2. Identifier le service vulnérable.\n  3. Afficher sa configuration.\n  4. Vérifier les droits d'écriture.\n  5. Récupérer le flag dans le dossier de lab.\n\nRemédiation : Citer les chemins de service et restreindre les permissions des répertoires.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Tâche planifiée",
+      "x": "<strong>Objectif :</strong> Une tâche planifiée de lab exécute un script modifiable. Identifier la persistance.<br><strong>Contexte :</strong> Concepts de persistance et d'évasion des malwares (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m14_c4_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir le planificateur de tâches."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lister les tâches non standard."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le script utilisé."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier les droits d'écriture."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le script."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Tâche planifiée)",
+      "x": "CTF 4/5 — Tâche planifiée\nChapitre : 14.4 — Concepts de persistance et d'évasion des malwares\nFlag : flag{m14_c4_ctf4}\n\nIndices :\n  1. Lister les tâches planifiées.\n  2. Vérifier les scripts exécutés.\n  3. Contrôler les permissions.\n\nProcédure pas à pas :\n  1. Ouvrir le planificateur de tâches.\n  2. Lister les tâches non standard.\n  3. Identifier le script utilisé.\n  4. Vérifier les droits d'écriture.\n  5. Récupérer le flag dans le script.\n\nRemédiation : Protéger les scripts et restreindre la création de tâches planifiées.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Politique de mot de passe",
+      "x": "<strong>Objectif :</strong> La politique de mot de passe d'un lab est trop faible. Prouver le risque.<br><strong>Contexte :</strong> Concepts de persistance et d'évasion des malwares (Système Windows).<br><strong>Flag attendu (lab) :</strong> flag{m14_c4_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Afficher la politique."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier la longueur et la complexité."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester un petit dictionnaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Constater la faiblesse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Politique de mot de passe)",
+      "x": "CTF 5/5 — Politique de mot de passe\nChapitre : 14.4 — Concepts de persistance et d'évasion des malwares\nFlag : flag{m14_c4_ctf5}\n\nIndices :\n  1. Utiliser net accounts.\n  2. Tester un dictionnaire de lab.\n  3. Mesurer le temps de cassage.\n\nProcédure pas à pas :\n  1. Afficher la politique.\n  2. Identifier la longueur et la complexité.\n  3. Tester un petit dictionnaire.\n  4. Constater la faiblesse.\n  5. Récupérer le flag dans le rapport.\n\nRemédiation : Imposer une longueur minimale, la complexité et une protection contre les mots de passe compromis.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 14.5 : Tendances modernes des malwares et études de cas"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Malware",
+      "x": "Mettre en pratique « Tendances modernes des malwares et études de cas » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Malware » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Isoler la VM d'analyse (réseau host-only, snapshots)."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer le hash de l'échantillon et rechercher les informations publiques."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Effectuer une analyse statique (strings, en-têtes, imports)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Observer le comportement dynamique (processus, fichiers, réseau)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Extraire les IOC et rédiger une règle de détection."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "# LAB ISOLÉ UNIQUEMENT\nsha256sum sample.bin\nstrings -n 6 sample.bin | head -80\nfile sample.bin\nobjdump -x sample.bin | head -60\ntcpdump -i eth0 -w lab/capture.pcap\nvolatility3 -f memory.raw windows.pslist"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "IOC à rechercher :\n- Hash SHA-256.\n- Domaines et adresses IP de callback.\n- Clés de registre de persistance.\n- Noms de fichiers et chemins.\n- Mutex et services créés."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 14.5 : Tendances modernes des malwares et études de cas"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Malware », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Extraction d'IOC",
+      "x": "<strong>Objectif :</strong> Extraire les indicateurs de compromission d'un échantillon de lab.<br><strong>Contexte :</strong> Tendances modernes des malwares et études de cas (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c5_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Calculer le hash."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Extraire les chaînes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier les IOC."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les artefacts."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Extraction d'IOC)",
+      "x": "CTF 1/5 — Extraction d'IOC\nChapitre : 14.5 — Tendances modernes des malwares et études de cas\nFlag : flag{m14_c5_ctf1}\n\nIndices :\n  1. Utiliser strings.\n  2. Chercher les URL et IP.\n  3. Corréler avec le comportement.\n\nProcédure pas à pas :\n  1. Calculer le hash.\n  2. Extraire les chaînes.\n  3. Identifier les IOC.\n  4. Documenter les artefacts.\n  5. Récupérer le flag dans le rapport.\n\nRemédiation : Bloquer les IOC et surveiller les journaux.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Mécanisme de persistance",
+      "x": "<strong>Objectif :</strong> Identifier comment un malware de lab survit au redémarrage.<br><strong>Contexte :</strong> Tendances modernes des malwares et études de cas (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c5_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser le comportement."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier la clé de persistance."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Documenter le chemin."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Nettoyer l'artefact."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Mécanisme de persistance)",
+      "x": "CTF 2/5 — Mécanisme de persistance\nChapitre : 14.5 — Tendances modernes des malwares et études de cas\nFlag : flag{m14_c5_ctf2}\n\nIndices :\n  1. Inspecter les clés Run.\n  2. Vérifier les services.\n  3. Observer les tâches planifiées.\n\nProcédure pas à pas :\n  1. Analyser le comportement.\n  2. Identifier la clé de persistance.\n  3. Documenter le chemin.\n  4. Nettoyer l'artefact.\n  5. Lire le flag.\n\nRemédiation : Surveiller les points de persistance et appliquer le moindre privilège.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Callback réseau",
+      "x": "<strong>Objectif :</strong> Un malware de lab contacte un serveur C2. Identifier le trafic.<br><strong>Contexte :</strong> Tendances modernes des malwares et études de cas (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c5_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir la capture."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer les requêtes sortantes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le domaine C2."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la requête."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Callback réseau)",
+      "x": "CTF 3/5 — Callback réseau\nChapitre : 14.5 — Tendances modernes des malwares et études de cas\nFlag : flag{m14_c5_ctf3}\n\nIndices :\n  1. Analyser le pcap.\n  2. Chercher les requêtes DNS/HTTP.\n  3. Isoler le réseau.\n\nProcédure pas à pas :\n  1. Ouvrir la capture.\n  2. Filtrer les requêtes sortantes.\n  3. Identifier le domaine C2.\n  4. Extraire la requête.\n  5. Lire le flag.\n\nRemédiation : Bloquer les domaines malveillants et inspecter le trafic sortant.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Binaire packé",
+      "x": "<strong>Objectif :</strong> Un échantillon de lab est packé. Détecter l'indice et expliquer.<br><strong>Contexte :</strong> Tendances modernes des malwares et études de cas (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c5_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser l'en-tête."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer l'entropie."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la section suspecte."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'indice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Binaire packé)",
+      "x": "CTF 4/5 — Binaire packé\nChapitre : 14.5 — Tendances modernes des malwares et études de cas\nFlag : flag{m14_c5_ctf4}\n\nIndices :\n  1. Vérifier l'entropie.\n  2. Comparer les sections.\n  3. Observer les imports.\n\nProcédure pas à pas :\n  1. Analyser l'en-tête.\n  2. Calculer l'entropie.\n  3. Identifier la section suspecte.\n  4. Documenter l'indice.\n  5. Récupérer le flag.\n\nRemédiation : Analyser en sandbox et utiliser la détection comportementale.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Règle YARA",
+      "x": "<strong>Objectif :</strong> Écrire une règle YARA pour détecter un échantillon de lab.<br><strong>Contexte :</strong> Tendances modernes des malwares et études de cas (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c5_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Extraire une chaîne caractéristique."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger la règle."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester sur l'échantillon."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier l'absence de faux positif."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Règle YARA)",
+      "x": "CTF 5/5 — Règle YARA\nChapitre : 14.5 — Tendances modernes des malwares et études de cas\nFlag : flag{m14_c5_ctf5}\n\nIndices :\n  1. Choisir une chaîne unique.\n  2. Vérifier les faux positifs.\n  3. Tester la règle.\n\nProcédure pas à pas :\n  1. Extraire une chaîne caractéristique.\n  2. Rédiger la règle.\n  3. Tester sur l'échantillon.\n  4. Vérifier l'absence de faux positif.\n  5. Récupérer le flag.\n\nRemédiation : Maintenir et tester les règles de détection régulièrement.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 14.6 : Rôle de l'IA dans la détection et la défense contre les malwares"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Malware",
+      "x": "Mettre en pratique « Rôle de l'IA dans la détection et la défense contre les malwares » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Malware » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Isoler la VM d'analyse (réseau host-only, snapshots)."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer le hash de l'échantillon et rechercher les informations publiques."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Effectuer une analyse statique (strings, en-têtes, imports)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Observer le comportement dynamique (processus, fichiers, réseau)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Extraire les IOC et rédiger une règle de détection."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "# LAB ISOLÉ UNIQUEMENT\nsha256sum sample.bin\nstrings -n 6 sample.bin | head -80\nfile sample.bin\nobjdump -x sample.bin | head -60\ntcpdump -i eth0 -w lab/capture.pcap\nvolatility3 -f memory.raw windows.pslist"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser un échantillon de malware de lab en toute sécurité",
+      "x": "IOC à rechercher :\n- Hash SHA-256.\n- Domaines et adresses IP de callback.\n- Clés de registre de persistance.\n- Noms de fichiers et chemins.\n- Mutex et services créés."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 14.6 : Rôle de l'IA dans la détection et la défense contre les malwares"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Malware », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Extraction d'IOC",
+      "x": "<strong>Objectif :</strong> Extraire les indicateurs de compromission d'un échantillon de lab.<br><strong>Contexte :</strong> Rôle de l'IA dans la détection et la défense contre les malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c6_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Calculer le hash."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Extraire les chaînes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier les IOC."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter les artefacts."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le rapport."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Extraction d'IOC)",
+      "x": "CTF 1/5 — Extraction d'IOC\nChapitre : 14.6 — Rôle de l'IA dans la détection et la défense contre les malwares\nFlag : flag{m14_c6_ctf1}\n\nIndices :\n  1. Utiliser strings.\n  2. Chercher les URL et IP.\n  3. Corréler avec le comportement.\n\nProcédure pas à pas :\n  1. Calculer le hash.\n  2. Extraire les chaînes.\n  3. Identifier les IOC.\n  4. Documenter les artefacts.\n  5. Récupérer le flag dans le rapport.\n\nRemédiation : Bloquer les IOC et surveiller les journaux.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Mécanisme de persistance",
+      "x": "<strong>Objectif :</strong> Identifier comment un malware de lab survit au redémarrage.<br><strong>Contexte :</strong> Rôle de l'IA dans la détection et la défense contre les malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c6_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser le comportement."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier la clé de persistance."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Documenter le chemin."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Nettoyer l'artefact."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Mécanisme de persistance)",
+      "x": "CTF 2/5 — Mécanisme de persistance\nChapitre : 14.6 — Rôle de l'IA dans la détection et la défense contre les malwares\nFlag : flag{m14_c6_ctf2}\n\nIndices :\n  1. Inspecter les clés Run.\n  2. Vérifier les services.\n  3. Observer les tâches planifiées.\n\nProcédure pas à pas :\n  1. Analyser le comportement.\n  2. Identifier la clé de persistance.\n  3. Documenter le chemin.\n  4. Nettoyer l'artefact.\n  5. Lire le flag.\n\nRemédiation : Surveiller les points de persistance et appliquer le moindre privilège.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Callback réseau",
+      "x": "<strong>Objectif :</strong> Un malware de lab contacte un serveur C2. Identifier le trafic.<br><strong>Contexte :</strong> Rôle de l'IA dans la détection et la défense contre les malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c6_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir la capture."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer les requêtes sortantes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le domaine C2."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la requête."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Lire le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Callback réseau)",
+      "x": "CTF 3/5 — Callback réseau\nChapitre : 14.6 — Rôle de l'IA dans la détection et la défense contre les malwares\nFlag : flag{m14_c6_ctf3}\n\nIndices :\n  1. Analyser le pcap.\n  2. Chercher les requêtes DNS/HTTP.\n  3. Isoler le réseau.\n\nProcédure pas à pas :\n  1. Ouvrir la capture.\n  2. Filtrer les requêtes sortantes.\n  3. Identifier le domaine C2.\n  4. Extraire la requête.\n  5. Lire le flag.\n\nRemédiation : Bloquer les domaines malveillants et inspecter le trafic sortant.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Binaire packé",
+      "x": "<strong>Objectif :</strong> Un échantillon de lab est packé. Détecter l'indice et expliquer.<br><strong>Contexte :</strong> Rôle de l'IA dans la détection et la défense contre les malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c6_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser l'en-tête."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Calculer l'entropie."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la section suspecte."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'indice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Binaire packé)",
+      "x": "CTF 4/5 — Binaire packé\nChapitre : 14.6 — Rôle de l'IA dans la détection et la défense contre les malwares\nFlag : flag{m14_c6_ctf4}\n\nIndices :\n  1. Vérifier l'entropie.\n  2. Comparer les sections.\n  3. Observer les imports.\n\nProcédure pas à pas :\n  1. Analyser l'en-tête.\n  2. Calculer l'entropie.\n  3. Identifier la section suspecte.\n  4. Documenter l'indice.\n  5. Récupérer le flag.\n\nRemédiation : Analyser en sandbox et utiliser la détection comportementale.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Règle YARA",
+      "x": "<strong>Objectif :</strong> Écrire une règle YARA pour détecter un échantillon de lab.<br><strong>Contexte :</strong> Rôle de l'IA dans la détection et la défense contre les malwares (Malware).<br><strong>Flag attendu (lab) :</strong> flag{m14_c6_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Extraire une chaîne caractéristique."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger la règle."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Tester sur l'échantillon."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier l'absence de faux positif."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Règle YARA)",
+      "x": "CTF 5/5 — Règle YARA\nChapitre : 14.6 — Rôle de l'IA dans la détection et la défense contre les malwares\nFlag : flag{m14_c6_ctf5}\n\nIndices :\n  1. Choisir une chaîne unique.\n  2. Vérifier les faux positifs.\n  3. Tester la règle.\n\nProcédure pas à pas :\n  1. Extraire une chaîne caractéristique.\n  2. Rédiger la règle.\n  3. Tester sur l'échantillon.\n  4. Vérifier l'absence de faux positif.\n  5. Récupérer le flag.\n\nRemédiation : Maintenir et tester les règles de détection régulièrement.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
     }
   ],
   "quiz": "q14"

@@ -6,7 +6,7 @@ export default {
   "icon": "🌐",
   "xp": 260,
   "duration": 60,
-  "summary": "Cours en français sur « Fondamentaux réseau pour hackers (Partie 1) » avec 6 chapitres, 10 exercices par chapitre et un défi CTF.",
+  "summary": "Cours en français enrichi sur « Fondamentaux réseau pour hackers (Partie 1) » : 6 chapitres, 10 exercices par chapitre, labs guidés pas à pas, payloads de lab isolé et 5 CTF détaillés par chapitre.",
   "objectives": [
     "Comprendre et appliquer : Modèles OSI et TCP/IP dans une perspective attaquant.",
     "Comprendre et appliquer : Équipements réseau : switchs, routeurs, pare-feu.",
@@ -903,10 +903,6 @@ export default {
       ]
     },
     {
-      "t": "h",
-      "x": "CTF — Module 3"
-    },
-    {
       "t": "callout",
       "v": "tip",
       "title": "Défi CTF (lab autorisé)",
@@ -932,6 +928,1482 @@ export default {
           "p": "Proposez des correctifs concrets et priorisés selon le risque."
         }
       ]
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 3.1 : Modèles OSI et TCP/IP dans une perspective attaquant"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Carrière & CEH",
+      "x": "Mettre en pratique « Modèles OSI et TCP/IP dans une perspective attaquant » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Carrière & CEH » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cartographier les domaines CEH v13 et les compétences associées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Évaluer votre niveau actuel par domaine."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Définir un plan d'étude et des labs pratiques."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Préparer un scénario de projet de synthèse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Rédiger une feuille de route de carrière et de certifications."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Construire un plan de progression et un scénario de projet",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/carriere/{notes,plan,labs}\necho 'Domaines CEH: reconnaissance, scanning, enumeration, vuln, system, web, wireless, mobile, IoT, cloud, crypto, IR' > lab/carriere/notes/domaines.txt\necho 'Objectif: certification + portfolio de labs' > lab/carriere/plan/objectifs.txt\ndate -Iseconds > lab/carriere/notes/start.txt"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Construire un plan de progression et un scénario de projet",
+      "x": "Plan type :\n- 4 semaines : fondamentaux réseau + Linux/Windows.\n- 4 semaines : recon, scan, enum, vuln.\n- 4 semaines : web, système, crypto.\n- 2 semaines : IR, cloud, IA.\n- 2 semaines : exam blanc + projet."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 3.1 : Modèles OSI et TCP/IP dans une perspective attaquant"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Carrière & CEH », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Cartographie CEH",
+      "x": "<strong>Objectif :</strong> Associer cinq sujets de lab aux domaines CEH v13.<br><strong>Contexte :</strong> Modèles OSI et TCP/IP dans une perspective attaquant (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c1_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les sujets."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lire les domaines."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Associer."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Justifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Cartographie CEH)",
+      "x": "CTF 1/5 — Cartographie CEH\nChapitre : 3.1 — Modèles OSI et TCP/IP dans une perspective attaquant\nFlag : flag{m3_c1_ctf1}\n\nIndices :\n  1. Lire le référentiel.\n  2. Classer les sujets.\n  3. Justifier.\n\nProcédure pas à pas :\n  1. Lister les sujets.\n  2. Lire les domaines.\n  3. Associer.\n  4. Justifier.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser le référentiel officiel et un plan d'étude.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Question scénario",
+      "x": "<strong>Objectif :</strong> Répondre à une question scénario de lab avec élimination.<br><strong>Contexte :</strong> Modèles OSI et TCP/IP dans une perspective attaquant (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c1_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser l'énoncé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Éliminer."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Choisir."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Question scénario)",
+      "x": "CTF 2/5 — Question scénario\nChapitre : 3.1 — Modèles OSI et TCP/IP dans une perspective attaquant\nFlag : flag{m3_c1_ctf2}\n\nIndices :\n  1. Lire l'énoncé.\n  2. Éliminer les options absurdes.\n  3. Choisir la meilleure.\n\nProcédure pas à pas :\n  1. Analyser l'énoncé.\n  2. Éliminer.\n  3. Comparer.\n  4. Choisir.\n  5. Récupérer le flag.\n\nRemédiation : S'entraîner sur des scénarios et justifier chaque choix.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Gestion du temps",
+      "x": "<strong>Objectif :</strong> Planifier un examen blanc de lab de 50 questions en 60 minutes.<br><strong>Contexte :</strong> Modèles OSI et TCP/IP dans une perspective attaquant (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c1_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un planning."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Répondre aux questions faciles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Marquer les difficiles."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Revenir."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Gestion du temps)",
+      "x": "CTF 3/5 — Gestion du temps\nChapitre : 3.1 — Modèles OSI et TCP/IP dans une perspective attaquant\nFlag : flag{m3_c1_ctf3}\n\nIndices :\n  1. Répartir le temps.\n  2. Marquer les questions difficiles.\n  3. Revenir ensuite.\n\nProcédure pas à pas :\n  1. Créer un planning.\n  2. Répondre aux questions faciles.\n  3. Marquer les difficiles.\n  4. Revenir.\n  5. Récupérer le flag.\n\nRemédiation : S'entraîner avec chronomètre et analyser les erreurs.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Feuille de route",
+      "x": "<strong>Objectif :</strong> Proposer une feuille de route de certifications après le lab.<br><strong>Contexte :</strong> Modèles OSI et TCP/IP dans une perspective attaquant (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c1_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les certifications."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier les prérequis."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Choisir une trajectoire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Planifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Feuille de route)",
+      "x": "CTF 4/5 — Feuille de route\nChapitre : 3.1 — Modèles OSI et TCP/IP dans une perspective attaquant\nFlag : flag{m3_c1_ctf4}\n\nIndices :\n  1. Identifier les prérequis.\n  2. Choisir une spécialisation.\n  3. Planifier.\n\nProcédure pas à pas :\n  1. Lister les certifications.\n  2. Vérifier les prérequis.\n  3. Choisir une trajectoire.\n  4. Planifier.\n  5. Récupérer le flag.\n\nRemédiation : Aligners certifications et expérience pratique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Capstone",
+      "x": "<strong>Objectif :</strong> Cadrer un projet de synthèse de lab avec périmètre et livrables.<br><strong>Contexte :</strong> Modèles OSI et TCP/IP dans une perspective attaquant (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c1_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir une cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Définir le périmètre."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les livrables."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Planifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Capstone)",
+      "x": "CTF 5/5 — Capstone\nChapitre : 3.1 — Modèles OSI et TCP/IP dans une perspective attaquant\nFlag : flag{m3_c1_ctf5}\n\nIndices :\n  1. Définir le périmètre.\n  2. Lister les livrables.\n  3. Planifier.\n\nProcédure pas à pas :\n  1. Choisir une cible de lab.\n  2. Définir le périmètre.\n  3. Lister les livrables.\n  4. Planifier.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser une méthodologie (PTES/OWASP) et documenter.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 3.2 : Équipements réseau : switchs, routeurs, pare-feu"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — SOC & sécurité réseau",
+      "x": "Mettre en pratique « Équipements réseau : switchs, routeurs, pare-feu » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « SOC & sécurité réseau » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Collecter les journaux de lab (pare-feu, IDS, système)."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Normaliser les champs et filtrer les événements pertinents."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Corréler les alertes pour reconstruire une chaîne d'attaque."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Créer une règle de détection simple (SIEM/IDS)."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter l'incident et proposer des actions."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Analyser des journaux et corréler des événements de sécurité",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\ngrep -Ei 'failed|denied|alert' lab/logs/*.log\nawk '{print $1}' lab/logs/access.log | sort | uniq -c | sort -nr | head\nsuricata -r lab/capture.pcap -l lab/suricata\ncat lab/suricata/fast.log\ngrep '4625' lab/logs/security.log | head"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Analyser des journaux et corréler des événements de sécurité",
+      "x": "Exemple de corrélation :\n- 10 échecs de connexion suivis d'un succès.\n- Requête HTTP vers un domaine suspect.\n- Alerte IDS + connexion sortante.\n- Création de compte + ajout au groupe admin."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 3.2 : Équipements réseau : switchs, routeurs, pare-feu"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « SOC & sécurité réseau », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Corrélation de logs",
+      "x": "<strong>Objectif :</strong> Corréler des journaux de lab pour identifier une intrusion.<br><strong>Contexte :</strong> Équipements réseau : switchs, routeurs, pare-feu (SOC & sécurité réseau).<br><strong>Flag attendu (lab) :</strong> flag{m3_c2_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser les logs."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Compter les échecs par IP."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le succès."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Reconstruire la chronologie."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Corrélation de logs)",
+      "x": "CTF 1/5 — Corrélation de logs\nChapitre : 3.2 — Équipements réseau : switchs, routeurs, pare-feu\nFlag : flag{m3_c2_ctf1}\n\nIndices :\n  1. Chercher les échecs répétés.\n  2. Identifier le succès.\n  3. Suivre l'activité.\n\nProcédure pas à pas :\n  1. Analyser les logs.\n  2. Compter les échecs par IP.\n  3. Identifier le succès.\n  4. Reconstruire la chronologie.\n  5. Récupérer le flag.\n\nRemédiation : Centraliser les logs et créer des alertes de corrélation.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Alerte IDS",
+      "x": "<strong>Objectif :</strong> Une alerte IDS de lab est déclenchée. L'analyser et qualifier.<br><strong>Contexte :</strong> Équipements réseau : switchs, routeurs, pare-feu (SOC & sécurité réseau).<br><strong>Flag attendu (lab) :</strong> flag{m3_c2_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir l'alerte."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lire la signature."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Analyser le trafic."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Qualifier l'alerte."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Alerte IDS)",
+      "x": "CTF 2/5 — Alerte IDS\nChapitre : 3.2 — Équipements réseau : switchs, routeurs, pare-feu\nFlag : flag{m3_c2_ctf2}\n\nIndices :\n  1. Lire la règle.\n  2. Examiner le paquet.\n  3. Vérifier le faux positif.\n\nProcédure pas à pas :\n  1. Ouvrir l'alerte.\n  2. Lire la signature.\n  3. Analyser le trafic.\n  4. Qualifier l'alerte.\n  5. Récupérer le flag.\n\nRemédiation : Tuner les règles et valider les alertes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Processus EDR",
+      "x": "<strong>Objectif :</strong> Un EDR de lab signale un processus suspect. Analyser l'arbre.<br><strong>Contexte :</strong> Équipements réseau : switchs, routeurs, pare-feu (SOC & sécurité réseau).<br><strong>Flag attendu (lab) :</strong> flag{m3_c2_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir l'alerte."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Analyser le processus."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le parent."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'activité."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Processus EDR)",
+      "x": "CTF 3/5 — Processus EDR\nChapitre : 3.2 — Équipements réseau : switchs, routeurs, pare-feu\nFlag : flag{m3_c2_ctf3}\n\nIndices :\n  1. Lire la ligne de commande.\n  2. Vérifier le parent.\n  3. Chercher les IOC.\n\nProcédure pas à pas :\n  1. Ouvrir l'alerte.\n  2. Analyser le processus.\n  3. Identifier le parent.\n  4. Documenter l'activité.\n  5. Récupérer le flag.\n\nRemédiation : Bloquer les binaires non autorisés et surveiller les parents.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Pare-feu",
+      "x": "<strong>Objectif :</strong> Un journal de pare-feu de lab montre des tentatives bloquées. Analyser.<br><strong>Contexte :</strong> Équipements réseau : switchs, routeurs, pare-feu (SOC & sécurité réseau).<br><strong>Flag attendu (lab) :</strong> flag{m3_c2_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lire les logs."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer les refus."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Compter par IP."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier la cible."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Pare-feu)",
+      "x": "CTF 4/5 — Pare-feu\nChapitre : 3.2 — Équipements réseau : switchs, routeurs, pare-feu\nFlag : flag{m3_c2_ctf4}\n\nIndices :\n  1. Filtrer les DENY.\n  2. Compter par source.\n  3. Identifier la cible.\n\nProcédure pas à pas :\n  1. Lire les logs.\n  2. Filtrer les refus.\n  3. Compter par IP.\n  4. Identifier la cible.\n  5. Récupérer le flag.\n\nRemédiation : Mettre en place un filtrage et une surveillance des tentatives.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Workflow SOC",
+      "x": "<strong>Objectif :</strong> Prioriser trois alertes de lab selon le risque.<br><strong>Contexte :</strong> Équipements réseau : switchs, routeurs, pare-feu (SOC & sécurité réseau).<br><strong>Flag attendu (lab) :</strong> flag{m3_c2_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les alertes."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Attribuer un score."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Choisir la priorité."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter la décision."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Workflow SOC)",
+      "x": "CTF 5/5 — Workflow SOC\nChapitre : 3.2 — Équipements réseau : switchs, routeurs, pare-feu\nFlag : flag{m3_c2_ctf5}\n\nIndices :\n  1. Évaluer la criticité.\n  2. Vérifier la confiance.\n  3. Appliquer le playbook.\n\nProcédure pas à pas :\n  1. Lister les alertes.\n  2. Attribuer un score.\n  3. Choisir la priorité.\n  4. Documenter la décision.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser un playbook et une matrice de priorisation.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 3.3 : Adresse MAC vs adresse IP"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Carrière & CEH",
+      "x": "Mettre en pratique « Adresse MAC vs adresse IP » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Carrière & CEH » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cartographier les domaines CEH v13 et les compétences associées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Évaluer votre niveau actuel par domaine."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Définir un plan d'étude et des labs pratiques."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Préparer un scénario de projet de synthèse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Rédiger une feuille de route de carrière et de certifications."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Construire un plan de progression et un scénario de projet",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/carriere/{notes,plan,labs}\necho 'Domaines CEH: reconnaissance, scanning, enumeration, vuln, system, web, wireless, mobile, IoT, cloud, crypto, IR' > lab/carriere/notes/domaines.txt\necho 'Objectif: certification + portfolio de labs' > lab/carriere/plan/objectifs.txt\ndate -Iseconds > lab/carriere/notes/start.txt"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Construire un plan de progression et un scénario de projet",
+      "x": "Plan type :\n- 4 semaines : fondamentaux réseau + Linux/Windows.\n- 4 semaines : recon, scan, enum, vuln.\n- 4 semaines : web, système, crypto.\n- 2 semaines : IR, cloud, IA.\n- 2 semaines : exam blanc + projet."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 3.3 : Adresse MAC vs adresse IP"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Carrière & CEH », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Cartographie CEH",
+      "x": "<strong>Objectif :</strong> Associer cinq sujets de lab aux domaines CEH v13.<br><strong>Contexte :</strong> Adresse MAC vs adresse IP (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c3_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les sujets."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lire les domaines."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Associer."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Justifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Cartographie CEH)",
+      "x": "CTF 1/5 — Cartographie CEH\nChapitre : 3.3 — Adresse MAC vs adresse IP\nFlag : flag{m3_c3_ctf1}\n\nIndices :\n  1. Lire le référentiel.\n  2. Classer les sujets.\n  3. Justifier.\n\nProcédure pas à pas :\n  1. Lister les sujets.\n  2. Lire les domaines.\n  3. Associer.\n  4. Justifier.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser le référentiel officiel et un plan d'étude.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Question scénario",
+      "x": "<strong>Objectif :</strong> Répondre à une question scénario de lab avec élimination.<br><strong>Contexte :</strong> Adresse MAC vs adresse IP (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c3_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser l'énoncé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Éliminer."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Choisir."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Question scénario)",
+      "x": "CTF 2/5 — Question scénario\nChapitre : 3.3 — Adresse MAC vs adresse IP\nFlag : flag{m3_c3_ctf2}\n\nIndices :\n  1. Lire l'énoncé.\n  2. Éliminer les options absurdes.\n  3. Choisir la meilleure.\n\nProcédure pas à pas :\n  1. Analyser l'énoncé.\n  2. Éliminer.\n  3. Comparer.\n  4. Choisir.\n  5. Récupérer le flag.\n\nRemédiation : S'entraîner sur des scénarios et justifier chaque choix.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Gestion du temps",
+      "x": "<strong>Objectif :</strong> Planifier un examen blanc de lab de 50 questions en 60 minutes.<br><strong>Contexte :</strong> Adresse MAC vs adresse IP (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c3_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un planning."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Répondre aux questions faciles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Marquer les difficiles."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Revenir."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Gestion du temps)",
+      "x": "CTF 3/5 — Gestion du temps\nChapitre : 3.3 — Adresse MAC vs adresse IP\nFlag : flag{m3_c3_ctf3}\n\nIndices :\n  1. Répartir le temps.\n  2. Marquer les questions difficiles.\n  3. Revenir ensuite.\n\nProcédure pas à pas :\n  1. Créer un planning.\n  2. Répondre aux questions faciles.\n  3. Marquer les difficiles.\n  4. Revenir.\n  5. Récupérer le flag.\n\nRemédiation : S'entraîner avec chronomètre et analyser les erreurs.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Feuille de route",
+      "x": "<strong>Objectif :</strong> Proposer une feuille de route de certifications après le lab.<br><strong>Contexte :</strong> Adresse MAC vs adresse IP (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c3_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les certifications."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier les prérequis."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Choisir une trajectoire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Planifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Feuille de route)",
+      "x": "CTF 4/5 — Feuille de route\nChapitre : 3.3 — Adresse MAC vs adresse IP\nFlag : flag{m3_c3_ctf4}\n\nIndices :\n  1. Identifier les prérequis.\n  2. Choisir une spécialisation.\n  3. Planifier.\n\nProcédure pas à pas :\n  1. Lister les certifications.\n  2. Vérifier les prérequis.\n  3. Choisir une trajectoire.\n  4. Planifier.\n  5. Récupérer le flag.\n\nRemédiation : Aligners certifications et expérience pratique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Capstone",
+      "x": "<strong>Objectif :</strong> Cadrer un projet de synthèse de lab avec périmètre et livrables.<br><strong>Contexte :</strong> Adresse MAC vs adresse IP (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c3_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir une cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Définir le périmètre."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les livrables."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Planifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Capstone)",
+      "x": "CTF 5/5 — Capstone\nChapitre : 3.3 — Adresse MAC vs adresse IP\nFlag : flag{m3_c3_ctf5}\n\nIndices :\n  1. Définir le périmètre.\n  2. Lister les livrables.\n  3. Planifier.\n\nProcédure pas à pas :\n  1. Choisir une cible de lab.\n  2. Définir le périmètre.\n  3. Lister les livrables.\n  4. Planifier.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser une méthodologie (PTES/OWASP) et documenter.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 3.4 : Topologies réseau et flux de trafic"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Sniffing & trafic",
+      "x": "Mettre en pratique « Topologies réseau et flux de trafic » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Sniffing & trafic » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Configurer une capture sur l'interface de lab autorisée."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Générer un trafic de test (HTTP, DNS, authentification de lab)."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Filtrer les paquets pertinents dans Wireshark."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Analyser les protocoles et les données en clair."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter les risques et les mesures de chiffrement."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Capturer et analyser le trafic d'un réseau de laboratoire",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nsudo tcpdump -i eth0 -w lab/capture.pcap\ntshark -r lab/capture.pcap -Y 'http.request'\ntshark -r lab/capture.pcap -Y 'dns.qry.name'\ntshark -r lab/capture.pcap -Y 'arp'\ntshark -r lab/capture.pcap -Y 'http.authorization'"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Capturer et analyser le trafic d'un réseau de laboratoire",
+      "x": "Filtres Wireshark utiles :\nhttp.request\ndns.qry.name\narp.opcode == 2\ntcp.flags.syn == 1 && tcp.flags.ack == 0\nhttp.authorization"
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 3.4 : Topologies réseau et flux de trafic"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Sniffing & trafic », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Identifiant en clair",
+      "x": "<strong>Objectif :</strong> Une capture de lab contient une authentification HTTP Basic. La retrouver.<br><strong>Contexte :</strong> Topologies réseau et flux de trafic (Sniffing & trafic).<br><strong>Flag attendu (lab) :</strong> flag{m3_c4_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir la capture."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer les requêtes HTTP."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier l'en-tête Authorization."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Décoder la valeur."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Identifiant en clair)",
+      "x": "CTF 1/5 — Identifiant en clair\nChapitre : 3.4 — Topologies réseau et flux de trafic\nFlag : flag{m3_c4_ctf1}\n\nIndices :\n  1. Filtrer http.authorization.\n  2. Décoder le Base64.\n  3. Ne pas utiliser de données réelles.\n\nProcédure pas à pas :\n  1. Ouvrir la capture.\n  2. Filtrer les requêtes HTTP.\n  3. Identifier l'en-tête Authorization.\n  4. Décoder la valeur.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser HTTPS et interdire les authentifications en clair.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — ARP spoof",
+      "x": "<strong>Objectif :</strong> Une capture de lab montre une attaque ARP. Identifier les preuves.<br><strong>Contexte :</strong> Topologies réseau et flux de trafic (Sniffing & trafic).<br><strong>Flag attendu (lab) :</strong> flag{m3_c4_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser les paquets ARP."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier les réponses ARP suspectes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer les MAC."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'attaque."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (ARP spoof)",
+      "x": "CTF 2/5 — ARP spoof\nChapitre : 3.4 — Topologies réseau et flux de trafic\nFlag : flag{m3_c4_ctf2}\n\nIndices :\n  1. Filtrer ARP.\n  2. Chercher les MAC dupliquées.\n  3. Comparer les annonces.\n\nProcédure pas à pas :\n  1. Analyser les paquets ARP.\n  2. Identifier les réponses ARP suspectes.\n  3. Comparer les MAC.\n  4. Documenter l'attaque.\n  5. Récupérer le flag.\n\nRemédiation : Activer la protection ARP et la surveillance réseau.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Exfiltration DNS",
+      "x": "<strong>Objectif :</strong> Un poste de lab exfiltre des données via DNS. Détecter le motif.<br><strong>Contexte :</strong> Topologies réseau et flux de trafic (Sniffing & trafic).<br><strong>Flag attendu (lab) :</strong> flag{m3_c4_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Filtrer les requêtes DNS."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier les noms anormaux."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Extraire les données encodées."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter la méthode."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Exfiltration DNS)",
+      "x": "CTF 3/5 — Exfiltration DNS\nChapitre : 3.4 — Topologies réseau et flux de trafic\nFlag : flag{m3_c4_ctf3}\n\nIndices :\n  1. Analyser les requêtes DNS.\n  2. Chercher les noms longs.\n  3. Comparer les fréquences.\n\nProcédure pas à pas :\n  1. Filtrer les requêtes DNS.\n  2. Identifier les noms anormaux.\n  3. Extraire les données encodées.\n  4. Documenter la méthode.\n  5. Récupérer le flag.\n\nRemédiation : Surveiller les requêtes DNS et limiter les résolveurs autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Authentification FTP",
+      "x": "<strong>Objectif :</strong> Une capture de lab contient un login FTP. L'extraire.<br><strong>Contexte :</strong> Topologies réseau et flux de trafic (Sniffing & trafic).<br><strong>Flag attendu (lab) :</strong> flag{m3_c4_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir la capture."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer le trafic FTP."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier les commandes USER/PASS."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Relever les identifiants de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Authentification FTP)",
+      "x": "CTF 4/5 — Authentification FTP\nChapitre : 3.4 — Topologies réseau et flux de trafic\nFlag : flag{m3_c4_ctf4}\n\nIndices :\n  1. Filtrer FTP.\n  2. Chercher USER et PASS.\n  3. Documenter le risque.\n\nProcédure pas à pas :\n  1. Ouvrir la capture.\n  2. Filtrer le trafic FTP.\n  3. Identifier les commandes USER/PASS.\n  4. Relever les identifiants de lab.\n  5. Récupérer le flag.\n\nRemédiation : Remplacer FTP par SFTP/FTPS et chiffrer les échanges.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Métadonnées TLS",
+      "x": "<strong>Objectif :</strong> Analyser le SNI d'une capture TLS de lab sans déchiffrer.<br><strong>Contexte :</strong> Topologies réseau et flux de trafic (Sniffing & trafic).<br><strong>Flag attendu (lab) :</strong> flag{m3_c4_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Ouvrir la capture."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Filtrer les paquets TLS."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Extraire le SNI."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier le service visité."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Métadonnées TLS)",
+      "x": "CTF 5/5 — Métadonnées TLS\nChapitre : 3.4 — Topologies réseau et flux de trafic\nFlag : flag{m3_c4_ctf5}\n\nIndices :\n  1. Filtrer TLS.\n  2. Chercher le champ SNI.\n  3. Identifier le service.\n\nProcédure pas à pas :\n  1. Ouvrir la capture.\n  2. Filtrer les paquets TLS.\n  3. Extraire le SNI.\n  4. Identifier le service visité.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser TLS 1.3, ECH si disponible et surveiller les métadonnées.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 3.5 : Faiblesses par couche et surfaces d'attaque"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — IA & automatisation",
+      "x": "Mettre en pratique « Faiblesses par couche et surfaces d'attaque » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « IA & automatisation » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Définir une tâche précise (résumé de logs, aide à la rédaction, analyse de code)."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Fournir un contexte limité et anonymisé à l'IA."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier les réponses et corriger les hallucinations."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Comparer les résultats avec une analyse manuelle."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter l'usage de l'IA et les limites."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Utiliser l'IA de manière contrôlée pour analyser des données de sécurité",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\necho 'Résume ces logs anonymisés et identifie 3 anomalies' > lab/prompt.txt\n# Coller uniquement des données de lab, jamais de données réelles\ngrep -Ei 'error|failed|denied' lab/logs/anonymized.log | head -50\n# Vérifier chaque conclusion de l'IA avec les logs sources"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Utiliser l'IA de manière contrôlée pour analyser des données de sécurité",
+      "x": "Bonnes pratiques :\n- Anonymiser les données avant envoi.\n- Ne pas envoyer de secrets.\n- Vérifier les réponses.\n- Citer l'usage de l'IA dans le rapport.\n- Garder l'humain dans la boucle."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 3.5 : Faiblesses par couche et surfaces d'attaque"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « IA & automatisation », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Analyse de logs par IA",
+      "x": "<strong>Objectif :</strong> Utiliser l'IA pour résumer des logs de lab et vérifier ses conclusions.<br><strong>Contexte :</strong> Faiblesses par couche et surfaces d'attaque (IA & automatisation).<br><strong>Flag attendu (lab) :</strong> flag{m3_c5_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Préparer un extrait."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Demander une analyse."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier chaque anomalie."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Corriger les erreurs."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Analyse de logs par IA)",
+      "x": "CTF 1/5 — Analyse de logs par IA\nChapitre : 3.5 — Faiblesses par couche et surfaces d'attaque\nFlag : flag{m3_c5_ctf1}\n\nIndices :\n  1. Anonymiser les logs.\n  2. Demander un résumé.\n  3. Vérifier les sources.\n\nProcédure pas à pas :\n  1. Préparer un extrait.\n  2. Demander une analyse.\n  3. Vérifier chaque anomalie.\n  4. Corriger les erreurs.\n  5. Récupérer le flag.\n\nRemédiation : Toujours valider les sorties de l'IA avec les données brutes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Hallucination",
+      "x": "<strong>Objectif :</strong> Une réponse d'IA contient une information inventée. L'identifier.<br><strong>Contexte :</strong> Faiblesses par couche et surfaces d'attaque (IA & automatisation).<br><strong>Flag attendu (lab) :</strong> flag{m3_c5_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lire la réponse."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier l'affirmation."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Vérifier la source."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Constater l'absence."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Hallucination)",
+      "x": "CTF 2/5 — Hallucination\nChapitre : 3.5 — Faiblesses par couche et surfaces d'attaque\nFlag : flag{m3_c5_ctf2}\n\nIndices :\n  1. Vérifier les faits.\n  2. Comparer aux sources.\n  3. Documenter.\n\nProcédure pas à pas :\n  1. Lire la réponse.\n  2. Identifier l'affirmation.\n  3. Vérifier la source.\n  4. Constater l'absence.\n  5. Récupérer le flag.\n\nRemédiation : Mettre en place une vérification systématique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Prompt injection",
+      "x": "<strong>Objectif :</strong> Un document de lab contient une instruction malveillante pour l'IA. La détecter.<br><strong>Contexte :</strong> Faiblesses par couche et surfaces d'attaque (IA & automatisation).<br><strong>Flag attendu (lab) :</strong> flag{m3_c5_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser le document."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier l'instruction."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Ne pas l'exécuter."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Prompt injection)",
+      "x": "CTF 3/5 — Prompt injection\nChapitre : 3.5 — Faiblesses par couche et surfaces d'attaque\nFlag : flag{m3_c5_ctf3}\n\nIndices :\n  1. Lire le document.\n  2. Repérer les instructions.\n  3. Isoler le contenu.\n\nProcédure pas à pas :\n  1. Analyser le document.\n  2. Identifier l'instruction.\n  3. Ne pas l'exécuter.\n  4. Documenter.\n  5. Récupérer le flag.\n\nRemédiation : Traiter les entrées comme non fiables et limiter les actions.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Rapport assisté",
+      "x": "<strong>Objectif :</strong> Rédiger un rapport de lab avec l'IA et vérifier la qualité.<br><strong>Contexte :</strong> Faiblesses par couche et surfaces d'attaque (IA & automatisation).<br><strong>Flag attendu (lab) :</strong> flag{m3_c5_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Rassembler les preuves."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Demander un plan."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rédiger."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Vérifier les faits."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Rapport assisté)",
+      "x": "CTF 4/5 — Rapport assisté\nChapitre : 3.5 — Faiblesses par couche et surfaces d'attaque\nFlag : flag{m3_c5_ctf4}\n\nIndices :\n  1. Fournir les faits.\n  2. Demander un plan.\n  3. Relire.\n\nProcédure pas à pas :\n  1. Rassembler les preuves.\n  2. Demander un plan.\n  3. Rédiger.\n  4. Vérifier les faits.\n  5. Récupérer le flag.\n\nRemédiation : L'IA aide à rédiger, mais l'expert valide le fond.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Éthique de l'automatisation",
+      "x": "<strong>Objectif :</strong> Un script de lab automatise une action risquée. Évaluer les garde-fous.<br><strong>Contexte :</strong> Faiblesses par couche et surfaces d'attaque (IA & automatisation).<br><strong>Flag attendu (lab) :</strong> flag{m3_c5_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser le script."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier l'action risquée."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Ajouter une confirmation."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Tester."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Éthique de l'automatisation)",
+      "x": "CTF 5/5 — Éthique de l'automatisation\nChapitre : 3.5 — Faiblesses par couche et surfaces d'attaque\nFlag : flag{m3_c5_ctf5}\n\nIndices :\n  1. Lire le script.\n  2. Identifier les risques.\n  3. Ajouter des limites.\n\nProcédure pas à pas :\n  1. Analyser le script.\n  2. Identifier l'action risquée.\n  3. Ajouter une confirmation.\n  4. Tester.\n  5. Récupérer le flag.\n\nRemédiation : Intégrer des garde-fous, des limites de périmètre et des journaux.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 3.6 : Concepts VLAN et aperçu de la segmentation"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Carrière & CEH",
+      "x": "Mettre en pratique « Concepts VLAN et aperçu de la segmentation » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Carrière & CEH » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cartographier les domaines CEH v13 et les compétences associées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Évaluer votre niveau actuel par domaine."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Définir un plan d'étude et des labs pratiques."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Préparer un scénario de projet de synthèse."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Rédiger une feuille de route de carrière et de certifications."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Construire un plan de progression et un scénario de projet",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/carriere/{notes,plan,labs}\necho 'Domaines CEH: reconnaissance, scanning, enumeration, vuln, system, web, wireless, mobile, IoT, cloud, crypto, IR' > lab/carriere/notes/domaines.txt\necho 'Objectif: certification + portfolio de labs' > lab/carriere/plan/objectifs.txt\ndate -Iseconds > lab/carriere/notes/start.txt"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Construire un plan de progression et un scénario de projet",
+      "x": "Plan type :\n- 4 semaines : fondamentaux réseau + Linux/Windows.\n- 4 semaines : recon, scan, enum, vuln.\n- 4 semaines : web, système, crypto.\n- 2 semaines : IR, cloud, IA.\n- 2 semaines : exam blanc + projet."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 3.6 : Concepts VLAN et aperçu de la segmentation"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Carrière & CEH », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Cartographie CEH",
+      "x": "<strong>Objectif :</strong> Associer cinq sujets de lab aux domaines CEH v13.<br><strong>Contexte :</strong> Concepts VLAN et aperçu de la segmentation (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c6_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les sujets."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Lire les domaines."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Associer."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Justifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Cartographie CEH)",
+      "x": "CTF 1/5 — Cartographie CEH\nChapitre : 3.6 — Concepts VLAN et aperçu de la segmentation\nFlag : flag{m3_c6_ctf1}\n\nIndices :\n  1. Lire le référentiel.\n  2. Classer les sujets.\n  3. Justifier.\n\nProcédure pas à pas :\n  1. Lister les sujets.\n  2. Lire les domaines.\n  3. Associer.\n  4. Justifier.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser le référentiel officiel et un plan d'étude.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Question scénario",
+      "x": "<strong>Objectif :</strong> Répondre à une question scénario de lab avec élimination.<br><strong>Contexte :</strong> Concepts VLAN et aperçu de la segmentation (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c6_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Analyser l'énoncé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Éliminer."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Comparer."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Choisir."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Question scénario)",
+      "x": "CTF 2/5 — Question scénario\nChapitre : 3.6 — Concepts VLAN et aperçu de la segmentation\nFlag : flag{m3_c6_ctf2}\n\nIndices :\n  1. Lire l'énoncé.\n  2. Éliminer les options absurdes.\n  3. Choisir la meilleure.\n\nProcédure pas à pas :\n  1. Analyser l'énoncé.\n  2. Éliminer.\n  3. Comparer.\n  4. Choisir.\n  5. Récupérer le flag.\n\nRemédiation : S'entraîner sur des scénarios et justifier chaque choix.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Gestion du temps",
+      "x": "<strong>Objectif :</strong> Planifier un examen blanc de lab de 50 questions en 60 minutes.<br><strong>Contexte :</strong> Concepts VLAN et aperçu de la segmentation (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c6_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un planning."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Répondre aux questions faciles."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Marquer les difficiles."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Revenir."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Gestion du temps)",
+      "x": "CTF 3/5 — Gestion du temps\nChapitre : 3.6 — Concepts VLAN et aperçu de la segmentation\nFlag : flag{m3_c6_ctf3}\n\nIndices :\n  1. Répartir le temps.\n  2. Marquer les questions difficiles.\n  3. Revenir ensuite.\n\nProcédure pas à pas :\n  1. Créer un planning.\n  2. Répondre aux questions faciles.\n  3. Marquer les difficiles.\n  4. Revenir.\n  5. Récupérer le flag.\n\nRemédiation : S'entraîner avec chronomètre et analyser les erreurs.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Feuille de route",
+      "x": "<strong>Objectif :</strong> Proposer une feuille de route de certifications après le lab.<br><strong>Contexte :</strong> Concepts VLAN et aperçu de la segmentation (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c6_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Lister les certifications."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier les prérequis."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Choisir une trajectoire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Planifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Feuille de route)",
+      "x": "CTF 4/5 — Feuille de route\nChapitre : 3.6 — Concepts VLAN et aperçu de la segmentation\nFlag : flag{m3_c6_ctf4}\n\nIndices :\n  1. Identifier les prérequis.\n  2. Choisir une spécialisation.\n  3. Planifier.\n\nProcédure pas à pas :\n  1. Lister les certifications.\n  2. Vérifier les prérequis.\n  3. Choisir une trajectoire.\n  4. Planifier.\n  5. Récupérer le flag.\n\nRemédiation : Aligners certifications et expérience pratique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Capstone",
+      "x": "<strong>Objectif :</strong> Cadrer un projet de synthèse de lab avec périmètre et livrables.<br><strong>Contexte :</strong> Concepts VLAN et aperçu de la segmentation (Carrière & CEH).<br><strong>Flag attendu (lab) :</strong> flag{m3_c6_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir une cible de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Définir le périmètre."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les livrables."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Planifier."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Capstone)",
+      "x": "CTF 5/5 — Capstone\nChapitre : 3.6 — Concepts VLAN et aperçu de la segmentation\nFlag : flag{m3_c6_ctf5}\n\nIndices :\n  1. Définir le périmètre.\n  2. Lister les livrables.\n  3. Planifier.\n\nProcédure pas à pas :\n  1. Choisir une cible de lab.\n  2. Définir le périmètre.\n  3. Lister les livrables.\n  4. Planifier.\n  5. Récupérer le flag.\n\nRemédiation : Utiliser une méthodologie (PTES/OWASP) et documenter.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
     }
   ],
   "quiz": "q3"

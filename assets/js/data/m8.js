@@ -6,7 +6,7 @@ export default {
   "icon": "🔎",
   "xp": 280,
   "duration": 65,
-  "summary": "Cours en français sur « Empreinte et reconnaissance » avec 6 chapitres, 10 exercices par chapitre et un défi CTF.",
+  "summary": "Cours en français enrichi sur « Empreinte et reconnaissance » : 6 chapitres, 10 exercices par chapitre, labs guidés pas à pas, payloads de lab isolé et 5 CTF détaillés par chapitre.",
   "objectives": [
     "Comprendre et appliquer : Techniques de reconnaissance passive et active.",
     "Comprendre et appliquer : Empreinte domaine, IP et DNS.",
@@ -903,10 +903,6 @@ export default {
       ]
     },
     {
-      "t": "h",
-      "x": "CTF — Module 8"
-    },
-    {
       "t": "callout",
       "v": "tip",
       "title": "Défi CTF (lab autorisé)",
@@ -932,6 +928,1482 @@ export default {
           "p": "Proposez des correctifs concrets et priorisés selon le risque."
         }
       ]
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 8.1 : Techniques de reconnaissance passive et active"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Reconnaissance & OSINT",
+      "x": "Mettre en pratique « Techniques de reconnaissance passive et active » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Reconnaissance & OSINT » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir un domaine de laboratoire ou un domaine fictif autorisé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Collecter les enregistrements DNS (A, MX, TXT, NS) et les informations whois."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher des sous-domaines et des services exposés sans interaction intrusive."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Analyser les métadonnées d'un document de lab et les corréler aux indices OSINT."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner les sources, les dates de collecte et le niveau de confiance."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\ndig +short example.org A\ndig +short example.org MX\ndig +short example.org TXT\nwhois example.org | head -40\nexiftool lab/document.pdf\ncurl -s https://crt.sh/?q=%25.example.org | head -20"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "Bonnes pratiques OSINT :\n- Ne pas se connecter avec un compte personnel.\n- Privilégier les sources publiques et les API officielles.\n- Horodater chaque collecte.\n- Valider une information avec au moins deux sources.\n- Ne jamais publier de données personnelles."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 8.1 : Techniques de reconnaissance passive et active"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Reconnaissance & OSINT », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Sous-domaine oublié",
+      "x": "<strong>Objectif :</strong> Retrouver un sous-domaine de développement exposé dans un lab et prouver son existence.<br><strong>Contexte :</strong> Techniques de reconnaissance passive et active (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c1_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les sous-domaines via DNS et crt.sh."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester la résolution des candidats."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le sous-domaine actif."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Accéder à la page d'accueil du lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le commentaire HTML."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Sous-domaine oublié)",
+      "x": "CTF 1/5 — Sous-domaine oublié\nChapitre : 8.1 — Techniques de reconnaissance passive et active\nFlag : flag{m8_c1_ctf1}\n\nIndices :\n  1. Chercher les enregistrements DNS et les certificats.\n  2. Vérifier les sous-domaines classiques (dev, staging, test).\n  3. Utiliser une source de transparence des certificats.\n\nProcédure pas à pas :\n  1. Énumérer les sous-domaines via DNS et crt.sh.\n  2. Tester la résolution des candidats.\n  3. Identifier le sous-domaine actif.\n  4. Accéder à la page d'accueil du lab.\n  5. Récupérer le flag dans le commentaire HTML.\n\nRemédiation : Retirer les environnements de test de la zone publique et appliquer une authentification.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Métadonnées PDF",
+      "x": "<strong>Objectif :</strong> Un PDF de lab contient des métadonnées révélatrices. Les extraire et conclure.<br><strong>Contexte :</strong> Techniques de reconnaissance passive et active (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c1_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Télécharger le PDF de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Exécuter exiftool."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relever l'auteur et le chemin interne."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Corréler avec les autres indices."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans les métadonnées."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Métadonnées PDF)",
+      "x": "CTF 2/5 — Métadonnées PDF\nChapitre : 8.1 — Techniques de reconnaissance passive et active\nFlag : flag{m8_c1_ctf2}\n\nIndices :\n  1. Utiliser un outil d'analyse de métadonnées.\n  2. Chercher auteur, logiciel, chemins.\n  3. Ne pas publier les données personnelles.\n\nProcédure pas à pas :\n  1. Télécharger le PDF de lab.\n  2. Exécuter exiftool.\n  3. Relever l'auteur et le chemin interne.\n  4. Corréler avec les autres indices.\n  5. Récupérer le flag dans les métadonnées.\n\nRemédiation : Nettoyer les métadonnées avant publication et sensibiliser les équipes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Modèle d'adresse email",
+      "x": "<strong>Objectif :</strong> Déduire le format des adresses email d'une organisation fictive à partir de sources publiques.<br><strong>Contexte :</strong> Techniques de reconnaissance passive et active (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c1_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Collecter des adresses publiques de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le format dominant."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Formuler des candidats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Valider avec une source de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de contact."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Modèle d'adresse email)",
+      "x": "CTF 3/5 — Modèle d'adresse email\nChapitre : 8.1 — Techniques de reconnaissance passive et active\nFlag : flag{m8_c1_ctf3}\n\nIndices :\n  1. Observer les adresses publiées.\n  2. Tester les formats prénom.nom, p.nom, nom.\n  3. Rester passif.\n\nProcédure pas à pas :\n  1. Collecter des adresses publiques de lab.\n  2. Identifier le format dominant.\n  3. Formuler des candidats.\n  4. Valider avec une source de lab.\n  5. Récupérer le flag dans la page de contact.\n\nRemédiation : Limiter l'exposition des adresses et utiliser des alias génériques.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Transfert de zone DNS",
+      "x": "<strong>Objectif :</strong> Vérifier si un serveur DNS de lab autorise un transfert de zone.<br><strong>Contexte :</strong> Techniques de reconnaissance passive et active (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c1_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier le serveur NS du lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tenter un transfert AXFR."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les enregistrements obtenus."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte contenant le flag."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder à la ressource de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Transfert de zone DNS)",
+      "x": "CTF 4/5 — Transfert de zone DNS\nChapitre : 8.1 — Techniques de reconnaissance passive et active\nFlag : flag{m8_c1_ctf4}\n\nIndices :\n  1. Tester dig AXFR.\n  2. Vérifier les NS.\n  3. Comparer avec les enregistrements publics.\n\nProcédure pas à pas :\n  1. Identifier le serveur NS du lab.\n  2. Tenter un transfert AXFR.\n  3. Lister les enregistrements obtenus.\n  4. Identifier l'hôte contenant le flag.\n  5. Accéder à la ressource de lab.\n\nRemédiation : Restreindre les transferts de zone aux serveurs secondaires autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Fuite dans un dépôt public",
+      "x": "<strong>Objectif :</strong> Un dépôt Git de lab contient un secret dans l'historique. Le retrouver.<br><strong>Contexte :</strong> Techniques de reconnaissance passive et active (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c1_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cloner le dépôt de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Parcourir l'historique avec git log -p."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le commit contenant le secret."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la valeur factice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag associé."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Fuite dans un dépôt public)",
+      "x": "CTF 5/5 — Fuite dans un dépôt public\nChapitre : 8.1 — Techniques de reconnaissance passive et active\nFlag : flag{m8_c1_ctf5}\n\nIndices :\n  1. Chercher les commits anciens.\n  2. Inspecter les fichiers de configuration.\n  3. Ne pas exposer le secret réel.\n\nProcédure pas à pas :\n  1. Cloner le dépôt de lab.\n  2. Parcourir l'historique avec git log -p.\n  3. Identifier le commit contenant le secret.\n  4. Extraire la valeur factice.\n  5. Récupérer le flag associé.\n\nRemédiation : Utiliser un scanner de secrets, révoquer les clés et nettoyer l'historique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 8.2 : Empreinte domaine, IP et DNS"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Reconnaissance & OSINT",
+      "x": "Mettre en pratique « Empreinte domaine, IP et DNS » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Reconnaissance & OSINT » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir un domaine de laboratoire ou un domaine fictif autorisé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Collecter les enregistrements DNS (A, MX, TXT, NS) et les informations whois."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher des sous-domaines et des services exposés sans interaction intrusive."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Analyser les métadonnées d'un document de lab et les corréler aux indices OSINT."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner les sources, les dates de collecte et le niveau de confiance."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\ndig +short example.org A\ndig +short example.org MX\ndig +short example.org TXT\nwhois example.org | head -40\nexiftool lab/document.pdf\ncurl -s https://crt.sh/?q=%25.example.org | head -20"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "Bonnes pratiques OSINT :\n- Ne pas se connecter avec un compte personnel.\n- Privilégier les sources publiques et les API officielles.\n- Horodater chaque collecte.\n- Valider une information avec au moins deux sources.\n- Ne jamais publier de données personnelles."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 8.2 : Empreinte domaine, IP et DNS"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Reconnaissance & OSINT », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Sous-domaine oublié",
+      "x": "<strong>Objectif :</strong> Retrouver un sous-domaine de développement exposé dans un lab et prouver son existence.<br><strong>Contexte :</strong> Empreinte domaine, IP et DNS (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c2_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les sous-domaines via DNS et crt.sh."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester la résolution des candidats."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le sous-domaine actif."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Accéder à la page d'accueil du lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le commentaire HTML."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Sous-domaine oublié)",
+      "x": "CTF 1/5 — Sous-domaine oublié\nChapitre : 8.2 — Empreinte domaine, IP et DNS\nFlag : flag{m8_c2_ctf1}\n\nIndices :\n  1. Chercher les enregistrements DNS et les certificats.\n  2. Vérifier les sous-domaines classiques (dev, staging, test).\n  3. Utiliser une source de transparence des certificats.\n\nProcédure pas à pas :\n  1. Énumérer les sous-domaines via DNS et crt.sh.\n  2. Tester la résolution des candidats.\n  3. Identifier le sous-domaine actif.\n  4. Accéder à la page d'accueil du lab.\n  5. Récupérer le flag dans le commentaire HTML.\n\nRemédiation : Retirer les environnements de test de la zone publique et appliquer une authentification.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Métadonnées PDF",
+      "x": "<strong>Objectif :</strong> Un PDF de lab contient des métadonnées révélatrices. Les extraire et conclure.<br><strong>Contexte :</strong> Empreinte domaine, IP et DNS (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c2_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Télécharger le PDF de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Exécuter exiftool."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relever l'auteur et le chemin interne."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Corréler avec les autres indices."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans les métadonnées."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Métadonnées PDF)",
+      "x": "CTF 2/5 — Métadonnées PDF\nChapitre : 8.2 — Empreinte domaine, IP et DNS\nFlag : flag{m8_c2_ctf2}\n\nIndices :\n  1. Utiliser un outil d'analyse de métadonnées.\n  2. Chercher auteur, logiciel, chemins.\n  3. Ne pas publier les données personnelles.\n\nProcédure pas à pas :\n  1. Télécharger le PDF de lab.\n  2. Exécuter exiftool.\n  3. Relever l'auteur et le chemin interne.\n  4. Corréler avec les autres indices.\n  5. Récupérer le flag dans les métadonnées.\n\nRemédiation : Nettoyer les métadonnées avant publication et sensibiliser les équipes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Modèle d'adresse email",
+      "x": "<strong>Objectif :</strong> Déduire le format des adresses email d'une organisation fictive à partir de sources publiques.<br><strong>Contexte :</strong> Empreinte domaine, IP et DNS (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c2_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Collecter des adresses publiques de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le format dominant."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Formuler des candidats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Valider avec une source de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de contact."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Modèle d'adresse email)",
+      "x": "CTF 3/5 — Modèle d'adresse email\nChapitre : 8.2 — Empreinte domaine, IP et DNS\nFlag : flag{m8_c2_ctf3}\n\nIndices :\n  1. Observer les adresses publiées.\n  2. Tester les formats prénom.nom, p.nom, nom.\n  3. Rester passif.\n\nProcédure pas à pas :\n  1. Collecter des adresses publiques de lab.\n  2. Identifier le format dominant.\n  3. Formuler des candidats.\n  4. Valider avec une source de lab.\n  5. Récupérer le flag dans la page de contact.\n\nRemédiation : Limiter l'exposition des adresses et utiliser des alias génériques.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Transfert de zone DNS",
+      "x": "<strong>Objectif :</strong> Vérifier si un serveur DNS de lab autorise un transfert de zone.<br><strong>Contexte :</strong> Empreinte domaine, IP et DNS (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c2_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier le serveur NS du lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tenter un transfert AXFR."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les enregistrements obtenus."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte contenant le flag."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder à la ressource de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Transfert de zone DNS)",
+      "x": "CTF 4/5 — Transfert de zone DNS\nChapitre : 8.2 — Empreinte domaine, IP et DNS\nFlag : flag{m8_c2_ctf4}\n\nIndices :\n  1. Tester dig AXFR.\n  2. Vérifier les NS.\n  3. Comparer avec les enregistrements publics.\n\nProcédure pas à pas :\n  1. Identifier le serveur NS du lab.\n  2. Tenter un transfert AXFR.\n  3. Lister les enregistrements obtenus.\n  4. Identifier l'hôte contenant le flag.\n  5. Accéder à la ressource de lab.\n\nRemédiation : Restreindre les transferts de zone aux serveurs secondaires autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Fuite dans un dépôt public",
+      "x": "<strong>Objectif :</strong> Un dépôt Git de lab contient un secret dans l'historique. Le retrouver.<br><strong>Contexte :</strong> Empreinte domaine, IP et DNS (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c2_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cloner le dépôt de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Parcourir l'historique avec git log -p."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le commit contenant le secret."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la valeur factice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag associé."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Fuite dans un dépôt public)",
+      "x": "CTF 5/5 — Fuite dans un dépôt public\nChapitre : 8.2 — Empreinte domaine, IP et DNS\nFlag : flag{m8_c2_ctf5}\n\nIndices :\n  1. Chercher les commits anciens.\n  2. Inspecter les fichiers de configuration.\n  3. Ne pas exposer le secret réel.\n\nProcédure pas à pas :\n  1. Cloner le dépôt de lab.\n  2. Parcourir l'historique avec git log -p.\n  3. Identifier le commit contenant le secret.\n  4. Extraire la valeur factice.\n  5. Récupérer le flag associé.\n\nRemédiation : Utiliser un scanner de secrets, révoquer les clés et nettoyer l'historique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 8.3 : Renseignement sur emails, personnes et organisations"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Reconnaissance & OSINT",
+      "x": "Mettre en pratique « Renseignement sur emails, personnes et organisations » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Reconnaissance & OSINT » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir un domaine de laboratoire ou un domaine fictif autorisé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Collecter les enregistrements DNS (A, MX, TXT, NS) et les informations whois."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher des sous-domaines et des services exposés sans interaction intrusive."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Analyser les métadonnées d'un document de lab et les corréler aux indices OSINT."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner les sources, les dates de collecte et le niveau de confiance."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\ndig +short example.org A\ndig +short example.org MX\ndig +short example.org TXT\nwhois example.org | head -40\nexiftool lab/document.pdf\ncurl -s https://crt.sh/?q=%25.example.org | head -20"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "Bonnes pratiques OSINT :\n- Ne pas se connecter avec un compte personnel.\n- Privilégier les sources publiques et les API officielles.\n- Horodater chaque collecte.\n- Valider une information avec au moins deux sources.\n- Ne jamais publier de données personnelles."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 8.3 : Renseignement sur emails, personnes et organisations"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Reconnaissance & OSINT », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Sous-domaine oublié",
+      "x": "<strong>Objectif :</strong> Retrouver un sous-domaine de développement exposé dans un lab et prouver son existence.<br><strong>Contexte :</strong> Renseignement sur emails, personnes et organisations (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c3_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les sous-domaines via DNS et crt.sh."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester la résolution des candidats."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le sous-domaine actif."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Accéder à la page d'accueil du lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le commentaire HTML."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Sous-domaine oublié)",
+      "x": "CTF 1/5 — Sous-domaine oublié\nChapitre : 8.3 — Renseignement sur emails, personnes et organisations\nFlag : flag{m8_c3_ctf1}\n\nIndices :\n  1. Chercher les enregistrements DNS et les certificats.\n  2. Vérifier les sous-domaines classiques (dev, staging, test).\n  3. Utiliser une source de transparence des certificats.\n\nProcédure pas à pas :\n  1. Énumérer les sous-domaines via DNS et crt.sh.\n  2. Tester la résolution des candidats.\n  3. Identifier le sous-domaine actif.\n  4. Accéder à la page d'accueil du lab.\n  5. Récupérer le flag dans le commentaire HTML.\n\nRemédiation : Retirer les environnements de test de la zone publique et appliquer une authentification.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Métadonnées PDF",
+      "x": "<strong>Objectif :</strong> Un PDF de lab contient des métadonnées révélatrices. Les extraire et conclure.<br><strong>Contexte :</strong> Renseignement sur emails, personnes et organisations (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c3_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Télécharger le PDF de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Exécuter exiftool."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relever l'auteur et le chemin interne."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Corréler avec les autres indices."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans les métadonnées."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Métadonnées PDF)",
+      "x": "CTF 2/5 — Métadonnées PDF\nChapitre : 8.3 — Renseignement sur emails, personnes et organisations\nFlag : flag{m8_c3_ctf2}\n\nIndices :\n  1. Utiliser un outil d'analyse de métadonnées.\n  2. Chercher auteur, logiciel, chemins.\n  3. Ne pas publier les données personnelles.\n\nProcédure pas à pas :\n  1. Télécharger le PDF de lab.\n  2. Exécuter exiftool.\n  3. Relever l'auteur et le chemin interne.\n  4. Corréler avec les autres indices.\n  5. Récupérer le flag dans les métadonnées.\n\nRemédiation : Nettoyer les métadonnées avant publication et sensibiliser les équipes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Modèle d'adresse email",
+      "x": "<strong>Objectif :</strong> Déduire le format des adresses email d'une organisation fictive à partir de sources publiques.<br><strong>Contexte :</strong> Renseignement sur emails, personnes et organisations (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c3_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Collecter des adresses publiques de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le format dominant."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Formuler des candidats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Valider avec une source de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de contact."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Modèle d'adresse email)",
+      "x": "CTF 3/5 — Modèle d'adresse email\nChapitre : 8.3 — Renseignement sur emails, personnes et organisations\nFlag : flag{m8_c3_ctf3}\n\nIndices :\n  1. Observer les adresses publiées.\n  2. Tester les formats prénom.nom, p.nom, nom.\n  3. Rester passif.\n\nProcédure pas à pas :\n  1. Collecter des adresses publiques de lab.\n  2. Identifier le format dominant.\n  3. Formuler des candidats.\n  4. Valider avec une source de lab.\n  5. Récupérer le flag dans la page de contact.\n\nRemédiation : Limiter l'exposition des adresses et utiliser des alias génériques.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Transfert de zone DNS",
+      "x": "<strong>Objectif :</strong> Vérifier si un serveur DNS de lab autorise un transfert de zone.<br><strong>Contexte :</strong> Renseignement sur emails, personnes et organisations (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c3_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier le serveur NS du lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tenter un transfert AXFR."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les enregistrements obtenus."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte contenant le flag."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder à la ressource de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Transfert de zone DNS)",
+      "x": "CTF 4/5 — Transfert de zone DNS\nChapitre : 8.3 — Renseignement sur emails, personnes et organisations\nFlag : flag{m8_c3_ctf4}\n\nIndices :\n  1. Tester dig AXFR.\n  2. Vérifier les NS.\n  3. Comparer avec les enregistrements publics.\n\nProcédure pas à pas :\n  1. Identifier le serveur NS du lab.\n  2. Tenter un transfert AXFR.\n  3. Lister les enregistrements obtenus.\n  4. Identifier l'hôte contenant le flag.\n  5. Accéder à la ressource de lab.\n\nRemédiation : Restreindre les transferts de zone aux serveurs secondaires autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Fuite dans un dépôt public",
+      "x": "<strong>Objectif :</strong> Un dépôt Git de lab contient un secret dans l'historique. Le retrouver.<br><strong>Contexte :</strong> Renseignement sur emails, personnes et organisations (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c3_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cloner le dépôt de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Parcourir l'historique avec git log -p."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le commit contenant le secret."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la valeur factice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag associé."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Fuite dans un dépôt public)",
+      "x": "CTF 5/5 — Fuite dans un dépôt public\nChapitre : 8.3 — Renseignement sur emails, personnes et organisations\nFlag : flag{m8_c3_ctf5}\n\nIndices :\n  1. Chercher les commits anciens.\n  2. Inspecter les fichiers de configuration.\n  3. Ne pas exposer le secret réel.\n\nProcédure pas à pas :\n  1. Cloner le dépôt de lab.\n  2. Parcourir l'historique avec git log -p.\n  3. Identifier le commit contenant le secret.\n  4. Extraire la valeur factice.\n  5. Récupérer le flag associé.\n\nRemédiation : Utiliser un scanner de secrets, révoquer les clés et nettoyer l'historique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 8.4 : Corrélation et validation des données OSINT"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Reconnaissance & OSINT",
+      "x": "Mettre en pratique « Corrélation et validation des données OSINT » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Reconnaissance & OSINT » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir un domaine de laboratoire ou un domaine fictif autorisé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Collecter les enregistrements DNS (A, MX, TXT, NS) et les informations whois."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher des sous-domaines et des services exposés sans interaction intrusive."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Analyser les métadonnées d'un document de lab et les corréler aux indices OSINT."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner les sources, les dates de collecte et le niveau de confiance."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\ndig +short example.org A\ndig +short example.org MX\ndig +short example.org TXT\nwhois example.org | head -40\nexiftool lab/document.pdf\ncurl -s https://crt.sh/?q=%25.example.org | head -20"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "Bonnes pratiques OSINT :\n- Ne pas se connecter avec un compte personnel.\n- Privilégier les sources publiques et les API officielles.\n- Horodater chaque collecte.\n- Valider une information avec au moins deux sources.\n- Ne jamais publier de données personnelles."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 8.4 : Corrélation et validation des données OSINT"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Reconnaissance & OSINT », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Sous-domaine oublié",
+      "x": "<strong>Objectif :</strong> Retrouver un sous-domaine de développement exposé dans un lab et prouver son existence.<br><strong>Contexte :</strong> Corrélation et validation des données OSINT (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c4_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les sous-domaines via DNS et crt.sh."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester la résolution des candidats."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le sous-domaine actif."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Accéder à la page d'accueil du lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le commentaire HTML."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Sous-domaine oublié)",
+      "x": "CTF 1/5 — Sous-domaine oublié\nChapitre : 8.4 — Corrélation et validation des données OSINT\nFlag : flag{m8_c4_ctf1}\n\nIndices :\n  1. Chercher les enregistrements DNS et les certificats.\n  2. Vérifier les sous-domaines classiques (dev, staging, test).\n  3. Utiliser une source de transparence des certificats.\n\nProcédure pas à pas :\n  1. Énumérer les sous-domaines via DNS et crt.sh.\n  2. Tester la résolution des candidats.\n  3. Identifier le sous-domaine actif.\n  4. Accéder à la page d'accueil du lab.\n  5. Récupérer le flag dans le commentaire HTML.\n\nRemédiation : Retirer les environnements de test de la zone publique et appliquer une authentification.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Métadonnées PDF",
+      "x": "<strong>Objectif :</strong> Un PDF de lab contient des métadonnées révélatrices. Les extraire et conclure.<br><strong>Contexte :</strong> Corrélation et validation des données OSINT (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c4_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Télécharger le PDF de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Exécuter exiftool."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relever l'auteur et le chemin interne."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Corréler avec les autres indices."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans les métadonnées."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Métadonnées PDF)",
+      "x": "CTF 2/5 — Métadonnées PDF\nChapitre : 8.4 — Corrélation et validation des données OSINT\nFlag : flag{m8_c4_ctf2}\n\nIndices :\n  1. Utiliser un outil d'analyse de métadonnées.\n  2. Chercher auteur, logiciel, chemins.\n  3. Ne pas publier les données personnelles.\n\nProcédure pas à pas :\n  1. Télécharger le PDF de lab.\n  2. Exécuter exiftool.\n  3. Relever l'auteur et le chemin interne.\n  4. Corréler avec les autres indices.\n  5. Récupérer le flag dans les métadonnées.\n\nRemédiation : Nettoyer les métadonnées avant publication et sensibiliser les équipes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Modèle d'adresse email",
+      "x": "<strong>Objectif :</strong> Déduire le format des adresses email d'une organisation fictive à partir de sources publiques.<br><strong>Contexte :</strong> Corrélation et validation des données OSINT (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c4_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Collecter des adresses publiques de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le format dominant."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Formuler des candidats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Valider avec une source de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de contact."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Modèle d'adresse email)",
+      "x": "CTF 3/5 — Modèle d'adresse email\nChapitre : 8.4 — Corrélation et validation des données OSINT\nFlag : flag{m8_c4_ctf3}\n\nIndices :\n  1. Observer les adresses publiées.\n  2. Tester les formats prénom.nom, p.nom, nom.\n  3. Rester passif.\n\nProcédure pas à pas :\n  1. Collecter des adresses publiques de lab.\n  2. Identifier le format dominant.\n  3. Formuler des candidats.\n  4. Valider avec une source de lab.\n  5. Récupérer le flag dans la page de contact.\n\nRemédiation : Limiter l'exposition des adresses et utiliser des alias génériques.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Transfert de zone DNS",
+      "x": "<strong>Objectif :</strong> Vérifier si un serveur DNS de lab autorise un transfert de zone.<br><strong>Contexte :</strong> Corrélation et validation des données OSINT (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c4_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier le serveur NS du lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tenter un transfert AXFR."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les enregistrements obtenus."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte contenant le flag."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder à la ressource de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Transfert de zone DNS)",
+      "x": "CTF 4/5 — Transfert de zone DNS\nChapitre : 8.4 — Corrélation et validation des données OSINT\nFlag : flag{m8_c4_ctf4}\n\nIndices :\n  1. Tester dig AXFR.\n  2. Vérifier les NS.\n  3. Comparer avec les enregistrements publics.\n\nProcédure pas à pas :\n  1. Identifier le serveur NS du lab.\n  2. Tenter un transfert AXFR.\n  3. Lister les enregistrements obtenus.\n  4. Identifier l'hôte contenant le flag.\n  5. Accéder à la ressource de lab.\n\nRemédiation : Restreindre les transferts de zone aux serveurs secondaires autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Fuite dans un dépôt public",
+      "x": "<strong>Objectif :</strong> Un dépôt Git de lab contient un secret dans l'historique. Le retrouver.<br><strong>Contexte :</strong> Corrélation et validation des données OSINT (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c4_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cloner le dépôt de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Parcourir l'historique avec git log -p."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le commit contenant le secret."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la valeur factice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag associé."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Fuite dans un dépôt public)",
+      "x": "CTF 5/5 — Fuite dans un dépôt public\nChapitre : 8.4 — Corrélation et validation des données OSINT\nFlag : flag{m8_c4_ctf5}\n\nIndices :\n  1. Chercher les commits anciens.\n  2. Inspecter les fichiers de configuration.\n  3. Ne pas exposer le secret réel.\n\nProcédure pas à pas :\n  1. Cloner le dépôt de lab.\n  2. Parcourir l'historique avec git log -p.\n  3. Identifier le commit contenant le secret.\n  4. Extraire la valeur factice.\n  5. Récupérer le flag associé.\n\nRemédiation : Utiliser un scanner de secrets, révoquer les clés et nettoyer l'historique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 8.5 : Flux de travail de reconnaissance assistée par IA"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Reconnaissance & OSINT",
+      "x": "Mettre en pratique « Flux de travail de reconnaissance assistée par IA » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Reconnaissance & OSINT » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir un domaine de laboratoire ou un domaine fictif autorisé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Collecter les enregistrements DNS (A, MX, TXT, NS) et les informations whois."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher des sous-domaines et des services exposés sans interaction intrusive."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Analyser les métadonnées d'un document de lab et les corréler aux indices OSINT."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner les sources, les dates de collecte et le niveau de confiance."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\ndig +short example.org A\ndig +short example.org MX\ndig +short example.org TXT\nwhois example.org | head -40\nexiftool lab/document.pdf\ncurl -s https://crt.sh/?q=%25.example.org | head -20"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "Bonnes pratiques OSINT :\n- Ne pas se connecter avec un compte personnel.\n- Privilégier les sources publiques et les API officielles.\n- Horodater chaque collecte.\n- Valider une information avec au moins deux sources.\n- Ne jamais publier de données personnelles."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 8.5 : Flux de travail de reconnaissance assistée par IA"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Reconnaissance & OSINT », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Sous-domaine oublié",
+      "x": "<strong>Objectif :</strong> Retrouver un sous-domaine de développement exposé dans un lab et prouver son existence.<br><strong>Contexte :</strong> Flux de travail de reconnaissance assistée par IA (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c5_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les sous-domaines via DNS et crt.sh."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester la résolution des candidats."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le sous-domaine actif."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Accéder à la page d'accueil du lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le commentaire HTML."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Sous-domaine oublié)",
+      "x": "CTF 1/5 — Sous-domaine oublié\nChapitre : 8.5 — Flux de travail de reconnaissance assistée par IA\nFlag : flag{m8_c5_ctf1}\n\nIndices :\n  1. Chercher les enregistrements DNS et les certificats.\n  2. Vérifier les sous-domaines classiques (dev, staging, test).\n  3. Utiliser une source de transparence des certificats.\n\nProcédure pas à pas :\n  1. Énumérer les sous-domaines via DNS et crt.sh.\n  2. Tester la résolution des candidats.\n  3. Identifier le sous-domaine actif.\n  4. Accéder à la page d'accueil du lab.\n  5. Récupérer le flag dans le commentaire HTML.\n\nRemédiation : Retirer les environnements de test de la zone publique et appliquer une authentification.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Métadonnées PDF",
+      "x": "<strong>Objectif :</strong> Un PDF de lab contient des métadonnées révélatrices. Les extraire et conclure.<br><strong>Contexte :</strong> Flux de travail de reconnaissance assistée par IA (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c5_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Télécharger le PDF de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Exécuter exiftool."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relever l'auteur et le chemin interne."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Corréler avec les autres indices."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans les métadonnées."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Métadonnées PDF)",
+      "x": "CTF 2/5 — Métadonnées PDF\nChapitre : 8.5 — Flux de travail de reconnaissance assistée par IA\nFlag : flag{m8_c5_ctf2}\n\nIndices :\n  1. Utiliser un outil d'analyse de métadonnées.\n  2. Chercher auteur, logiciel, chemins.\n  3. Ne pas publier les données personnelles.\n\nProcédure pas à pas :\n  1. Télécharger le PDF de lab.\n  2. Exécuter exiftool.\n  3. Relever l'auteur et le chemin interne.\n  4. Corréler avec les autres indices.\n  5. Récupérer le flag dans les métadonnées.\n\nRemédiation : Nettoyer les métadonnées avant publication et sensibiliser les équipes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Modèle d'adresse email",
+      "x": "<strong>Objectif :</strong> Déduire le format des adresses email d'une organisation fictive à partir de sources publiques.<br><strong>Contexte :</strong> Flux de travail de reconnaissance assistée par IA (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c5_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Collecter des adresses publiques de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le format dominant."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Formuler des candidats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Valider avec une source de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de contact."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Modèle d'adresse email)",
+      "x": "CTF 3/5 — Modèle d'adresse email\nChapitre : 8.5 — Flux de travail de reconnaissance assistée par IA\nFlag : flag{m8_c5_ctf3}\n\nIndices :\n  1. Observer les adresses publiées.\n  2. Tester les formats prénom.nom, p.nom, nom.\n  3. Rester passif.\n\nProcédure pas à pas :\n  1. Collecter des adresses publiques de lab.\n  2. Identifier le format dominant.\n  3. Formuler des candidats.\n  4. Valider avec une source de lab.\n  5. Récupérer le flag dans la page de contact.\n\nRemédiation : Limiter l'exposition des adresses et utiliser des alias génériques.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Transfert de zone DNS",
+      "x": "<strong>Objectif :</strong> Vérifier si un serveur DNS de lab autorise un transfert de zone.<br><strong>Contexte :</strong> Flux de travail de reconnaissance assistée par IA (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c5_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier le serveur NS du lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tenter un transfert AXFR."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les enregistrements obtenus."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte contenant le flag."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder à la ressource de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Transfert de zone DNS)",
+      "x": "CTF 4/5 — Transfert de zone DNS\nChapitre : 8.5 — Flux de travail de reconnaissance assistée par IA\nFlag : flag{m8_c5_ctf4}\n\nIndices :\n  1. Tester dig AXFR.\n  2. Vérifier les NS.\n  3. Comparer avec les enregistrements publics.\n\nProcédure pas à pas :\n  1. Identifier le serveur NS du lab.\n  2. Tenter un transfert AXFR.\n  3. Lister les enregistrements obtenus.\n  4. Identifier l'hôte contenant le flag.\n  5. Accéder à la ressource de lab.\n\nRemédiation : Restreindre les transferts de zone aux serveurs secondaires autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Fuite dans un dépôt public",
+      "x": "<strong>Objectif :</strong> Un dépôt Git de lab contient un secret dans l'historique. Le retrouver.<br><strong>Contexte :</strong> Flux de travail de reconnaissance assistée par IA (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c5_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cloner le dépôt de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Parcourir l'historique avec git log -p."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le commit contenant le secret."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la valeur factice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag associé."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Fuite dans un dépôt public)",
+      "x": "CTF 5/5 — Fuite dans un dépôt public\nChapitre : 8.5 — Flux de travail de reconnaissance assistée par IA\nFlag : flag{m8_c5_ctf5}\n\nIndices :\n  1. Chercher les commits anciens.\n  2. Inspecter les fichiers de configuration.\n  3. Ne pas exposer le secret réel.\n\nProcédure pas à pas :\n  1. Cloner le dépôt de lab.\n  2. Parcourir l'historique avec git log -p.\n  3. Identifier le commit contenant le secret.\n  4. Extraire la valeur factice.\n  5. Récupérer le flag associé.\n\nRemédiation : Utiliser un scanner de secrets, révoquer les clés et nettoyer l'historique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 8.6 : OPSEC de reconnaissance et évitement de la détection"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Reconnaissance & OSINT",
+      "x": "Mettre en pratique « OPSEC de reconnaissance et évitement de la détection » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Reconnaissance & OSINT » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Choisir un domaine de laboratoire ou un domaine fictif autorisé."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Collecter les enregistrements DNS (A, MX, TXT, NS) et les informations whois."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rechercher des sous-domaines et des services exposés sans interaction intrusive."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Analyser les métadonnées d'un document de lab et les corréler aux indices OSINT."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner les sources, les dates de collecte et le niveau de confiance."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\ndig +short example.org A\ndig +short example.org MX\ndig +short example.org TXT\nwhois example.org | head -40\nexiftool lab/document.pdf\ncurl -s https://crt.sh/?q=%25.example.org | head -20"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Cartographier un domaine de lab et corréler des informations publiques",
+      "x": "Bonnes pratiques OSINT :\n- Ne pas se connecter avec un compte personnel.\n- Privilégier les sources publiques et les API officielles.\n- Horodater chaque collecte.\n- Valider une information avec au moins deux sources.\n- Ne jamais publier de données personnelles."
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 8.6 : OPSEC de reconnaissance et évitement de la détection"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Reconnaissance & OSINT », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Sous-domaine oublié",
+      "x": "<strong>Objectif :</strong> Retrouver un sous-domaine de développement exposé dans un lab et prouver son existence.<br><strong>Contexte :</strong> OPSEC de reconnaissance et évitement de la détection (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c6_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Énumérer les sous-domaines via DNS et crt.sh."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tester la résolution des candidats."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le sous-domaine actif."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Accéder à la page d'accueil du lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans le commentaire HTML."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Sous-domaine oublié)",
+      "x": "CTF 1/5 — Sous-domaine oublié\nChapitre : 8.6 — OPSEC de reconnaissance et évitement de la détection\nFlag : flag{m8_c6_ctf1}\n\nIndices :\n  1. Chercher les enregistrements DNS et les certificats.\n  2. Vérifier les sous-domaines classiques (dev, staging, test).\n  3. Utiliser une source de transparence des certificats.\n\nProcédure pas à pas :\n  1. Énumérer les sous-domaines via DNS et crt.sh.\n  2. Tester la résolution des candidats.\n  3. Identifier le sous-domaine actif.\n  4. Accéder à la page d'accueil du lab.\n  5. Récupérer le flag dans le commentaire HTML.\n\nRemédiation : Retirer les environnements de test de la zone publique et appliquer une authentification.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Métadonnées PDF",
+      "x": "<strong>Objectif :</strong> Un PDF de lab contient des métadonnées révélatrices. Les extraire et conclure.<br><strong>Contexte :</strong> OPSEC de reconnaissance et évitement de la détection (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c6_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Télécharger le PDF de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Exécuter exiftool."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Relever l'auteur et le chemin interne."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Corréler avec les autres indices."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans les métadonnées."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Métadonnées PDF)",
+      "x": "CTF 2/5 — Métadonnées PDF\nChapitre : 8.6 — OPSEC de reconnaissance et évitement de la détection\nFlag : flag{m8_c6_ctf2}\n\nIndices :\n  1. Utiliser un outil d'analyse de métadonnées.\n  2. Chercher auteur, logiciel, chemins.\n  3. Ne pas publier les données personnelles.\n\nProcédure pas à pas :\n  1. Télécharger le PDF de lab.\n  2. Exécuter exiftool.\n  3. Relever l'auteur et le chemin interne.\n  4. Corréler avec les autres indices.\n  5. Récupérer le flag dans les métadonnées.\n\nRemédiation : Nettoyer les métadonnées avant publication et sensibiliser les équipes.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Modèle d'adresse email",
+      "x": "<strong>Objectif :</strong> Déduire le format des adresses email d'une organisation fictive à partir de sources publiques.<br><strong>Contexte :</strong> OPSEC de reconnaissance et évitement de la détection (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c6_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Collecter des adresses publiques de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Identifier le format dominant."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Formuler des candidats."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Valider avec une source de lab."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag dans la page de contact."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Modèle d'adresse email)",
+      "x": "CTF 3/5 — Modèle d'adresse email\nChapitre : 8.6 — OPSEC de reconnaissance et évitement de la détection\nFlag : flag{m8_c6_ctf3}\n\nIndices :\n  1. Observer les adresses publiées.\n  2. Tester les formats prénom.nom, p.nom, nom.\n  3. Rester passif.\n\nProcédure pas à pas :\n  1. Collecter des adresses publiques de lab.\n  2. Identifier le format dominant.\n  3. Formuler des candidats.\n  4. Valider avec une source de lab.\n  5. Récupérer le flag dans la page de contact.\n\nRemédiation : Limiter l'exposition des adresses et utiliser des alias génériques.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Transfert de zone DNS",
+      "x": "<strong>Objectif :</strong> Vérifier si un serveur DNS de lab autorise un transfert de zone.<br><strong>Contexte :</strong> OPSEC de reconnaissance et évitement de la détection (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c6_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier le serveur NS du lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Tenter un transfert AXFR."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Lister les enregistrements obtenus."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Identifier l'hôte contenant le flag."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Accéder à la ressource de lab."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Transfert de zone DNS)",
+      "x": "CTF 4/5 — Transfert de zone DNS\nChapitre : 8.6 — OPSEC de reconnaissance et évitement de la détection\nFlag : flag{m8_c6_ctf4}\n\nIndices :\n  1. Tester dig AXFR.\n  2. Vérifier les NS.\n  3. Comparer avec les enregistrements publics.\n\nProcédure pas à pas :\n  1. Identifier le serveur NS du lab.\n  2. Tenter un transfert AXFR.\n  3. Lister les enregistrements obtenus.\n  4. Identifier l'hôte contenant le flag.\n  5. Accéder à la ressource de lab.\n\nRemédiation : Restreindre les transferts de zone aux serveurs secondaires autorisés.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Fuite dans un dépôt public",
+      "x": "<strong>Objectif :</strong> Un dépôt Git de lab contient un secret dans l'historique. Le retrouver.<br><strong>Contexte :</strong> OPSEC de reconnaissance et évitement de la détection (Reconnaissance & OSINT).<br><strong>Flag attendu (lab) :</strong> flag{m8_c6_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Cloner le dépôt de lab."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Parcourir l'historique avec git log -p."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier le commit contenant le secret."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Extraire la valeur factice."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Récupérer le flag associé."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Fuite dans un dépôt public)",
+      "x": "CTF 5/5 — Fuite dans un dépôt public\nChapitre : 8.6 — OPSEC de reconnaissance et évitement de la détection\nFlag : flag{m8_c6_ctf5}\n\nIndices :\n  1. Chercher les commits anciens.\n  2. Inspecter les fichiers de configuration.\n  3. Ne pas exposer le secret réel.\n\nProcédure pas à pas :\n  1. Cloner le dépôt de lab.\n  2. Parcourir l'historique avec git log -p.\n  3. Identifier le commit contenant le secret.\n  4. Extraire la valeur factice.\n  5. Récupérer le flag associé.\n\nRemédiation : Utiliser un scanner de secrets, révoquer les clés et nettoyer l'historique.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
     }
   ],
   "quiz": "q8"

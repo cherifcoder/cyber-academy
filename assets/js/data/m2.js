@@ -6,7 +6,7 @@ export default {
   "icon": "⚖️",
   "xp": 250,
   "duration": 55,
-  "summary": "Cours en français sur « Lois cyber, conformité et éthique » avec 6 chapitres, 10 exercices par chapitre et un défi CTF.",
+  "summary": "Cours en français enrichi sur « Lois cyber, conformité et éthique » : 6 chapitres, 10 exercices par chapitre, labs guidés pas à pas, payloads de lab isolé et 5 CTF détaillés par chapitre.",
   "objectives": [
     "Comprendre et appliquer : Loi IT indienne et lois mondiales sur la cybercriminalité.",
     "Comprendre et appliquer : RGPD, protection des données et principes de confidentialité.",
@@ -903,10 +903,6 @@ export default {
       ]
     },
     {
-      "t": "h",
-      "x": "CTF — Module 2"
-    },
-    {
       "t": "callout",
       "v": "tip",
       "title": "Défi CTF (lab autorisé)",
@@ -932,6 +928,1482 @@ export default {
           "p": "Proposez des correctifs concrets et priorisés selon le risque."
         }
       ]
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 2.1 : Loi IT indienne et lois mondiales sur la cybercriminalité"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Cadre légal & éthique",
+      "x": "Mettre en pratique « Loi IT indienne et lois mondiales sur la cybercriminalité » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Cadre légal & éthique » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un dossier de mission avec sous-dossiers notes/, preuves/, roes/ et rapports/."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger une lettre d'autorisation fictive pour un lab local (127.0.0.1) en précisant cibles, exclusions et dates."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rédiger les règles d'engagement (RoE) : techniques autorisées, interdites, contacts et procédure d'arrêt."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Créer une preuve texte, calculer son empreinte SHA-256 et journaliser l'opération."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Vérifier la checklist avant test et conclure sur l'autorisation de démarrer."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/legal/{notes,preuves,roes,rapports}\ndate -Iseconds | tee lab/legal/notes/session_start.txt\nprintf 'Cibles: 127.0.0.1\\nExclusions: tout hors local\\n' > lab/legal/roes/perimetre_lab.txt\necho 'Preuve de test' > lab/legal/preuves/preuve.txt\nsha256sum lab/legal/preuves/preuve.txt | tee lab/legal/preuves/preuve.sha256"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "Extrait de lettre d'autorisation (lab) :\nClient: LAB LOCAL\nPérimètre: 127.0.0.1:8080, 127.0.0.1:3000\nPériode: 2026-01-01 09:00 au 2026-01-01 12:00\nInterdit: DoS, cibles réelles, exfiltration de données personnelles\nContact: [nom, téléphone]"
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 2.1 : Loi IT indienne et lois mondiales sur la cybercriminalité"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Cadre légal & éthique », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Périmètre non autorisé",
+      "x": "<strong>Objectif :</strong> Un testeur scanne une IP voisine non incluse dans le périmètre. Identifier la violation et la conduite à tenir.<br><strong>Contexte :</strong> Loi IT indienne et lois mondiales sur la cybercriminalité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c1_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Relever l'IP et l'horodatage du scan."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au périmètre autorisé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Arrêter immédiatement toute action sur la cible hors scope."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'incident et prévenir le client."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer une mesure correctrice : liste blanche d'IP, double validation."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Périmètre non autorisé)",
+      "x": "CTF 1/5 — Périmètre non autorisé\nChapitre : 2.1 — Loi IT indienne et lois mondiales sur la cybercriminalité\nFlag : flag{m2_c1_ctf1}\n\nIndices :\n  1. Relire la lettre d'autorisation et les RoE.\n  2. Comparer l'IP cible au périmètre contractuel.\n  3. Distinguer erreur technique et infraction.\n\nProcédure pas à pas :\n  1. Relever l'IP et l'horodatage du scan.\n  2. Comparer au périmètre autorisé.\n  3. Arrêter immédiatement toute action sur la cible hors scope.\n  4. Documenter l'incident et prévenir le client.\n  5. Proposer une mesure correctrice : liste blanche d'IP, double validation.\n\nRemédiation : Mettre en place une validation technique du périmètre avant chaque commande et un arrêt automatique en cas d'écart.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Violation de données personnelles",
+      "x": "<strong>Objectif :</strong> Un fichier de preuves contient des données personnelles réelles. Déterminer les obligations RGPD.<br><strong>Contexte :</strong> Loi IT indienne et lois mondiales sur la cybercriminalité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c1_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Classer les données concernées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier la base légale et l'information des personnes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Supprimer ou anonymiser les données non nécessaires."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Notifier l'autorité si la violation est avérée."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter la décision et les mesures."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Violation de données personnelles)",
+      "x": "CTF 2/5 — Violation de données personnelles\nChapitre : 2.1 — Loi IT indienne et lois mondiales sur la cybercriminalité\nFlag : flag{m2_c1_ctf2}\n\nIndices :\n  1. Identifier la nature des données.\n  2. Vérifier la minimisation et la durée de conservation.\n  3. Penser à la notification sous 72 h.\n\nProcédure pas à pas :\n  1. Classer les données concernées.\n  2. Vérifier la base légale et l'information des personnes.\n  3. Supprimer ou anonymiser les données non nécessaires.\n  4. Notifier l'autorité si la violation est avérée.\n  5. Documenter la décision et les mesures.\n\nRemédiation : Appliquer la minimisation, chiffrer les preuves et limiter la conservation à la durée de la mission.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Preuve non intègre",
+      "x": "<strong>Objectif :</strong> Une capture d'écran a été modifiée après collecte. Expliquer pourquoi elle perd sa valeur.<br><strong>Contexte :</strong> Loi IT indienne et lois mondiales sur la cybercriminalité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c1_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Recalculer le hash du fichier."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au hash consigné."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la différence."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Écarter la preuve non intègre."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Recommencer la collecte avec un journal."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Preuve non intègre)",
+      "x": "CTF 3/5 — Preuve non intègre\nChapitre : 2.1 — Loi IT indienne et lois mondiales sur la cybercriminalité\nFlag : flag{m2_c1_ctf3}\n\nIndices :\n  1. Comparer l'empreinte avant/après.\n  2. Vérifier l'horodatage.\n  3. Distinguer preuve technique et simple copie.\n\nProcédure pas à pas :\n  1. Recalculer le hash du fichier.\n  2. Comparer au hash consigné.\n  3. Identifier la différence.\n  4. Écarter la preuve non intègre.\n  5. Recommencer la collecte avec un journal.\n\nRemédiation : Hasher les preuves au moment de la collecte et conserver les empreintes séparément.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Divulgation responsable",
+      "x": "<strong>Objectif :</strong> Une vulnérabilité critique est découverte chez un éditeur. Définir une chronologie de divulgation.<br><strong>Contexte :</strong> Loi IT indienne et lois mondiales sur la cybercriminalité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c1_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Rédiger un rapport minimal et reproductible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Contacter le programme de divulgation."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Proposer un délai (ex. 90 jours)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Suivre les échanges et la correction."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Publier uniquement après accord ou expiration négociée."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Divulgation responsable)",
+      "x": "CTF 4/5 — Divulgation responsable\nChapitre : 2.1 — Loi IT indienne et lois mondiales sur la cybercriminalité\nFlag : flag{m2_c1_ctf4}\n\nIndices :\n  1. Vérifier le canal de contact sécurité.\n  2. Prévoir un délai de correction raisonnable.\n  3. Éviter la publication avant accord.\n\nProcédure pas à pas :\n  1. Rédiger un rapport minimal et reproductible.\n  2. Contacter le programme de divulgation.\n  3. Proposer un délai (ex. 90 jours).\n  4. Suivre les échanges et la correction.\n  5. Publier uniquement après accord ou expiration négociée.\n\nRemédiation : Utiliser un canal chiffré, limiter les données sensibles et documenter chaque échange.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Contrat ambigu",
+      "x": "<strong>Objectif :</strong> Un client autorise un test sur son SaaS hébergé chez un tiers. Identifier la limite de son autorisation.<br><strong>Contexte :</strong> Loi IT indienne et lois mondiales sur la cybercriminalité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c1_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier l'hébergeur et le service concerné."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier si le client contrôle réellement la couche testée."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Demander une autorisation écrite supplémentaire si nécessaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Adapter le périmètre aux seuls actifs contrôlés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner la décision dans les RoE."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Contrat ambigu)",
+      "x": "CTF 5/5 — Contrat ambigu\nChapitre : 2.1 — Loi IT indienne et lois mondiales sur la cybercriminalité\nFlag : flag{m2_c1_ctf5}\n\nIndices :\n  1. Distinguer propriétaire et hébergeur.\n  2. Lire les conditions du fournisseur.\n  3. Vérifier la chaîne d'autorisation.\n\nProcédure pas à pas :\n  1. Identifier l'hébergeur et le service concerné.\n  2. Vérifier si le client contrôle réellement la couche testée.\n  3. Demander une autorisation écrite supplémentaire si nécessaire.\n  4. Adapter le périmètre aux seuls actifs contrôlés.\n  5. Consigner la décision dans les RoE.\n\nRemédiation : Faire valider le périmètre par le juridique et obtenir l'accord de chaque partie concernée.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 2.2 : RGPD, protection des données et principes de confidentialité"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Cadre légal & éthique",
+      "x": "Mettre en pratique « RGPD, protection des données et principes de confidentialité » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Cadre légal & éthique » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un dossier de mission avec sous-dossiers notes/, preuves/, roes/ et rapports/."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger une lettre d'autorisation fictive pour un lab local (127.0.0.1) en précisant cibles, exclusions et dates."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rédiger les règles d'engagement (RoE) : techniques autorisées, interdites, contacts et procédure d'arrêt."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Créer une preuve texte, calculer son empreinte SHA-256 et journaliser l'opération."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Vérifier la checklist avant test et conclure sur l'autorisation de démarrer."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/legal/{notes,preuves,roes,rapports}\ndate -Iseconds | tee lab/legal/notes/session_start.txt\nprintf 'Cibles: 127.0.0.1\\nExclusions: tout hors local\\n' > lab/legal/roes/perimetre_lab.txt\necho 'Preuve de test' > lab/legal/preuves/preuve.txt\nsha256sum lab/legal/preuves/preuve.txt | tee lab/legal/preuves/preuve.sha256"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "Extrait de lettre d'autorisation (lab) :\nClient: LAB LOCAL\nPérimètre: 127.0.0.1:8080, 127.0.0.1:3000\nPériode: 2026-01-01 09:00 au 2026-01-01 12:00\nInterdit: DoS, cibles réelles, exfiltration de données personnelles\nContact: [nom, téléphone]"
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 2.2 : RGPD, protection des données et principes de confidentialité"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Cadre légal & éthique », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Périmètre non autorisé",
+      "x": "<strong>Objectif :</strong> Un testeur scanne une IP voisine non incluse dans le périmètre. Identifier la violation et la conduite à tenir.<br><strong>Contexte :</strong> RGPD, protection des données et principes de confidentialité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c2_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Relever l'IP et l'horodatage du scan."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au périmètre autorisé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Arrêter immédiatement toute action sur la cible hors scope."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'incident et prévenir le client."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer une mesure correctrice : liste blanche d'IP, double validation."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Périmètre non autorisé)",
+      "x": "CTF 1/5 — Périmètre non autorisé\nChapitre : 2.2 — RGPD, protection des données et principes de confidentialité\nFlag : flag{m2_c2_ctf1}\n\nIndices :\n  1. Relire la lettre d'autorisation et les RoE.\n  2. Comparer l'IP cible au périmètre contractuel.\n  3. Distinguer erreur technique et infraction.\n\nProcédure pas à pas :\n  1. Relever l'IP et l'horodatage du scan.\n  2. Comparer au périmètre autorisé.\n  3. Arrêter immédiatement toute action sur la cible hors scope.\n  4. Documenter l'incident et prévenir le client.\n  5. Proposer une mesure correctrice : liste blanche d'IP, double validation.\n\nRemédiation : Mettre en place une validation technique du périmètre avant chaque commande et un arrêt automatique en cas d'écart.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Violation de données personnelles",
+      "x": "<strong>Objectif :</strong> Un fichier de preuves contient des données personnelles réelles. Déterminer les obligations RGPD.<br><strong>Contexte :</strong> RGPD, protection des données et principes de confidentialité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c2_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Classer les données concernées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier la base légale et l'information des personnes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Supprimer ou anonymiser les données non nécessaires."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Notifier l'autorité si la violation est avérée."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter la décision et les mesures."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Violation de données personnelles)",
+      "x": "CTF 2/5 — Violation de données personnelles\nChapitre : 2.2 — RGPD, protection des données et principes de confidentialité\nFlag : flag{m2_c2_ctf2}\n\nIndices :\n  1. Identifier la nature des données.\n  2. Vérifier la minimisation et la durée de conservation.\n  3. Penser à la notification sous 72 h.\n\nProcédure pas à pas :\n  1. Classer les données concernées.\n  2. Vérifier la base légale et l'information des personnes.\n  3. Supprimer ou anonymiser les données non nécessaires.\n  4. Notifier l'autorité si la violation est avérée.\n  5. Documenter la décision et les mesures.\n\nRemédiation : Appliquer la minimisation, chiffrer les preuves et limiter la conservation à la durée de la mission.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Preuve non intègre",
+      "x": "<strong>Objectif :</strong> Une capture d'écran a été modifiée après collecte. Expliquer pourquoi elle perd sa valeur.<br><strong>Contexte :</strong> RGPD, protection des données et principes de confidentialité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c2_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Recalculer le hash du fichier."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au hash consigné."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la différence."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Écarter la preuve non intègre."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Recommencer la collecte avec un journal."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Preuve non intègre)",
+      "x": "CTF 3/5 — Preuve non intègre\nChapitre : 2.2 — RGPD, protection des données et principes de confidentialité\nFlag : flag{m2_c2_ctf3}\n\nIndices :\n  1. Comparer l'empreinte avant/après.\n  2. Vérifier l'horodatage.\n  3. Distinguer preuve technique et simple copie.\n\nProcédure pas à pas :\n  1. Recalculer le hash du fichier.\n  2. Comparer au hash consigné.\n  3. Identifier la différence.\n  4. Écarter la preuve non intègre.\n  5. Recommencer la collecte avec un journal.\n\nRemédiation : Hasher les preuves au moment de la collecte et conserver les empreintes séparément.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Divulgation responsable",
+      "x": "<strong>Objectif :</strong> Une vulnérabilité critique est découverte chez un éditeur. Définir une chronologie de divulgation.<br><strong>Contexte :</strong> RGPD, protection des données et principes de confidentialité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c2_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Rédiger un rapport minimal et reproductible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Contacter le programme de divulgation."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Proposer un délai (ex. 90 jours)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Suivre les échanges et la correction."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Publier uniquement après accord ou expiration négociée."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Divulgation responsable)",
+      "x": "CTF 4/5 — Divulgation responsable\nChapitre : 2.2 — RGPD, protection des données et principes de confidentialité\nFlag : flag{m2_c2_ctf4}\n\nIndices :\n  1. Vérifier le canal de contact sécurité.\n  2. Prévoir un délai de correction raisonnable.\n  3. Éviter la publication avant accord.\n\nProcédure pas à pas :\n  1. Rédiger un rapport minimal et reproductible.\n  2. Contacter le programme de divulgation.\n  3. Proposer un délai (ex. 90 jours).\n  4. Suivre les échanges et la correction.\n  5. Publier uniquement après accord ou expiration négociée.\n\nRemédiation : Utiliser un canal chiffré, limiter les données sensibles et documenter chaque échange.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Contrat ambigu",
+      "x": "<strong>Objectif :</strong> Un client autorise un test sur son SaaS hébergé chez un tiers. Identifier la limite de son autorisation.<br><strong>Contexte :</strong> RGPD, protection des données et principes de confidentialité (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c2_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier l'hébergeur et le service concerné."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier si le client contrôle réellement la couche testée."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Demander une autorisation écrite supplémentaire si nécessaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Adapter le périmètre aux seuls actifs contrôlés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner la décision dans les RoE."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Contrat ambigu)",
+      "x": "CTF 5/5 — Contrat ambigu\nChapitre : 2.2 — RGPD, protection des données et principes de confidentialité\nFlag : flag{m2_c2_ctf5}\n\nIndices :\n  1. Distinguer propriétaire et hébergeur.\n  2. Lire les conditions du fournisseur.\n  3. Vérifier la chaîne d'autorisation.\n\nProcédure pas à pas :\n  1. Identifier l'hébergeur et le service concerné.\n  2. Vérifier si le client contrôle réellement la couche testée.\n  3. Demander une autorisation écrite supplémentaire si nécessaire.\n  4. Adapter le périmètre aux seuls actifs contrôlés.\n  5. Consigner la décision dans les RoE.\n\nRemédiation : Faire valider le périmètre par le juridique et obtenir l'accord de chaque partie concernée.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 2.3 : Autorisation, définition du périmètre et règles d'engagement"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Cadre légal & éthique",
+      "x": "Mettre en pratique « Autorisation, définition du périmètre et règles d'engagement » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Cadre légal & éthique » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un dossier de mission avec sous-dossiers notes/, preuves/, roes/ et rapports/."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger une lettre d'autorisation fictive pour un lab local (127.0.0.1) en précisant cibles, exclusions et dates."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rédiger les règles d'engagement (RoE) : techniques autorisées, interdites, contacts et procédure d'arrêt."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Créer une preuve texte, calculer son empreinte SHA-256 et journaliser l'opération."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Vérifier la checklist avant test et conclure sur l'autorisation de démarrer."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/legal/{notes,preuves,roes,rapports}\ndate -Iseconds | tee lab/legal/notes/session_start.txt\nprintf 'Cibles: 127.0.0.1\\nExclusions: tout hors local\\n' > lab/legal/roes/perimetre_lab.txt\necho 'Preuve de test' > lab/legal/preuves/preuve.txt\nsha256sum lab/legal/preuves/preuve.txt | tee lab/legal/preuves/preuve.sha256"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "Extrait de lettre d'autorisation (lab) :\nClient: LAB LOCAL\nPérimètre: 127.0.0.1:8080, 127.0.0.1:3000\nPériode: 2026-01-01 09:00 au 2026-01-01 12:00\nInterdit: DoS, cibles réelles, exfiltration de données personnelles\nContact: [nom, téléphone]"
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 2.3 : Autorisation, définition du périmètre et règles d'engagement"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Cadre légal & éthique », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Périmètre non autorisé",
+      "x": "<strong>Objectif :</strong> Un testeur scanne une IP voisine non incluse dans le périmètre. Identifier la violation et la conduite à tenir.<br><strong>Contexte :</strong> Autorisation, définition du périmètre et règles d'engagement (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c3_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Relever l'IP et l'horodatage du scan."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au périmètre autorisé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Arrêter immédiatement toute action sur la cible hors scope."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'incident et prévenir le client."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer une mesure correctrice : liste blanche d'IP, double validation."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Périmètre non autorisé)",
+      "x": "CTF 1/5 — Périmètre non autorisé\nChapitre : 2.3 — Autorisation, définition du périmètre et règles d'engagement\nFlag : flag{m2_c3_ctf1}\n\nIndices :\n  1. Relire la lettre d'autorisation et les RoE.\n  2. Comparer l'IP cible au périmètre contractuel.\n  3. Distinguer erreur technique et infraction.\n\nProcédure pas à pas :\n  1. Relever l'IP et l'horodatage du scan.\n  2. Comparer au périmètre autorisé.\n  3. Arrêter immédiatement toute action sur la cible hors scope.\n  4. Documenter l'incident et prévenir le client.\n  5. Proposer une mesure correctrice : liste blanche d'IP, double validation.\n\nRemédiation : Mettre en place une validation technique du périmètre avant chaque commande et un arrêt automatique en cas d'écart.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Violation de données personnelles",
+      "x": "<strong>Objectif :</strong> Un fichier de preuves contient des données personnelles réelles. Déterminer les obligations RGPD.<br><strong>Contexte :</strong> Autorisation, définition du périmètre et règles d'engagement (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c3_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Classer les données concernées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier la base légale et l'information des personnes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Supprimer ou anonymiser les données non nécessaires."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Notifier l'autorité si la violation est avérée."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter la décision et les mesures."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Violation de données personnelles)",
+      "x": "CTF 2/5 — Violation de données personnelles\nChapitre : 2.3 — Autorisation, définition du périmètre et règles d'engagement\nFlag : flag{m2_c3_ctf2}\n\nIndices :\n  1. Identifier la nature des données.\n  2. Vérifier la minimisation et la durée de conservation.\n  3. Penser à la notification sous 72 h.\n\nProcédure pas à pas :\n  1. Classer les données concernées.\n  2. Vérifier la base légale et l'information des personnes.\n  3. Supprimer ou anonymiser les données non nécessaires.\n  4. Notifier l'autorité si la violation est avérée.\n  5. Documenter la décision et les mesures.\n\nRemédiation : Appliquer la minimisation, chiffrer les preuves et limiter la conservation à la durée de la mission.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Preuve non intègre",
+      "x": "<strong>Objectif :</strong> Une capture d'écran a été modifiée après collecte. Expliquer pourquoi elle perd sa valeur.<br><strong>Contexte :</strong> Autorisation, définition du périmètre et règles d'engagement (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c3_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Recalculer le hash du fichier."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au hash consigné."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la différence."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Écarter la preuve non intègre."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Recommencer la collecte avec un journal."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Preuve non intègre)",
+      "x": "CTF 3/5 — Preuve non intègre\nChapitre : 2.3 — Autorisation, définition du périmètre et règles d'engagement\nFlag : flag{m2_c3_ctf3}\n\nIndices :\n  1. Comparer l'empreinte avant/après.\n  2. Vérifier l'horodatage.\n  3. Distinguer preuve technique et simple copie.\n\nProcédure pas à pas :\n  1. Recalculer le hash du fichier.\n  2. Comparer au hash consigné.\n  3. Identifier la différence.\n  4. Écarter la preuve non intègre.\n  5. Recommencer la collecte avec un journal.\n\nRemédiation : Hasher les preuves au moment de la collecte et conserver les empreintes séparément.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Divulgation responsable",
+      "x": "<strong>Objectif :</strong> Une vulnérabilité critique est découverte chez un éditeur. Définir une chronologie de divulgation.<br><strong>Contexte :</strong> Autorisation, définition du périmètre et règles d'engagement (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c3_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Rédiger un rapport minimal et reproductible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Contacter le programme de divulgation."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Proposer un délai (ex. 90 jours)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Suivre les échanges et la correction."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Publier uniquement après accord ou expiration négociée."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Divulgation responsable)",
+      "x": "CTF 4/5 — Divulgation responsable\nChapitre : 2.3 — Autorisation, définition du périmètre et règles d'engagement\nFlag : flag{m2_c3_ctf4}\n\nIndices :\n  1. Vérifier le canal de contact sécurité.\n  2. Prévoir un délai de correction raisonnable.\n  3. Éviter la publication avant accord.\n\nProcédure pas à pas :\n  1. Rédiger un rapport minimal et reproductible.\n  2. Contacter le programme de divulgation.\n  3. Proposer un délai (ex. 90 jours).\n  4. Suivre les échanges et la correction.\n  5. Publier uniquement après accord ou expiration négociée.\n\nRemédiation : Utiliser un canal chiffré, limiter les données sensibles et documenter chaque échange.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Contrat ambigu",
+      "x": "<strong>Objectif :</strong> Un client autorise un test sur son SaaS hébergé chez un tiers. Identifier la limite de son autorisation.<br><strong>Contexte :</strong> Autorisation, définition du périmètre et règles d'engagement (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c3_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier l'hébergeur et le service concerné."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier si le client contrôle réellement la couche testée."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Demander une autorisation écrite supplémentaire si nécessaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Adapter le périmètre aux seuls actifs contrôlés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner la décision dans les RoE."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Contrat ambigu)",
+      "x": "CTF 5/5 — Contrat ambigu\nChapitre : 2.3 — Autorisation, définition du périmètre et règles d'engagement\nFlag : flag{m2_c3_ctf5}\n\nIndices :\n  1. Distinguer propriétaire et hébergeur.\n  2. Lire les conditions du fournisseur.\n  3. Vérifier la chaîne d'autorisation.\n\nProcédure pas à pas :\n  1. Identifier l'hébergeur et le service concerné.\n  2. Vérifier si le client contrôle réellement la couche testée.\n  3. Demander une autorisation écrite supplémentaire si nécessaire.\n  4. Adapter le périmètre aux seuls actifs contrôlés.\n  5. Consigner la décision dans les RoE.\n\nRemédiation : Faire valider le périmètre par le juridique et obtenir l'accord de chaque partie concernée.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 2.4 : Pratiques de divulgation responsable"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Cadre légal & éthique",
+      "x": "Mettre en pratique « Pratiques de divulgation responsable » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Cadre légal & éthique » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un dossier de mission avec sous-dossiers notes/, preuves/, roes/ et rapports/."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger une lettre d'autorisation fictive pour un lab local (127.0.0.1) en précisant cibles, exclusions et dates."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rédiger les règles d'engagement (RoE) : techniques autorisées, interdites, contacts et procédure d'arrêt."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Créer une preuve texte, calculer son empreinte SHA-256 et journaliser l'opération."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Vérifier la checklist avant test et conclure sur l'autorisation de démarrer."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/legal/{notes,preuves,roes,rapports}\ndate -Iseconds | tee lab/legal/notes/session_start.txt\nprintf 'Cibles: 127.0.0.1\\nExclusions: tout hors local\\n' > lab/legal/roes/perimetre_lab.txt\necho 'Preuve de test' > lab/legal/preuves/preuve.txt\nsha256sum lab/legal/preuves/preuve.txt | tee lab/legal/preuves/preuve.sha256"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "Extrait de lettre d'autorisation (lab) :\nClient: LAB LOCAL\nPérimètre: 127.0.0.1:8080, 127.0.0.1:3000\nPériode: 2026-01-01 09:00 au 2026-01-01 12:00\nInterdit: DoS, cibles réelles, exfiltration de données personnelles\nContact: [nom, téléphone]"
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 2.4 : Pratiques de divulgation responsable"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Cadre légal & éthique », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Périmètre non autorisé",
+      "x": "<strong>Objectif :</strong> Un testeur scanne une IP voisine non incluse dans le périmètre. Identifier la violation et la conduite à tenir.<br><strong>Contexte :</strong> Pratiques de divulgation responsable (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c4_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Relever l'IP et l'horodatage du scan."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au périmètre autorisé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Arrêter immédiatement toute action sur la cible hors scope."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'incident et prévenir le client."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer une mesure correctrice : liste blanche d'IP, double validation."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Périmètre non autorisé)",
+      "x": "CTF 1/5 — Périmètre non autorisé\nChapitre : 2.4 — Pratiques de divulgation responsable\nFlag : flag{m2_c4_ctf1}\n\nIndices :\n  1. Relire la lettre d'autorisation et les RoE.\n  2. Comparer l'IP cible au périmètre contractuel.\n  3. Distinguer erreur technique et infraction.\n\nProcédure pas à pas :\n  1. Relever l'IP et l'horodatage du scan.\n  2. Comparer au périmètre autorisé.\n  3. Arrêter immédiatement toute action sur la cible hors scope.\n  4. Documenter l'incident et prévenir le client.\n  5. Proposer une mesure correctrice : liste blanche d'IP, double validation.\n\nRemédiation : Mettre en place une validation technique du périmètre avant chaque commande et un arrêt automatique en cas d'écart.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Violation de données personnelles",
+      "x": "<strong>Objectif :</strong> Un fichier de preuves contient des données personnelles réelles. Déterminer les obligations RGPD.<br><strong>Contexte :</strong> Pratiques de divulgation responsable (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c4_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Classer les données concernées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier la base légale et l'information des personnes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Supprimer ou anonymiser les données non nécessaires."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Notifier l'autorité si la violation est avérée."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter la décision et les mesures."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Violation de données personnelles)",
+      "x": "CTF 2/5 — Violation de données personnelles\nChapitre : 2.4 — Pratiques de divulgation responsable\nFlag : flag{m2_c4_ctf2}\n\nIndices :\n  1. Identifier la nature des données.\n  2. Vérifier la minimisation et la durée de conservation.\n  3. Penser à la notification sous 72 h.\n\nProcédure pas à pas :\n  1. Classer les données concernées.\n  2. Vérifier la base légale et l'information des personnes.\n  3. Supprimer ou anonymiser les données non nécessaires.\n  4. Notifier l'autorité si la violation est avérée.\n  5. Documenter la décision et les mesures.\n\nRemédiation : Appliquer la minimisation, chiffrer les preuves et limiter la conservation à la durée de la mission.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Preuve non intègre",
+      "x": "<strong>Objectif :</strong> Une capture d'écran a été modifiée après collecte. Expliquer pourquoi elle perd sa valeur.<br><strong>Contexte :</strong> Pratiques de divulgation responsable (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c4_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Recalculer le hash du fichier."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au hash consigné."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la différence."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Écarter la preuve non intègre."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Recommencer la collecte avec un journal."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Preuve non intègre)",
+      "x": "CTF 3/5 — Preuve non intègre\nChapitre : 2.4 — Pratiques de divulgation responsable\nFlag : flag{m2_c4_ctf3}\n\nIndices :\n  1. Comparer l'empreinte avant/après.\n  2. Vérifier l'horodatage.\n  3. Distinguer preuve technique et simple copie.\n\nProcédure pas à pas :\n  1. Recalculer le hash du fichier.\n  2. Comparer au hash consigné.\n  3. Identifier la différence.\n  4. Écarter la preuve non intègre.\n  5. Recommencer la collecte avec un journal.\n\nRemédiation : Hasher les preuves au moment de la collecte et conserver les empreintes séparément.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Divulgation responsable",
+      "x": "<strong>Objectif :</strong> Une vulnérabilité critique est découverte chez un éditeur. Définir une chronologie de divulgation.<br><strong>Contexte :</strong> Pratiques de divulgation responsable (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c4_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Rédiger un rapport minimal et reproductible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Contacter le programme de divulgation."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Proposer un délai (ex. 90 jours)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Suivre les échanges et la correction."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Publier uniquement après accord ou expiration négociée."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Divulgation responsable)",
+      "x": "CTF 4/5 — Divulgation responsable\nChapitre : 2.4 — Pratiques de divulgation responsable\nFlag : flag{m2_c4_ctf4}\n\nIndices :\n  1. Vérifier le canal de contact sécurité.\n  2. Prévoir un délai de correction raisonnable.\n  3. Éviter la publication avant accord.\n\nProcédure pas à pas :\n  1. Rédiger un rapport minimal et reproductible.\n  2. Contacter le programme de divulgation.\n  3. Proposer un délai (ex. 90 jours).\n  4. Suivre les échanges et la correction.\n  5. Publier uniquement après accord ou expiration négociée.\n\nRemédiation : Utiliser un canal chiffré, limiter les données sensibles et documenter chaque échange.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Contrat ambigu",
+      "x": "<strong>Objectif :</strong> Un client autorise un test sur son SaaS hébergé chez un tiers. Identifier la limite de son autorisation.<br><strong>Contexte :</strong> Pratiques de divulgation responsable (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c4_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier l'hébergeur et le service concerné."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier si le client contrôle réellement la couche testée."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Demander une autorisation écrite supplémentaire si nécessaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Adapter le périmètre aux seuls actifs contrôlés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner la décision dans les RoE."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Contrat ambigu)",
+      "x": "CTF 5/5 — Contrat ambigu\nChapitre : 2.4 — Pratiques de divulgation responsable\nFlag : flag{m2_c4_ctf5}\n\nIndices :\n  1. Distinguer propriétaire et hébergeur.\n  2. Lire les conditions du fournisseur.\n  3. Vérifier la chaîne d'autorisation.\n\nProcédure pas à pas :\n  1. Identifier l'hébergeur et le service concerné.\n  2. Vérifier si le client contrôle réellement la couche testée.\n  3. Demander une autorisation écrite supplémentaire si nécessaire.\n  4. Adapter le périmètre aux seuls actifs contrôlés.\n  5. Consigner la décision dans les RoE.\n\nRemédiation : Faire valider le périmètre par le juridique et obtenir l'accord de chaque partie concernée.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 2.5 : Gestion des preuves et bases du reporting légal"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Cadre légal & éthique",
+      "x": "Mettre en pratique « Gestion des preuves et bases du reporting légal » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Cadre légal & éthique » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un dossier de mission avec sous-dossiers notes/, preuves/, roes/ et rapports/."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger une lettre d'autorisation fictive pour un lab local (127.0.0.1) en précisant cibles, exclusions et dates."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rédiger les règles d'engagement (RoE) : techniques autorisées, interdites, contacts et procédure d'arrêt."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Créer une preuve texte, calculer son empreinte SHA-256 et journaliser l'opération."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Vérifier la checklist avant test et conclure sur l'autorisation de démarrer."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/legal/{notes,preuves,roes,rapports}\ndate -Iseconds | tee lab/legal/notes/session_start.txt\nprintf 'Cibles: 127.0.0.1\\nExclusions: tout hors local\\n' > lab/legal/roes/perimetre_lab.txt\necho 'Preuve de test' > lab/legal/preuves/preuve.txt\nsha256sum lab/legal/preuves/preuve.txt | tee lab/legal/preuves/preuve.sha256"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "Extrait de lettre d'autorisation (lab) :\nClient: LAB LOCAL\nPérimètre: 127.0.0.1:8080, 127.0.0.1:3000\nPériode: 2026-01-01 09:00 au 2026-01-01 12:00\nInterdit: DoS, cibles réelles, exfiltration de données personnelles\nContact: [nom, téléphone]"
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 2.5 : Gestion des preuves et bases du reporting légal"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Cadre légal & éthique », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Périmètre non autorisé",
+      "x": "<strong>Objectif :</strong> Un testeur scanne une IP voisine non incluse dans le périmètre. Identifier la violation et la conduite à tenir.<br><strong>Contexte :</strong> Gestion des preuves et bases du reporting légal (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c5_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Relever l'IP et l'horodatage du scan."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au périmètre autorisé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Arrêter immédiatement toute action sur la cible hors scope."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'incident et prévenir le client."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer une mesure correctrice : liste blanche d'IP, double validation."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Périmètre non autorisé)",
+      "x": "CTF 1/5 — Périmètre non autorisé\nChapitre : 2.5 — Gestion des preuves et bases du reporting légal\nFlag : flag{m2_c5_ctf1}\n\nIndices :\n  1. Relire la lettre d'autorisation et les RoE.\n  2. Comparer l'IP cible au périmètre contractuel.\n  3. Distinguer erreur technique et infraction.\n\nProcédure pas à pas :\n  1. Relever l'IP et l'horodatage du scan.\n  2. Comparer au périmètre autorisé.\n  3. Arrêter immédiatement toute action sur la cible hors scope.\n  4. Documenter l'incident et prévenir le client.\n  5. Proposer une mesure correctrice : liste blanche d'IP, double validation.\n\nRemédiation : Mettre en place une validation technique du périmètre avant chaque commande et un arrêt automatique en cas d'écart.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Violation de données personnelles",
+      "x": "<strong>Objectif :</strong> Un fichier de preuves contient des données personnelles réelles. Déterminer les obligations RGPD.<br><strong>Contexte :</strong> Gestion des preuves et bases du reporting légal (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c5_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Classer les données concernées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier la base légale et l'information des personnes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Supprimer ou anonymiser les données non nécessaires."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Notifier l'autorité si la violation est avérée."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter la décision et les mesures."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Violation de données personnelles)",
+      "x": "CTF 2/5 — Violation de données personnelles\nChapitre : 2.5 — Gestion des preuves et bases du reporting légal\nFlag : flag{m2_c5_ctf2}\n\nIndices :\n  1. Identifier la nature des données.\n  2. Vérifier la minimisation et la durée de conservation.\n  3. Penser à la notification sous 72 h.\n\nProcédure pas à pas :\n  1. Classer les données concernées.\n  2. Vérifier la base légale et l'information des personnes.\n  3. Supprimer ou anonymiser les données non nécessaires.\n  4. Notifier l'autorité si la violation est avérée.\n  5. Documenter la décision et les mesures.\n\nRemédiation : Appliquer la minimisation, chiffrer les preuves et limiter la conservation à la durée de la mission.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Preuve non intègre",
+      "x": "<strong>Objectif :</strong> Une capture d'écran a été modifiée après collecte. Expliquer pourquoi elle perd sa valeur.<br><strong>Contexte :</strong> Gestion des preuves et bases du reporting légal (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c5_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Recalculer le hash du fichier."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au hash consigné."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la différence."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Écarter la preuve non intègre."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Recommencer la collecte avec un journal."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Preuve non intègre)",
+      "x": "CTF 3/5 — Preuve non intègre\nChapitre : 2.5 — Gestion des preuves et bases du reporting légal\nFlag : flag{m2_c5_ctf3}\n\nIndices :\n  1. Comparer l'empreinte avant/après.\n  2. Vérifier l'horodatage.\n  3. Distinguer preuve technique et simple copie.\n\nProcédure pas à pas :\n  1. Recalculer le hash du fichier.\n  2. Comparer au hash consigné.\n  3. Identifier la différence.\n  4. Écarter la preuve non intègre.\n  5. Recommencer la collecte avec un journal.\n\nRemédiation : Hasher les preuves au moment de la collecte et conserver les empreintes séparément.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Divulgation responsable",
+      "x": "<strong>Objectif :</strong> Une vulnérabilité critique est découverte chez un éditeur. Définir une chronologie de divulgation.<br><strong>Contexte :</strong> Gestion des preuves et bases du reporting légal (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c5_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Rédiger un rapport minimal et reproductible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Contacter le programme de divulgation."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Proposer un délai (ex. 90 jours)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Suivre les échanges et la correction."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Publier uniquement après accord ou expiration négociée."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Divulgation responsable)",
+      "x": "CTF 4/5 — Divulgation responsable\nChapitre : 2.5 — Gestion des preuves et bases du reporting légal\nFlag : flag{m2_c5_ctf4}\n\nIndices :\n  1. Vérifier le canal de contact sécurité.\n  2. Prévoir un délai de correction raisonnable.\n  3. Éviter la publication avant accord.\n\nProcédure pas à pas :\n  1. Rédiger un rapport minimal et reproductible.\n  2. Contacter le programme de divulgation.\n  3. Proposer un délai (ex. 90 jours).\n  4. Suivre les échanges et la correction.\n  5. Publier uniquement après accord ou expiration négociée.\n\nRemédiation : Utiliser un canal chiffré, limiter les données sensibles et documenter chaque échange.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Contrat ambigu",
+      "x": "<strong>Objectif :</strong> Un client autorise un test sur son SaaS hébergé chez un tiers. Identifier la limite de son autorisation.<br><strong>Contexte :</strong> Gestion des preuves et bases du reporting légal (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c5_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier l'hébergeur et le service concerné."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier si le client contrôle réellement la couche testée."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Demander une autorisation écrite supplémentaire si nécessaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Adapter le périmètre aux seuls actifs contrôlés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner la décision dans les RoE."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Contrat ambigu)",
+      "x": "CTF 5/5 — Contrat ambigu\nChapitre : 2.5 — Gestion des preuves et bases du reporting légal\nFlag : flag{m2_c5_ctf5}\n\nIndices :\n  1. Distinguer propriétaire et hébergeur.\n  2. Lire les conditions du fournisseur.\n  3. Vérifier la chaîne d'autorisation.\n\nProcédure pas à pas :\n  1. Identifier l'hébergeur et le service concerné.\n  2. Vérifier si le client contrôle réellement la couche testée.\n  3. Demander une autorisation écrite supplémentaire si nécessaire.\n  4. Adapter le périmètre aux seuls actifs contrôlés.\n  5. Consigner la décision dans les RoE.\n\nRemédiation : Faire valider le périmètre par le juridique et obtenir l'accord de chaque partie concernée.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "h",
+      "x": "Lab guidé pas à pas — Chapitre 2.6 : Risques juridiques et limites du hacking assisté par IA"
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectif du lab — Cadre légal & éthique",
+      "x": "Mettre en pratique « Risques juridiques et limites du hacking assisté par IA » dans un laboratoire autorisé (VM locale, conteneur Docker, réseau host-only). Le lab ci-dessous est spécifique au thème « Cadre légal & éthique » et doit être exécuté uniquement sur des cibles de lab."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Créer un dossier de mission avec sous-dossiers notes/, preuves/, roes/ et rapports/."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Rédiger une lettre d'autorisation fictive pour un lab local (127.0.0.1) en précisant cibles, exclusions et dates."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Rédiger les règles d'engagement (RoE) : techniques autorisées, interdites, contacts et procédure d'arrêt."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Créer une preuve texte, calculer son empreinte SHA-256 et journaliser l'opération."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Vérifier la checklist avant test et conclure sur l'autorisation de démarrer."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Commandes de lab — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "# LAB AUTORISÉ UNIQUEMENT\nmkdir -p lab/legal/{notes,preuves,roes,rapports}\ndate -Iseconds | tee lab/legal/notes/session_start.txt\nprintf 'Cibles: 127.0.0.1\\nExclusions: tout hors local\\n' > lab/legal/roes/perimetre_lab.txt\necho 'Preuve de test' > lab/legal/preuves/preuve.txt\nsha256sum lab/legal/preuves/preuve.txt | tee lab/legal/preuves/preuve.sha256"
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Payloads / données de test — Rédiger un dossier d'autorisation, un périmètre et un journal de preuves",
+      "x": "Extrait de lettre d'autorisation (lab) :\nClient: LAB LOCAL\nPérimètre: 127.0.0.1:8080, 127.0.0.1:3000\nPériode: 2026-01-01 09:00 au 2026-01-01 12:00\nInterdit: DoS, cibles réelles, exfiltration de données personnelles\nContact: [nom, téléphone]"
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Rappel critique",
+      "x": "Toutes les commandes et tous les payloads ci-dessus sont destinés à un environnement de laboratoire isolé et autorisé. Ne les exécutez jamais sur un système tiers sans autorisation écrite."
+    },
+    {
+      "t": "h",
+      "x": "5 CTF — Chapitre 2.6 : Risques juridiques et limites du hacking assisté par IA"
+    },
+    {
+      "t": "p",
+      "x": "Cinq défis CTF spécifiques au thème « Cadre légal & éthique », avec objectif, indices, procédure détaillée et remédiation. Environnement : lab isolé uniquement."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 1/5 — Périmètre non autorisé",
+      "x": "<strong>Objectif :</strong> Un testeur scanne une IP voisine non incluse dans le périmètre. Identifier la violation et la conduite à tenir.<br><strong>Contexte :</strong> Risques juridiques et limites du hacking assisté par IA (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c6_ctf1}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Relever l'IP et l'horodatage du scan."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au périmètre autorisé."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Arrêter immédiatement toute action sur la cible hors scope."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Documenter l'incident et prévenir le client."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Proposer une mesure correctrice : liste blanche d'IP, double validation."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 1/5 (Périmètre non autorisé)",
+      "x": "CTF 1/5 — Périmètre non autorisé\nChapitre : 2.6 — Risques juridiques et limites du hacking assisté par IA\nFlag : flag{m2_c6_ctf1}\n\nIndices :\n  1. Relire la lettre d'autorisation et les RoE.\n  2. Comparer l'IP cible au périmètre contractuel.\n  3. Distinguer erreur technique et infraction.\n\nProcédure pas à pas :\n  1. Relever l'IP et l'horodatage du scan.\n  2. Comparer au périmètre autorisé.\n  3. Arrêter immédiatement toute action sur la cible hors scope.\n  4. Documenter l'incident et prévenir le client.\n  5. Proposer une mesure correctrice : liste blanche d'IP, double validation.\n\nRemédiation : Mettre en place une validation technique du périmètre avant chaque commande et un arrêt automatique en cas d'écart.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 2/5 — Violation de données personnelles",
+      "x": "<strong>Objectif :</strong> Un fichier de preuves contient des données personnelles réelles. Déterminer les obligations RGPD.<br><strong>Contexte :</strong> Risques juridiques et limites du hacking assisté par IA (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c6_ctf2}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Classer les données concernées."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier la base légale et l'information des personnes."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Supprimer ou anonymiser les données non nécessaires."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Notifier l'autorité si la violation est avérée."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Documenter la décision et les mesures."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 2/5 (Violation de données personnelles)",
+      "x": "CTF 2/5 — Violation de données personnelles\nChapitre : 2.6 — Risques juridiques et limites du hacking assisté par IA\nFlag : flag{m2_c6_ctf2}\n\nIndices :\n  1. Identifier la nature des données.\n  2. Vérifier la minimisation et la durée de conservation.\n  3. Penser à la notification sous 72 h.\n\nProcédure pas à pas :\n  1. Classer les données concernées.\n  2. Vérifier la base légale et l'information des personnes.\n  3. Supprimer ou anonymiser les données non nécessaires.\n  4. Notifier l'autorité si la violation est avérée.\n  5. Documenter la décision et les mesures.\n\nRemédiation : Appliquer la minimisation, chiffrer les preuves et limiter la conservation à la durée de la mission.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 3/5 — Preuve non intègre",
+      "x": "<strong>Objectif :</strong> Une capture d'écran a été modifiée après collecte. Expliquer pourquoi elle perd sa valeur.<br><strong>Contexte :</strong> Risques juridiques et limites du hacking assisté par IA (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c6_ctf3}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Recalculer le hash du fichier."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Comparer au hash consigné."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Identifier la différence."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Écarter la preuve non intègre."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Recommencer la collecte avec un journal."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 3/5 (Preuve non intègre)",
+      "x": "CTF 3/5 — Preuve non intègre\nChapitre : 2.6 — Risques juridiques et limites du hacking assisté par IA\nFlag : flag{m2_c6_ctf3}\n\nIndices :\n  1. Comparer l'empreinte avant/après.\n  2. Vérifier l'horodatage.\n  3. Distinguer preuve technique et simple copie.\n\nProcédure pas à pas :\n  1. Recalculer le hash du fichier.\n  2. Comparer au hash consigné.\n  3. Identifier la différence.\n  4. Écarter la preuve non intègre.\n  5. Recommencer la collecte avec un journal.\n\nRemédiation : Hasher les preuves au moment de la collecte et conserver les empreintes séparément.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 4/5 — Divulgation responsable",
+      "x": "<strong>Objectif :</strong> Une vulnérabilité critique est découverte chez un éditeur. Définir une chronologie de divulgation.<br><strong>Contexte :</strong> Risques juridiques et limites du hacking assisté par IA (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c6_ctf4}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Rédiger un rapport minimal et reproductible."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Contacter le programme de divulgation."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Proposer un délai (ex. 90 jours)."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Suivre les échanges et la correction."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Publier uniquement après accord ou expiration négociée."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 4/5 (Divulgation responsable)",
+      "x": "CTF 4/5 — Divulgation responsable\nChapitre : 2.6 — Risques juridiques et limites du hacking assisté par IA\nFlag : flag{m2_c6_ctf4}\n\nIndices :\n  1. Vérifier le canal de contact sécurité.\n  2. Prévoir un délai de correction raisonnable.\n  3. Éviter la publication avant accord.\n\nProcédure pas à pas :\n  1. Rédiger un rapport minimal et reproductible.\n  2. Contacter le programme de divulgation.\n  3. Proposer un délai (ex. 90 jours).\n  4. Suivre les échanges et la correction.\n  5. Publier uniquement après accord ou expiration négociée.\n\nRemédiation : Utiliser un canal chiffré, limiter les données sensibles et documenter chaque échange.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "CTF 5/5 — Contrat ambigu",
+      "x": "<strong>Objectif :</strong> Un client autorise un test sur son SaaS hébergé chez un tiers. Identifier la limite de son autorisation.<br><strong>Contexte :</strong> Risques juridiques et limites du hacking assisté par IA (Cadre légal & éthique).<br><strong>Flag attendu (lab) :</strong> flag{m2_c6_ctf5}"
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Étape 1",
+          "p": "Identifier l'hébergeur et le service concerné."
+        },
+        {
+          "h": "Étape 2",
+          "p": "Vérifier si le client contrôle réellement la couche testée."
+        },
+        {
+          "h": "Étape 3",
+          "p": "Demander une autorisation écrite supplémentaire si nécessaire."
+        },
+        {
+          "h": "Étape 4",
+          "p": "Adapter le périmètre aux seuls actifs contrôlés."
+        },
+        {
+          "h": "Étape 5",
+          "p": "Consigner la décision dans les RoE."
+        }
+      ]
+    },
+    {
+      "t": "code",
+      "lang": "text",
+      "title": "Write-up détaillé — CTF 5/5 (Contrat ambigu)",
+      "x": "CTF 5/5 — Contrat ambigu\nChapitre : 2.6 — Risques juridiques et limites du hacking assisté par IA\nFlag : flag{m2_c6_ctf5}\n\nIndices :\n  1. Distinguer propriétaire et hébergeur.\n  2. Lire les conditions du fournisseur.\n  3. Vérifier la chaîne d'autorisation.\n\nProcédure pas à pas :\n  1. Identifier l'hébergeur et le service concerné.\n  2. Vérifier si le client contrôle réellement la couche testée.\n  3. Demander une autorisation écrite supplémentaire si nécessaire.\n  4. Adapter le périmètre aux seuls actifs contrôlés.\n  5. Consigner la décision dans les RoE.\n\nRemédiation : Faire valider le périmètre par le juridique et obtenir l'accord de chaque partie concernée.\n\nLivrable attendu : capture(s) horodatée(s), commande(s) exacte(s), preuve minimale et recommandation."
     }
   ],
   "quiz": "q2"
