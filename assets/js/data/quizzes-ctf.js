@@ -1,477 +1,1054 @@
-/**
- * Quiz des modules CTF (m9 à m12).
- * Chaque entrée est un quiz complet : moduleId, title, pass et 10 questions.
- */
-
 export const CTF_QUIZZES = {
-  q9: {
-    moduleId: 'm9',
-    title: "Évaluation — CTF application web",
-    pass: 70,
-    questions: [
+  "qctf9": {
+    "moduleId": "m9",
+    "title": "Évaluation — Scan réseau",
+    "pass": 70,
+    "questions": [
       {
-        q: "Quelle est la première action utile lors d'un CTF web sur une cible inconnue ?",
-        options: [
-          "Lancer immédiatement un exploit connu",
-          "Cartographier les ports, services et technologies exposés",
-          "Tenter tous les mots de passe de rockyou",
-          "Modifier la page d'accueil"
+        "q": "[Scanning] Question 1 — Découverte d'hôtes et cartographie réseau : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Découverte d'hôtes et cartographie réseau » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "La reconnaissance précède l'exploitation. Ports, versions, en-têtes et technologies déterminent quelles pistes sont pertinentes et évitent de scanner au hasard."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Découverte d'hôtes et cartographie réseau ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que révèle un code HTTP 403 sur un chemin découvert par Gobuster ?",
-        options: [
-          "La ressource n'existe pas",
-          "La ressource existe mais l'accès est interdit sans les bons droits",
-          "Le serveur est hors ligne",
-          "Le chemin a été supprimé"
+        "q": "[Scanning] Question 2 — Scan de ports et détection de services : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Scan de ports et détection de services » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "403 signifie « authentifié ou non, accès refusé ». La ressource existe : c'est une piste à explorer avec un compte valide ou une autre méthode."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Scan de ports et détection de services ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Pourquoi lire le code JavaScript d'une application web ?",
-        options: [
-          "Pour accélérer le chargement du site",
-          "Parce qu'il peut révéler des routes d'API, des paramètres et parfois des secrets",
-          "Pour modifier l'apparence du site",
-          "Pour désactiver le HTTPS"
+        "q": "[Scanning] Question 3 — Identification de versions et bannières : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Identification de versions et bannières » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Les bundles clients contiennent souvent les endpoints internes, les noms de paramètres et des clés laissées par erreur. C'est une source d'énumération gratuite."
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Identification de versions et bannières ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Un JWT est composé de trois parties. Que contient la deuxième ?",
-        options: [
-          "La signature cryptographique",
-          "Les revendications (sujet, rôle, expiration) encodées en Base64URL",
-          "Le mot de passe de l'utilisateur",
-          "La clé privée du serveur"
+        "q": "[Scanning] Question 4 — Concepts de scan furtif et sensible à la détection : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Concepts de scan furtif et sensible à la détection » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "La charge utile contient des revendications lisibles par tous. Elle n'est pas chiffrée : la sécurité repose sur la vérification de la signature et des autorisations côté serveur."
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Concepts de scan furtif et sensible à la détection ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Qu'est-ce qu'un IDOR ?",
-        options: [
-          "Une injection SQL dans un formulaire",
-          "Un accès à l'objet d'un autre utilisateur en changeant son identifiant, sans contrôle d'autorisation",
-          "Un cookie mal configuré",
-          "Une redirection ouverte"
+        "q": "[Scanning] Question 5 — Priorisation des résultats de scan et analyse de risque : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Priorisation des résultats de scan et analyse de risque » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "L'IDOR est un défaut d'autorisation : l'utilisateur est authentifié, mais le serveur ne vérifie pas qu'il est propriétaire de la ressource demandée."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Priorisation des résultats de scan et analyse de risque ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle correction supprime réellement un IDOR ?",
-        options: [
-          "Rendre les identifiants plus longs et aléatoires",
-          "Masquer les boutons dans l'interface",
-          "Vérifier côté serveur que l'utilisateur est propriétaire de l'objet ou possède le rôle requis",
-          "Ajouter un WAF"
+        "q": "[Scanning] Question 6 — Interprétation des scans assistée par IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Interprétation des scans assistée par IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 2,
-        explain: "Un identifiant imprévisible ne remplace pas un contrôle d'accès. La vérification de propriété ou de rôle doit être faite à chaque requête, côté serveur."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Interprétation des scans assistée par IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle différence entre contrôle d'accès horizontal et vertical ?",
-        options: [
-          "Horizontal concerne un autre utilisateur de même rôle, vertical concerne un rôle supérieur",
-          "Horizontal concerne le réseau, vertical le web",
-          "Ils sont identiques",
-          "Vertical concerne uniquement les bases de données"
+        "q": "[Scanning] Question 7 — Découverte d'hôtes et cartographie réseau : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Découverte d'hôtes et cartographie réseau » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 0,
-        explain: "L'horizontal compare deux comptes de même niveau (Alice vs Bob). Le vertical tente d'atteindre les fonctions d'un rôle supérieur (utilisateur vs admin)."
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Découverte d'hôtes et cartographie réseau ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Pourquoi une sauvegarde exposée dans le webroot est-elle critique ?",
-        options: [
-          "Elle ralentit le site",
-          "Elle peut contenir des identifiants, des données et des secrets téléchargeables sans authentification",
-          "Elle empêche le référencement",
-          "Elle désactive les cookies"
+        "q": "[Scanning] Question 8 — Scan de ports et détection de services : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Scan de ports et détection de services » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Un export SQL ou une archive peut contenir des comptes, des hachages et des données métier. Le webroot ne doit jamais servir de stockage de sauvegardes."
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Scan de ports et détection de services ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que doit contenir une preuve reproductible dans un rapport de CTF ou d'audit ?",
-        options: [
-          "Uniquement le flag",
-          "La commande exacte, la réponse observée, l'horodatage et le contexte minimal",
-          "Une capture d'écran floue",
-          "Le nom de l'outil utilisé seulement"
+        "q": "[Scanning] Question 9 — Identification de versions et bannières : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Identification de versions et bannières » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Une preuve doit permettre à un tiers de reproduire le constat sans deviner. La commande, la réponse et le contexte suffisent, sans exposer de données inutiles."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Identification de versions et bannières ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle est la meilleure façon de tester une route interne découverte en CTF ?",
-        options: [
-          "L'appeler sans jeton pour voir",
-          "Obtenir d'abord un jeton légitime, puis tester si le rôle est réellement vérifié",
-          "Lancer un déni de service",
-          "Modifier la base de données"
+        "q": "[Scanning] Question 10 — Concepts de scan furtif et sensible à la détection : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Concepts de scan furtif et sensible à la détection » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Sans jeton, on ne teste que l'authentification. Avec un jeton utilisateur, on teste l'autorisation : c'est là que se trouve souvent le défaut vertical."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Concepts de scan furtif et sensible à la détection ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       }
     ]
   },
-
-  q10: {
-    moduleId: 'm10',
-    title: "Évaluation — CTF WordPress",
-    pass: 70,
-    questions: [
+  "qctf10": {
+    "moduleId": "m10",
+    "title": "Évaluation — Techniques d'énumération",
+    "pass": 70,
+    "questions": [
       {
-        q: "Quel fichier permet de reconnaître rapidement une installation WordPress ?",
-        options: [
-          "/wp-login.php",
-          "/index.html",
-          "/robots.txt uniquement",
-          "/favicon.ico"
+        "q": "[Enumération] Question 1 — Énumération des utilisateurs, services et ressources : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Énumération des utilisateurs, services et ressources » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 0,
-        explain: "<code>/wp-login.php</code>, <code>/wp-json/</code>, <code>/wp-content/</code> et la balise generator sont des indices classiques d'un site WordPress."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Énumération des utilisateurs, services et ressources ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Où trouve-t-on souvent la version exacte de WordPress dans le HTML ?",
-        options: [
-          "Dans l'attribut alt des images",
-          "Dans la balise meta generator",
-          "Dans le fichier robots.txt",
-          "Dans le cookie de session"
+        "q": "[Enumération] Question 2 — Concepts d'énumération SMB, FTP, SMTP, DNS : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Concepts d'énumération SMB, FTP, SMTP, DNS » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "La balise <code>&lt;meta name=\"generator\" content=\"WordPress x.y.z\"&gt;</code> révèle la version si le thème ne l'a pas retirée."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Concepts d'énumération SMB, FTP, SMTP, DNS ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quel endpoint REST permet souvent d'énumérer les utilisateurs ?",
-        options: [
-          "/wp-json/wp/v2/users",
-          "/wp-admin/admin.php",
-          "/wp-content/uploads/",
-          "/xmlrpc.php"
+        "q": "[Enumération] Question 3 — Banner grabbing et extraction d'informations : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Banner grabbing et extraction d'informations » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 0,
-        explain: "L'API REST expose parfois les auteurs avec leur identifiant, slug et nom. C'est une source directe pour cibler une attaque de mots de passe."
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Banner grabbing et extraction d'informations ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Pourquoi les plugins sont-ils une cible prioritaire sur WordPress ?",
-        options: [
-          "Ils sont toujours écrits en JavaScript",
-          "Ils ajoutent du code tiers exécuté avec les privilèges du site et sont souvent obsolètes",
-          "Ils remplacent le noyau",
-          "Ils désactivent HTTPS"
+        "q": "[Enumération] Question 4 — Chaînage d'énumération pour un accès plus profond : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Chaînage d'énumération pour un accès plus profond » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Le cœur est généralement bien maintenu ; les plugins et thèmes abandonnés accumulent les vulnérabilités et s'exécutent avec les droits de WordPress."
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Chaînage d'énumération pour un accès plus profond ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que signifie un résultat searchsploit pour un plugin en version 6.0 ?",
-        options: [
-          "Le site est certainement compromis",
-          "Un exploit public existe, mais il faut vérifier la version, la configuration et le chemin réellement accessible",
-          "Le plugin est à jour",
-          "La CVE est fictive"
+        "q": "[Enumération] Question 5 — Cartographie des données d'énumération vers des chemins d'attaque : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Cartographie des données d'énumération vers des chemins d'attaque » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Un exploit public est une piste, pas une preuve. Il faut confirmer la version, la présence du composant et la condition d'exploitation avant de conclure."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Cartographie des données d'énumération vers des chemins d'attaque ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quel est le risque d'un éditeur de thème accessible depuis l'administration ?",
-        options: [
-          "Il ralentit le site",
-          "Il permet à un admin compromis d'écrire du PHP et d'exécuter du code",
-          "Il supprime les cookies",
-          "Il désactive les sauvegardes"
+        "q": "[Enumération] Question 6 — Analyse d'énumération assistée par IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Analyse d'énumération assistée par IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "L'éditeur de fichiers permet de modifier un fichier PHP du thème. Un compte admin compromis obtient donc une exécution de code sur le serveur."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Analyse d'énumération assistée par IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle constante WordPress désactive l'éditeur de fichiers ?",
-        options: [
-          "define('DISALLOW_FILE_EDIT', true);",
-          "define('WP_DEBUG', true);",
-          "define('FORCE_SSL_ADMIN', true);",
-          "define('AUTOSAVE_INTERVAL', 60);"
+        "q": "[Enumération] Question 7 — Énumération des utilisateurs, services et ressources : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Énumération des utilisateurs, services et ressources » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 0,
-        explain: "DISALLOW_FILE_EDIT retire l'éditeur de thèmes et de plugins. À combiner avec des permissions de fichiers en lecture seule."
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Énumération des utilisateurs, services et ressources ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quel est le bon réflexe avant d'envoyer un POST à l'éditeur de thème ?",
-        options: [
-          "Deviner le nonce",
-          "Extraire le champ _wpnonce de la page et le réutiliser dans la même session",
-          "Désactiver les cookies",
-          "Changer l'URL en HTTPS"
+        "q": "[Enumération] Question 8 — Concepts d'énumération SMB, FTP, SMTP, DNS : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Concepts d'énumération SMB, FTP, SMTP, DNS » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "WordPress protège ses formulaires par un nonce lié à l'action et à la session. Un nonce absent ou expiré provoque un 403."
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Concepts d'énumération SMB, FTP, SMTP, DNS ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que faire immédiatement après avoir prouvé une exécution de code en lab ?",
-        options: [
-          "Déployer une persistance",
-          "Lire le flag, documenter la preuve, puis restaurer le fichier modifié",
-          "Créer un compte admin supplémentaire",
-          "Supprimer les logs"
+        "q": "[Enumération] Question 9 — Banner grabbing et extraction d'informations : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Banner grabbing et extraction d'informations » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "La preuve minimale suffit. On restaure le fichier, on ne laisse ni webshell ni compte, et on documente la chaîne d'exploitation."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Banner grabbing et extraction d'informations ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quel ensemble de mesures durcit réellement un WordPress ?",
-        options: [
-          "Mises à jour, MFA, plugins minimaux, éditeur désactivé, permissions restreintes",
-          "Un thème sombre",
-          "La suppression de robots.txt",
-          "Un mot de passe admin de 8 caractères"
+        "q": "[Enumération] Question 10 — Chaînage d'énumération pour un accès plus profond : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Chaînage d'énumération pour un accès plus profond » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 0,
-        explain: "La surface WordPress se réduit par les mises à jour, la suppression des composants inutiles, la MFA, le moindre privilège et des permissions de fichiers strictes."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Chaînage d'énumération pour un accès plus profond ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       }
     ]
   },
-
-  q11: {
-    moduleId: 'm11',
-    title: "Évaluation — CTF injection SQL",
-    pass: 70,
-    questions: [
+  "qctf11": {
+    "moduleId": "m11",
+    "title": "Évaluation — Analyse de vulnérabilités",
+    "pass": 70,
+    "questions": [
       {
-        q: "Quelle est la cause racine d'une injection SQL ?",
-        options: [
-          "Un serveur trop lent",
-          "La concaténation d'une entrée utilisateur dans une requête SQL",
-          "Un certificat TLS expiré",
-          "Un cookie sans flag Secure"
+        "q": "[Vuln Analysis] Question 1 — Comprendre vulnérabilités, mauvaises configurations et expositions : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Comprendre vulnérabilités, mauvaises configurations et expositions » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "L'injection apparaît quand la donnée et le code SQL ne sont pas séparés. Une entrée concaténée peut modifier la structure de la requête."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Comprendre vulnérabilités, mauvaises configurations et expositions ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle correction élimine une injection SQL à la source ?",
-        options: [
-          "Un WAF",
-          "Une requête paramétrée avec des valeurs liées",
-          "Une blacklist de mots-clés",
-          "Un mot de passe plus long"
+        "q": "[Vuln Analysis] Question 2 — CVE, score CVSS et bases de données de vulnérabilités : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « CVE, score CVSS et bases de données de vulnérabilités » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Les requêtes paramétrées transmettent les valeurs séparément du code. La base les traite comme des données, quelle que soit leur syntaxe."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « CVE, score CVSS et bases de données de vulnérabilités ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que permet de déterminer la séquence ORDER BY 1, 2, 3… ?",
-        options: [
-          "Le mot de passe de la base",
-          "Le nombre de colonnes de la requête d'origine",
-          "La version de PHP",
-          "Le nom d'utilisateur courant"
+        "q": "[Vuln Analysis] Question 3 — Évaluation manuelle vs automatisée des vulnérabilités : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Évaluation manuelle vs automatisée des vulnérabilités » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "ORDER BY n échoue quand n dépasse le nombre de colonnes. La dernière valeur valide donne l'arité nécessaire pour une UNION."
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Évaluation manuelle vs automatisée des vulnérabilités ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle condition doit respecter une UNION SQLi ?",
-        options: [
-          "Un seul mot-clé SELECT",
-          "Le même nombre de colonnes et des types compatibles",
-          "Uniquement des colonnes numériques",
-          "Une base PostgreSQL"
+        "q": "[Vuln Analysis] Question 4 — Faisabilité d'exploitation et évaluation du risque réel : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Faisabilité d'exploitation et évaluation du risque réel » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "L'UNION exige le même nombre de colonnes que la requête d'origine. Les types doivent être compatibles pour être affichés correctement."
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Faisabilité d'exploitation et évaluation du risque réel ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "À quoi sert information_schema en MySQL ?",
-        options: [
-          "À chiffrer les données",
-          "À décrire les bases, tables et colonnes",
-          "À gérer les sessions PHP",
-          "À journaliser les requêtes HTTP"
+        "q": "[Vuln Analysis] Question 5 — Identification et validation des faux positifs : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Identification et validation des faux positifs » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "information_schema est une base de métadonnées. Elle permet de lister les tables et colonnes avant de cibler les données sensibles."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Identification et validation des faux positifs ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que fait la charge `' OR 1=1-- -` dans un formulaire de login vulnérable ?",
-        options: [
-          "Elle supprime la base",
-          "Elle rend la condition vraie et commente la vérification du mot de passe",
-          "Elle chiffre le mot de passe",
-          "Elle crée un nouvel utilisateur"
+        "q": "[Vuln Analysis] Question 6 — Priorisation des vulnérabilités assistée par IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Priorisation des vulnérabilités assistée par IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "<code>OR 1=1</code> rend la condition toujours vraie et <code>-- -</code> commente la suite de la requête, supprimant le contrôle du mot de passe."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Priorisation des vulnérabilités assistée par IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Pourquoi utiliser un identifiant négatif dans une UNION ?",
-        options: [
-          "Pour accélérer la requête",
-          "Pour masquer la ligne d'origine et afficher uniquement les données injectées",
-          "Pour contourner HTTPS",
-          "Pour désactiver les logs"
+        "q": "[Vuln Analysis] Question 7 — Comprendre vulnérabilités, mauvaises configurations et expositions : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Comprendre vulnérabilités, mauvaises configurations et expositions » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Un identifiant inexistant comme <code>-1</code> ne retourne aucune ligne d'origine, ce qui rend lisible la sortie de l'UNION."
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Comprendre vulnérabilités, mauvaises configurations et expositions ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelles conditions sont nécessaires à LOAD_FILE() ?",
-        options: [
-          "Un compte root MySQL uniquement",
-          "Le privilège FILE et un chemin autorisé par secure_file_priv",
-          "Un accès FTP",
-          "Un cookie de session"
+        "q": "[Vuln Analysis] Question 8 — CVE, score CVSS et bases de données de vulnérabilités : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « CVE, score CVSS et bases de données de vulnérabilités » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Le compte MySQL doit avoir le privilège FILE, et secure_file_priv doit autoriser le répertoire ou être vide. Ces droits doivent être retirés en production."
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « CVE, score CVSS et bases de données de vulnérabilités ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quel est le bon usage de sqlmap dans un audit autorisé ?",
-        options: [
-          "Lancer --risk=3 --level=5 sans restriction",
-          "Commencer avec un risque faible, cibler une preuve et journaliser les requêtes",
-          "L'utiliser sur n'importe quel site public",
-          "Laisser l'outil vider toute la base"
+        "q": "[Vuln Analysis] Question 9 — Évaluation manuelle vs automatisée des vulnérabilités : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Évaluation manuelle vs automatisée des vulnérabilités » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Un risque élevé peut modifier ou supprimer des données. On commence prudemment, on prouve l'accès avec un échantillon et on respecte le périmètre."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Évaluation manuelle vs automatisée des vulnérabilités ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle mesure réduit l'impact d'une injection SQL même si elle existe ?",
-        options: [
-          "Donner tous les droits au compte applicatif",
-          "Appliquer le moindre privilège à la base et désactiver l'affichage des erreurs",
-          "Stocker les mots de passe en clair",
-          "Désactiver les sauvegardes"
+        "q": "[Vuln Analysis] Question 10 — Faisabilité d'exploitation et évaluation du risque réel : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Faisabilité d'exploitation et évaluation du risque réel » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Un compte limité ne peut ni lire de fichiers ni supprimer des tables. Masquer les erreurs complique l'exploitation et la journalisation côté serveur conserve la trace."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Faisabilité d'exploitation et évaluation du risque réel ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       }
     ]
   },
-
-  q12: {
-    moduleId: 'm12',
-    title: "Évaluation — CTF élévation de privilèges Linux",
-    pass: 70,
-    questions: [
+  "qctf12": {
+    "moduleId": "m12",
+    "title": "Évaluation — Piratage système (Windows)",
+    "pass": 70,
+    "questions": [
       {
-        q: "Après un premier accès Linux, quelle est la première étape ?",
-        options: [
-          "Lancer un exploit noyau au hasard",
-          "Énumérer l'identité, les droits, les services et les fichiers",
-          "Supprimer les logs",
-          "Créer un compte root"
+        "q": "[SysHack Win] Question 1 — Techniques d'attaque de mots de passe et faiblesses d'authentification : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Techniques d'attaque de mots de passe et faiblesses d'authentification » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "La majorité des élévations viennent d'une mauvaise configuration. L'énumération méthodique (id, sudo, SUID, cron, capabilities) précède toute exploitation."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Techniques d'attaque de mots de passe et faiblesses d'authentification ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que signifie un binaire avec le bit SUID root ?",
-        options: [
-          "Il est en lecture seule",
-          "Il s'exécute avec les droits de root même si l'utilisateur est non privilégié",
-          "Il est chiffré",
-          "Il ne peut pas être exécuté"
+        "q": "[SysHack Win] Question 2 — Réutilisation d'identifiants et chemins d'escalade de privilèges : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Réutilisation d'identifiants et chemins d'escalade de privilèges » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Le bit SUID fait prendre au processus l'UID du propriétaire du fichier. Un binaire SUID root mal écrit peut donc exécuter du code en root."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Réutilisation d'identifiants et chemins d'escalade de privilèges ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Pourquoi `NOPASSWD: /usr/bin/find` est-il dangereux dans sudo ?",
-        options: [
-          "find est trop lent",
-          "find peut exécuter une commande arbitraire avec -exec, donc un shell root",
-          "find modifie les mots de passe",
-          "find désactive SSH"
+        "q": "[SysHack Win] Question 3 — Concepts d'accès au compte et de compromission système : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Concepts d'accès au compte et de compromission système » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Toute commande autorisée via sudo hérite des droits cibles. <code>find -exec</code> permet d'exécuter <code>/bin/sh</code> en root."
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Concepts d'accès au compte et de compromission système ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Comment un binaire SUID qui appelle `tar` sans chemin absolu peut-il être détourné ?",
-        options: [
-          "En changeant l'heure système",
-          "En plaçant un faux `tar` dans un répertoire contrôlé et en le mettant en tête du PATH",
-          "En supprimant le binaire",
-          "En modifiant le mot de passe"
+        "q": "[SysHack Win] Question 4 — Théorie du maintien d'accès et bases de la persistance : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Théorie du maintien d'accès et bases de la persistance » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Si le binaire cherche <code>tar</code> dans le PATH, un faux exécutable placé avant le vrai sera lancé avec les droits SUID root."
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Théorie du maintien d'accès et bases de la persistance ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quel risque présente un script cron exécuté par root et inscriptible par un utilisateur ?",
-        options: [
-          "Aucun, cron est sécurisé",
-          "L'utilisateur peut y ajouter des commandes qui s'exécuteront en root",
-          "Le script devient illisible",
-          "Cron désactive le script"
+        "q": "[SysHack Win] Question 5 — Planification post-exploitation sensible à la détection : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Planification post-exploitation sensible à la détection » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Cron exécute le script avec l'utilisateur spécifié. Si un utilisateur peut modifier le script, il obtient une exécution root répétée."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Planification post-exploitation sensible à la détection ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que permet la capability `cap_setuid+ep` sur Python ?",
-        options: [
-          "Lire les fichiers sans permission",
-          "Appeler setuid(0) et devenir root",
-          "Chiffrer le disque",
-          "Désactiver le pare-feu"
+        "q": "[SysHack Win] Question 6 — Analyse des chemins d'attaque assistée par IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Analyse des chemins d'attaque assistée par IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "<code>cap_setuid</code> autorise le changement d'UID. Sur un interpréteur, cela revient à donner un accès root complet."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Analyse des chemins d'attaque assistée par IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle commande liste les capabilities de tous les fichiers accessibles ?",
-        options: [
-          "ls -la /",
-          "getcap -r / 2>/dev/null",
-          "sudo -l",
-          "find / -perm -4000"
+        "q": "[SysHack Win] Question 7 — Techniques d'attaque de mots de passe et faiblesses d'authentification : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Techniques d'attaque de mots de passe et faiblesses d'authentification » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "<code>getcap -r /</code> parcourt récursivement le système et affiche les capabilities étendues. À comparer à la liste des SUID."
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Techniques d'attaque de mots de passe et faiblesses d'authentification ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Pourquoi les exploits de noyau sont-ils rarement le premier choix ?",
-        options: [
-          "Ils sont illégaux",
-          "Ils peuvent être instables et les mauvaises configurations offrent souvent un chemin plus simple",
-          "Ils ne fonctionnent jamais",
-          "Ils nécessitent toujours un accès physique"
+        "q": "[SysHack Win] Question 8 — Réutilisation d'identifiants et chemins d'escalade de privilèges : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Réutilisation d'identifiants et chemins d'escalade de privilèges » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Un exploit noyau peut provoquer un crash ou un panic. Les vecteurs de configuration (sudo, SUID, cron, capabilities) sont plus fiables et plus faciles à documenter."
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Réutilisation d'identifiants et chemins d'escalade de privilèges ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Que doit-on faire après avoir prouvé une élévation de privilèges en lab ?",
-        options: [
-          "Installer une persistance",
-          "Documenter la preuve, lire le flag et nettoyer les modifications",
-          "Créer un utilisateur root caché",
-          "Désactiver les journaux"
+        "q": "[SysHack Win] Question 9 — Concepts d'accès au compte et de compromission système : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Concepts d'accès au compte et de compromission système » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 1,
-        explain: "Le livrable est la preuve reproductible. On ne laisse pas de porte dérobée et on restaure les fichiers modifiés, en accord avec le cadre de la mission."
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Concepts d'accès au compte et de compromission système ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       },
       {
-        q: "Quelle mesure réduit durablement la surface d'élévation de privilèges Linux ?",
-        options: [
-          "Auditer sudo, SUID, cron et capabilities, puis retirer ce qui n'est pas nécessaire",
-          "Donner sudo à tous les comptes",
-          "Désactiver les mises à jour",
-          "Rendre tous les scripts inscriptibles"
+        "q": "[SysHack Win] Question 10 — Théorie du maintien d'accès et bases de la persistance : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Théorie du maintien d'accès et bases de la persistance » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
         ],
-        answer: 0,
-        explain: "Le durcissement consiste à supprimer les privilèges inutiles : règles sudo précises, SUID limités, scripts cron protégés et capabilities minimales."
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Théorie du maintien d'accès et bases de la persistance ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      }
+    ]
+  },
+  "qctf18": {
+    "moduleId": "m18",
+    "title": "Évaluation — Piratage d'applications web (Partie 1)",
+    "pass": 70,
+    "questions": [
+      {
+        "q": "[Web I] Question 1 — Architecture et technologies des applications web : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Architecture et technologies des applications web » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Architecture et technologies des applications web ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 2 — Comportement du protocole HTTP/HTTPS : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Comportement du protocole HTTP/HTTPS » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Comportement du protocole HTTP/HTTPS ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 3 — Failles d'authentification et de gestion de session : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Failles d'authentification et de gestion de session » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Failles d'authentification et de gestion de session ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 4 — Aperçu des vulnérabilités OWASP Top 10 : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Aperçu des vulnérabilités OWASP Top 10 » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Aperçu des vulnérabilités OWASP Top 10 ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 5 — Problèmes de validation des entrées et de contrôle d'accès : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Problèmes de validation des entrées et de contrôle d'accès » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Problèmes de validation des entrées et de contrôle d'accès ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 6 — Flux de travail de tests web assistés par IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Flux de travail de tests web assistés par IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Flux de travail de tests web assistés par IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 7 — Architecture et technologies des applications web : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Architecture et technologies des applications web » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Architecture et technologies des applications web ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 8 — Comportement du protocole HTTP/HTTPS : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Comportement du protocole HTTP/HTTPS » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Comportement du protocole HTTP/HTTPS ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 9 — Failles d'authentification et de gestion de session : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Failles d'authentification et de gestion de session » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Failles d'authentification et de gestion de session ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web I] Question 10 — Aperçu des vulnérabilités OWASP Top 10 : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Aperçu des vulnérabilités OWASP Top 10 » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Aperçu des vulnérabilités OWASP Top 10 ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      }
+    ]
+  },
+  "qctf19": {
+    "moduleId": "m19",
+    "title": "Évaluation — Piratage d'applications web (Partie 2)",
+    "pass": 70,
+    "questions": [
+      {
+        "q": "[Web II] Question 1 — Injection SQL et concepts d'attaques de bases de données : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Injection SQL et concepts d'attaques de bases de données » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Injection SQL et concepts d'attaques de bases de données ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 2 — Variantes de Cross-Site Scripting (XSS) : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Variantes de Cross-Site Scripting (XSS) » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Variantes de Cross-Site Scripting (XSS) ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 3 — Failles CSRF et falsification de requêtes : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Failles CSRF et falsification de requêtes » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Failles CSRF et falsification de requêtes ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 4 — Faiblesses d'inclusion de fichiers et d'upload : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Faiblesses d'inclusion de fichiers et d'upload » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Faiblesses d'inclusion de fichiers et d'upload ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 5 — Vulnérabilités de logique métier : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Vulnérabilités de logique métier » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Vulnérabilités de logique métier ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 6 — Fondamentaux de la sécurité des API : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Fondamentaux de la sécurité des API » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Fondamentaux de la sécurité des API ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 7 — Injection SQL et concepts d'attaques de bases de données : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Injection SQL et concepts d'attaques de bases de données » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Injection SQL et concepts d'attaques de bases de données ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 8 — Variantes de Cross-Site Scripting (XSS) : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Variantes de Cross-Site Scripting (XSS) » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Variantes de Cross-Site Scripting (XSS) ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 9 — Failles CSRF et falsification de requêtes : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Failles CSRF et falsification de requêtes » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Failles CSRF et falsification de requêtes ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Web II] Question 10 — Faiblesses d'inclusion de fichiers et d'upload : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Faiblesses d'inclusion de fichiers et d'upload » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Faiblesses d'inclusion de fichiers et d'upload ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      }
+    ]
+  },
+  "qctf23": {
+    "moduleId": "m23",
+    "title": "Évaluation — Cloud computing et sécurité",
+    "pass": 70,
+    "questions": [
+      {
+        "q": "[Cloud] Question 1 — Modèles de services et de déploiement cloud : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Modèles de services et de déploiement cloud » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Modèles de services et de déploiement cloud ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 2 — Modèle de responsabilité partagée : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Modèle de responsabilité partagée » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Modèle de responsabilité partagée ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 3 — Risques liés à l'identité et à la gestion des accès cloud : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Risques liés à l'identité et à la gestion des accès cloud » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Risques liés à l'identité et à la gestion des accès cloud ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 4 — Scénarios d'attaque basés sur les mauvaises configurations : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Scénarios d'attaque basés sur les mauvaises configurations » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Scénarios d'attaque basés sur les mauvaises configurations ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 5 — Bases de la journalisation et de la surveillance cloud : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Bases de la journalisation et de la surveillance cloud » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Bases de la journalisation et de la surveillance cloud ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 6 — Concepts de surveillance de sécurité cloud assistée par IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Concepts de surveillance de sécurité cloud assistée par IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Concepts de surveillance de sécurité cloud assistée par IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 7 — Modèles de services et de déploiement cloud : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Modèles de services et de déploiement cloud » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Modèles de services et de déploiement cloud ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 8 — Modèle de responsabilité partagée : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Modèle de responsabilité partagée » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Modèle de responsabilité partagée ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 9 — Risques liés à l'identité et à la gestion des accès cloud : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Risques liés à l'identité et à la gestion des accès cloud » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Risques liés à l'identité et à la gestion des accès cloud ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Cloud] Question 10 — Scénarios d'attaque basés sur les mauvaises configurations : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Scénarios d'attaque basés sur les mauvaises configurations » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Scénarios d'attaque basés sur les mauvaises configurations ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      }
+    ]
+  },
+  "qctf26": {
+    "moduleId": "m26",
+    "title": "Évaluation — Réponse aux incidents et forensic numérique",
+    "pass": 70,
+    "questions": [
+      {
+        "q": "[IR & Forensic] Question 1 — Cycle de vie et procédures de réponse aux incidents : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Cycle de vie et procédures de réponse aux incidents » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Cycle de vie et procédures de réponse aux incidents ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 2 — Préparation, détection et confinement : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Préparation, détection et confinement » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Préparation, détection et confinement ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 3 — Gestion des preuves et préparation forensic : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Gestion des preuves et préparation forensic » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Gestion des preuves et préparation forensic ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 4 — Fondamentaux de l'analyse disque et mémoire : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Fondamentaux de l'analyse disque et mémoire » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Fondamentaux de l'analyse disque et mémoire ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 5 — Concepts de reconstruction de chronologie : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Concepts de reconstruction de chronologie » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Concepts de reconstruction de chronologie ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 6 — Flux de travail de réponse aux incidents assistés par IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Flux de travail de réponse aux incidents assistés par IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Flux de travail de réponse aux incidents assistés par IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 7 — Cycle de vie et procédures de réponse aux incidents : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Cycle de vie et procédures de réponse aux incidents » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Cycle de vie et procédures de réponse aux incidents ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 8 — Préparation, détection et confinement : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Préparation, détection et confinement » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Préparation, détection et confinement ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 9 — Gestion des preuves et préparation forensic : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Gestion des preuves et préparation forensic » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Gestion des preuves et préparation forensic ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[IR & Forensic] Question 10 — Fondamentaux de l'analyse disque et mémoire : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Fondamentaux de l'analyse disque et mémoire » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Fondamentaux de l'analyse disque et mémoire ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      }
+    ]
+  },
+  "qctf30": {
+    "moduleId": "m30",
+    "title": "Évaluation — Projet de synthèse et orientation professionnelle",
+    "pass": 70,
+    "questions": [
+      {
+        "q": "[Capstone] Question 1 — Évaluation éthique de bout en bout : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Évaluation éthique de bout en bout » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Évaluation éthique de bout en bout ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 2 — Évaluation réseau, système et web : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Évaluation réseau, système et web » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Évaluation réseau, système et web ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 3 — Documentation et justification de l'usage de l'IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Documentation et justification de l'usage de l'IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Documentation et justification de l'usage de l'IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 4 — Reporting final basé sur le risque : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Reporting final basé sur le risque » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Reporting final basé sur le risque ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 5 — Feuille de route de carrière et certifications suivantes : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Feuille de route de carrière et certifications suivantes » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Feuille de route de carrière et certifications suivantes ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 6 — Éthique professionnelle et stratégie de progression : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Éthique professionnelle et stratégie de progression » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Éthique professionnelle et stratégie de progression ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 7 — Évaluation éthique de bout en bout : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Évaluation éthique de bout en bout » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 2,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Évaluation éthique de bout en bout ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 8 — Évaluation réseau, système et web : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Évaluation réseau, système et web » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 3,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Évaluation réseau, système et web ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 9 — Documentation et justification de l'usage de l'IA : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Documentation et justification de l'usage de l'IA » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 0,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Documentation et justification de l'usage de l'IA ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
+      },
+      {
+        "q": "[Capstone] Question 10 — Reporting final basé sur le risque : quelle approche est correcte ?",
+        "options": [
+          "Appliquer les principes de « Reporting final basé sur le risque » dans un cadre autorisé et documenté",
+          "Tester toute technique sur des systèmes tiers sans autorisation pour aller plus vite",
+          "Ignorer la traçabilité et conserver des données sensibles inutilement",
+          "Désactiver les contrôles de sécurité pour simplifier l'exercice"
+        ],
+        "answer": 1,
+        "explain": "La bonne pratique consiste à travailler dans un périmètre autorisé, de façon méthodique et traçable, en appliquant les notions de « Reporting final basé sur le risque ». Les autres options sont contraires à l'éthique, à la loi ou à la sécurité."
       }
     ]
   }

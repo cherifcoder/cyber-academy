@@ -1,308 +1,938 @@
 export default {
-  id: 'm2',
-  num: 2,
-  title: "Reconnaissance & Enquête d'Empreinte",
-  short: "Recon & OSINT",
-  icon: "🛰️",
-  xp: 300,
-  duration: 60,
-  summary: "Cartographier la surface d'attaque sans bruit : OSINT, DNS, sous-domaines, technologies, ports et services. Maîtriser Whois, dig, Amass, theHarvester, Subfinder, Nmap et WhatWeb.",
-  objectives: [
-    "Différencier reconnaissance passive et active, et leurs conséquences",
-    "Exploiter Whois, dig, nslookup, crt.sh, theHarvester, Amass et Subfinder",
-    "Lire une sortie Nmap et choisir les bons flags selon l'objectif",
-    "Identifier les technologies et versions exposées avec WhatWeb / Wappalyzer"
+  "id": "m2",
+  "num": 2,
+  "title": "Lois cyber, conformité et éthique",
+  "short": "Lois & Éthique",
+  "icon": "⚖️",
+  "xp": 250,
+  "duration": 55,
+  "summary": "Cours en français sur « Lois cyber, conformité et éthique » avec 6 chapitres, 10 exercices par chapitre et un défi CTF.",
+  "objectives": [
+    "Comprendre et appliquer : Loi IT indienne et lois mondiales sur la cybercriminalité.",
+    "Comprendre et appliquer : RGPD, protection des données et principes de confidentialité.",
+    "Comprendre et appliquer : Autorisation, définition du périmètre et règles d'engagement.",
+    "Comprendre et appliquer : Pratiques de divulgation responsable.",
+    "Comprendre et appliquer : Gestion des preuves et bases du reporting légal.",
+    "Comprendre et appliquer : Risques juridiques et limites du hacking assisté par IA."
   ],
-  blocks: [
+  "blocks": [
     {
-      t: 'p',
-      x: "La reconnaissance représente <strong>60 à 70 % du temps</strong> d'un audit réel. L'objectif n'est pas de « trouver une faille » mais de construire une <strong>carte fiable de la surface d'attaque</strong> : noms de domaine, sous-domaines, adresses IP, technologies, versions, services exposés, employés et fuites publiques."
+      "t": "p",
+      "x": "<strong>Module 2 — Lois cyber, conformité et éthique</strong>. Ce module est présenté en français et couvre les chapitres suivants avec des exercices pratiques et des objectifs de compréhension."
     },
     {
-      t: 'mini',
-      items: [
-        { v: 'cyan', h: 'Passive', p: "Aucun paquet envoyé à la cible : moteurs de recherche, registres, certificats, archives, fuites. Indétectable par la cible." },
-        { v: 'magenta', h: 'Active', p: "Interrogation directe : DNS, ports, bannières HTTP. Visible dans les logs et par les IDS/IPS. À réserver au périmètre autorisé." }
-      ]
-    },
-    { t: 'h', x: "2.1 Reconnaissance passive (OSINT)" },
-    {
-      t: 'table',
-      head: ['Source', 'Ce que l’on obtient', 'Exemple'],
-      rows: [
-        ['Whois / RDAP', "Titulaire, registrar, dates, serveurs DNS", "whois acme.example"],
-        ['crt.sh (Certificate Transparency)', "Sous-domaines révélés par les certificats TLS", 'https://crt.sh/?q=%25.acme.example'],
-        ['theHarvester', "Emails, hôtes, employés via sources publiques", "theHarvester -d acme.example -b all"],
-        ['Amass (passive)', "Cartographie DNS/ASM à partir de sources tierces", "amass enum -passive -d acme.example"],
-        ['Subfinder', "Énumération rapide de sous-domaines (sources passives)", "subfinder -d acme.example -all"],
-        ['Shodan / Censys', "Services exposés, bannières, certificats", 'shodan search "ssl:acme.example"'],
-        ['Wayback Machine', "Anciennes URLs, endpoints oubliés, paramètres", "web.archive.org/web/*/acme.example/*"],
-        ['GitHub / GitLab', "Clés, tokens, endpoints internes, configs", 'recherche "acme.example password"']
-      ]
+      "t": "callout",
+      "v": "info",
+      "title": "Résumé",
+      "x": "Durée estimée : 55 min · XP : 250. Travaillez chapitre par chapitre, réalisez les 10 exercices de chaque chapitre, puis validez vos acquis."
     },
     {
-      t: 'callout', v: 'warn', title: "L'OSINT est passif pour la cible, pas pour vous",
-      x: "Vos requêtes laissent des traces chez les fournisseurs (Google, crt.sh, Shodan) et peuvent être corrélées. Utilisez un compte dédié à la mission, respectez les CGU et ne collectez pas de données personnelles au-delà du nécessaire (minimisation RGPD)."
-    },
-    { t: 'h', x: "2.2 DNS : le socle de la cartographie" },
-    {
-      t: 'code', lang: 'bash', title: "Résolution et enregistrements",
-      x: `# Résolution simple
-dig acme.example +short
-nslookup acme.example
-
-# Tous les types utiles
-dig acme.example ANY +noall +answer
-dig MX acme.example +short
-dig TXT acme.example +short
-dig NS acme.example +short
-
-# Transfert de zone (mal configuré = jackpot)
-dig AXFR @ns1.acme.example acme.example
-
-# Reverse DNS d'une plage
-for ip in $(seq 1 254); do dig -x 203.0.113.$ip +short; done`
+      "t": "h",
+      "x": "2.1 Loi IT indienne et lois mondiales sur la cybercriminalité"
     },
     {
-      t: 'p',
-      x: "Un <strong>transfert de zone (AXFR)</strong> réussi livre l'intégralité des enregistrements du domaine. C'est rare mais critique : un serveur DNS qui l'autorise expose sa structure interne. Les enregistrements <strong>TXT</strong> révèlent souvent des vérifications de propriété (Google, Microsoft), des politiques SPF/DMARC et parfois des secrets oubliés."
+      "t": "p",
+      "x": "Ce chapitre présente <strong>loi it indienne et lois mondiales sur la cybercriminalité</strong> dans le cadre du module « Lois cyber, conformité et éthique ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
     },
     {
-      t: 'table',
-      head: ['Enregistrement', 'Rôle', 'Intérêt offensif'],
-      rows: [
-        ['A / AAAA', "Nom → IPv4 / IPv6", "Cibles directes, IP d'origine derrière CDN"],
-        ['CNAME', "Alias vers un autre nom", "Sous-domaine abandonné → takeover"],
-        ['MX', "Serveurs mail", "Surface email, SPF/DMARC, phishing autorisé ?"],
-        ['TXT', "Métadonnées (SPF, DKIM, vérifications)", "Fuite d'infos, faiblesse SPF"],
-        ['NS', "Serveurs autoritaires", "Zone transfer, provider DNS"],
-        ['SOA', "Serveur primaire, contact", "Nom d'admin, sérial"]
-      ]
-    },
-    { t: 'h', x: "2.3 Énumération de sous-domaines" },
-    {
-      t: 'code', lang: 'bash', title: "Subfinder + Amass + résolution en masse",
-      x: `# Passif rapide (sources publiques)
-subfinder -d acme.example -all -silent -o subs.txt
-
-# Amass passif puis actif (plus lent, plus complet)
-amass enum -passive -d acme.example -o amass.txt
-amass enum -active -d acme.example -brute -w subdomains-top1m.txt
-
-# Vérifier lesquels résolvent réellement
-dnsx -l subs.txt -a -resp -o live.txt
-httpx -l live.txt -title -tech-detect -status-code -o web.txt
-
-# Détecter les takeovers (CNAME orphelin)
-subzy run --targets subs.txt`
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Loi IT indienne et lois mondiales sur la cybercriminalité », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
     },
     {
-      t: 'callout', v: 'tip', title: "Subdomain takeover",
-      x: "Un CNAME pointe vers un service tiers (S3, GitHub Pages, Heroku…) dont l'instance a été supprimée. Si le nom est encore résolvable et le bucket libérable, un attaquant peut revendiquer la ressource et servir du contenu sous le domaine de la victime. Vérifiez chaque CNAME vers un service externe."
-    },
-    { t: 'h', x: "2.4 Nmap : du scan à l'interprétation" },
-    {
-      t: 'p',
-      x: "Nmap combine <strong>découverte d'hôtes</strong>, <strong>scan de ports</strong>, <strong>détection de services/versions</strong> et <strong>scripts NSE</strong>. Le choix des options dépend de la discrétion attendue et du périmètre."
-    },
-    {
-      t: 'table',
-      head: ['Flag', 'Effet', 'Quand l’utiliser'],
-      rows: [
-        ['-sn', "Découverte d'hôtes sans scan de ports", "Cartographier un /24 en début de mission"],
-        ['-sS', "TCP SYN (half-open), rapide et discret", "Scan privilégié (root) par défaut"],
-        ['-sT', "TCP connect complet", "Sans privilèges root, via proxy"],
-        ['-sU', "UDP", "DNS, SNMP, DHCP ; lent, cibler les ports clés"],
-        ['-sV', "Version des services", "Identifier Apache 2.4.49, OpenSSH 8.2…"],
-        ['-O', "Détection d'OS (heuristique)", "Compléter le profil de la cible"],
-        ['-p-', "Les 65 535 ports TCP", "Scan exhaustif (long)"],
-        ['--top-ports 1000', "Top 1000 ports", "Compromis vitesse/couverture"],
-        ['-Pn', "Pas de ping préalable", "Cible qui bloque l'ICMP"],
-        ['--script', "Scripts NSE (http-title, vuln…)", "Enrichir sans exploiter"],
-        ['-T4', "Temporisation agressive", "Lab rapide ; risqué en prod"],
-        ['-oA scan', "Sortie normalisée (.nmap/.xml/.gnmap)", "Traçabilité et parsing"]
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Loi IT indienne et lois mondiales sur la cybercriminalité.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
       ]
     },
     {
-      t: 'code', lang: 'bash', title: "Séquence de scan recommandée",
-      x: `# 1. Découverte
-nmap -sn 10.10.10.0/24 -oA 01-discovery
-
-# 2. Top ports + versions, sans trop de bruit
-nmap -sS -sV --top-ports 1000 -T3 --max-retries 2 10.10.10.5 -oA 02-services
-
-# 3. Scan complet si autorisé et utile
-nmap -sS -p- --min-rate 500 -T4 10.10.10.5 -oA 03-allports
-
-# 4. Enrichissement HTTP
-nmap -sV -p 80,443,8080 --script http-title,http-headers,http-methods 10.10.10.5
-
-# 5. Vulnérabilités (lecture seule, périmètre lab)
-nmap -p 445 --script smb-vuln-ms17-010 10.10.10.5`
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
     },
     {
-      t: 'p',
-      x: "<strong>Interprétation des états :</strong> <code>open</code> = un service écoute et accepte les connexions ; <code>closed</code> = aucun service mais l'hôte répond ; <code>filtered</code> = un pare-feu ou un IDS bloque silencieusement (souvent par drop) ; <code>open|filtered</code> = indécidable (fréquent en UDP). Un port filtré n'est pas une preuve d'absence de service : adaptez (fragmentation, ports source, scan UDP)."
-    },
-    { t: 'h', x: "2.5 Empreinte technologique" },
-    {
-      t: 'code', lang: 'bash', title: "WhatWeb, Wappalyzer, curl",
-      x: `# Empreinte HTTP globale
-whatweb -a 3 https://app.acme.example
-
-# Bannière et en-têtes bruts
-curl -sSI https://app.acme.example
-
-# Chaîne de redirections
-curl -sSIL https://app.acme.example | grep -E "^(HTTP|location)"
-
-# Analyse d'une app JS (endpoints dans les bundles)
-curl -s https://app.acme.example/static/js/main.js | grep -oE '"/api/[a-zA-Z0-9/_-]+"' | sort -u`
-    },
-    {
-      t: 'table',
-      head: ['Indice', 'Technologie probable', 'Piste de test'],
-      rows: [
-        ['X-Powered-By: PHP/7.4', "PHP ancien", "Versions EOL, wrappers, LFI"],
-        ['Server: nginx + Set-Cookie: PHPSESSID', "Nginx + PHP", "Fichiers .php.bak, path traversal"],
-        ['X-AspNet-Version', "ASP.NET / IIS", "ViewState, erreurs détaillées, .aspx"],
-        ['_shopify_s, cdn.shopify.com', "Shopify", "Apps tierces, IDOR sur les thèmes"],
-        ['X-Generator: Drupal 9', "Drupal", "Modules, /user/login, CHANGELOG.txt"],
-        ['wp-content, wp-json', "WordPress", "Enumération plugins/thèmes, xmlrpc"],
-        ['Set-Cookie: JSESSIONID', "Java / Spring", "Actuator, SpEL, deserialization"]
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
       ]
     },
     {
-      t: 'callout', v: 'danger', title: "Discrétion : le bruit se paie",
-      x: "Un scan -T4 sur un /16, des requêtes ffuf à 500 threads ou des scripts NSE « vuln » en production déclenchent WAF, SOC et coupure. En mission réelle, validez les débits avec le client et préférez des fenêtres horaires annoncées. En lab, vous pouvez être agressif — c'est le seul endroit où c'est sans conséquence."
-    },
-    { t: 'h', x: "2.6 Atelier : simulateur Nmap" },
-    {
-      t: 'p',
-      x: "Choisissez une cible de laboratoire et une stratégie de scan. Le simulateur produit une sortie réaliste, puis vous devez identifier les services et les pistes prioritaires."
-    },
-    { t: 'lab', id: 'nmap' },
-
-    { t: 'h', x: "2.7 PAS À PAS POUR DÉBUTANT : Reconnaissance complète sur LAB AUTORISÉ" },
-    {
-      t: 'p',
-      x: "Objectif : cartographier UNIQUEMENT un environnement de lab local (DVWA/Juice Shop/Metasploitable) de manière méthodique. On privilégie le passif d'abord, puis l'actif contrôlé."
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
     },
     {
-      t: 'callout', v: 'legal', title: "Règle absolue",
-      x: "N'utilisez QUE des cibles que vous possédez/locales. Exemples sûrs : 127.0.0.1, 192.168.56.XXX, 10.0.2.XXX (réseau host-only/isolé)."
+      "t": "h",
+      "x": "2.2 RGPD, protection des données et principes de confidentialité"
     },
     {
-      t: 'steps',
-      items: [
-        { h: "Étape 1 : Préparer le workspace", p: "Créer mission-recon dans votre arborescence, journaliser les actions." },
-        { h: "Étape 2 : Reconnaissance passive", p: "whois/dig/host/nslookup sur cibles autorisées." },
-        { h: "Étape 3 : Découverte réseau (actif, lab)", p: "nmap ping scan sur le réseau du lab UNIQUEMENT." },
-        { h: "Étape 4 : Scan de ports/services", p: "TCP SYN/Connect, détection version, scripts sûrs." },
-        { h: "Étape 5 : Empreinte web", p: "whatweb/curl/wappalyzer sur les services HTTP/HTTPS du lab." },
-        { h: "Étape 6 : Documentation", p: "Captures, logs, synthèse dans reports/." }
-      ]
-    },
-    { t: 'h', x: "2.7.1 Préparation (Linux/macOS/Windows)" },
-    {
-      t: 'code', lang: 'bash', title: "VARIANTES - Linux/macOS",
-      x: `mkdir -p ~/pentest-lab/mission-recon/{evidence/{logs,pcaps,screenshots},reports,notes}
-cd ~/pentest-lab/mission-recon
-echo "# RECON MISSION - LAB LOCAL" > notes/journal-$(date +%Y%m%d).md
-echo "[$(date -Iseconds)] Début recon sur LAB UNIQUEMENT" >> notes/journal-$(date +%Y%m%d).md
-echo "Définir LAB_NET et LAB_HOST" >> notes/journal-$(date +%Y%m%d).md`
+      "t": "p",
+      "x": "Ce chapitre présente <strong>rgpd, protection des données et principes de confidentialité</strong> dans le cadre du module « Lois cyber, conformité et éthique ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
     },
     {
-      t: 'code', lang: 'powershell', title: "VARIANTE - Windows",
-      x: `$r="$env:USERPROFILE\\pentest-lab\\mission-recon"; New-Item -ItemType Directory -Force -Path "$r\\evidence\\logs","$r\\evidence\\pcaps","$r\\evidence\\screenshots","$r\\reports","$r\\notes"|Out-Null; Set-Location $r; "# RECON MISSION - LAB LOCAL" | Out-File -Encoding UTF8 .\\notes\\journal-$(Get-Date -Format yyyyMMdd).md; "[$(Get-Date -Format o)] Debut recon LAB" | Out-File -Append -Encoding UTF8 .\\notes\\journal-$(Get-Date -Format yyyyMMdd).md`
-    },
-    { t: 'h', x: "2.7.2 Reconnaissance passive (sans scan agressif)" },
-    {
-      t: 'code', lang: 'bash', title: "VARIANTES - DNS/passif (lab/public autorisé)",
-      x: `whois example.com 2>&1 | head -30
-dig example.com A +short
-dig example.com MX +short
-dig example.com TXT +short
-dig example.com NS +short
-host example.com
-nslookup example.com 8.8.8.8
-echo "[$(date -Iseconds)] Passif DNS fait (cible autorisée)" >> notes/journal-$(date +%Y%m%d).md`
-    },
-    { t: 'h', x: "2.7.3 Découverte d'hôtes sur réseau LAB (actif contrôlé)" },
-    {
-      t: 'callout', v: 'warn', title: "UNIQUEMENT RÉSEAU DE LAB",
-      x: "Remplacez 192.168.56.0/24 par VOTRE réseau host-only. Jamais 0.0.0.0/0 ni réseau entreprise."
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « RGPD, protection des données et principes de confidentialité », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
     },
     {
-      t: 'code', lang: 'bash', title: "VARIANTES - nmap host discovery (lab uniquement)",
-      x: `LAB_NET="192.168.56.0/24"
-sudo nmap -PR -sn $LAB_NET -oN evidence/logs/arp-discovery.nmap 2>&1 | tail -25
-nmap -PE -PP -sn $LAB_NET -oN evidence/logs/icmp-discovery.nmap 2>&1 | tail -15
-nmap -PS22,80,443,8080,8443 -sn $LAB_NET -oN evidence/logs/tcp-ping.nmap 2>&1 | tail -15
-grep -E "Nmap scan report|Up" evidence/logs/arp-discovery.nmap | head -10`
-    },
-    { t: 'h', x: "2.7.4 Scan de ports et services (détaillé)" },
-    {
-      t: 'code', lang: 'bash', title: "VARIANTES - nmap scan sur hôte lab unique",
-      x: `LAB_HOST="192.168.56.101"
-sudo nmap -sS -sV --version-intensity 5 -T4 $LAB_HOST -oN evidence/logs/ports-syn-sv.nmap 2>&1 | tail -40
-nmap -sT -sV -T4 $LAB_HOST -oN evidence/logs/ports-connect-sv.nmap 2>&1 | tail -40
-nmap --top-ports 1000 -sV -sC -T4 $LAB_HOST -oN evidence/logs/top1000-svc-scripts.nmap 2>&1 | tail -50
-nmap -p 80,443,8080,8443,8000,3000,5000 -sV -sC $LAB_HOST -oN evidence/logs/web-ports.nmap 2>&1 | tail -30`
-    },
-    {
-      t: 'callout', v: 'tip', title: "Interprétation débutant",
-      x: "<strong>open</strong>=service écoute. <strong>closed</strong>=port joignable mais rien. <strong>filtered</strong>=filtré (firewall). <strong>open|filtered</strong>=incertain."
-    },
-    { t: 'h', x: "2.7.5 Empreinte technologique web (lab)" },
-    {
-      t: 'code', lang: 'bash', title: "VARIANTES - whatweb/curl/nikto",
-      x: `LAB_HOST="192.168.56.101"
-whatweb http://$LAB_HOST:8080 2>&1 | tee evidence/logs/whatweb-8080.txt
-curl -I http://$LAB_HOST:8080 2>&1 | tee evidence/logs/headers-8080.txt
-curl -L -A "Mozilla/5.0 (PentestLab)" http://$LAB_HOST:8080/ 2>&1 | head -40
-nikto -h http://$LAB_HOST:8080 -output evidence/logs/nikto-8080.txt 2>&1 | tail -30`
-    },
-    { t: 'h', x: "2.7.6 Synthèse" },
-    {
-      t: 'code', lang: 'bash', title: "VARIANTE - Générer mini-rapport recon (lab)",
-      x: `cat > reports/recon_synthese_lab.md << EOF
-# SYNTHÈSE RECON - MISSION LAB LOCAL
-Date: $(date -Iseconds)
-Cible(s): LAB UNIQUEMENT (127.0.0.1 / host-only)
-EOF
-cat reports/recon_synthese_lab.md`
-    },
-    { t: 'h', x: "2.8 TEST PRATIQUE À LA FIN DU MODULE - Recon pas à pas sur LAB SÉCURISÉ" },
-    {
-      t: 'p',
-      x: "Réalisez ce parcours COMPLET sur VOTRE lab local (DVWA/Metasploitable/Juice Shop). Durée: 45-60 min."
-    },
-    {
-      t: 'steps',
-      items: [
-        { h: "TEST 1 - Cadrage (5-10 min)", p: "Vérifier que cible = 127.0.0.1 ou host-only. Mettre à jour journal." },
-        { h: "TEST 2 - Découverte (10 min)", p: "nmap -sn sur réseau lab. Identifier hôte UP." },
-        { h: "TEST 3 - Scan détaillé (15 min)", p: "nmap -sV -sC sur ports web. Sauver en .nmap." },
-        { h: "TEST 4 - Empreinte (10 min)", p: "whatweb + curl -I + notes. Identifier framework/serveur." },
-        { h: "TEST 5 - Synthèse (10 min)", p: "Rédiger recon_synthese_lab.md avec preuves + chemins." }
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : RGPD, protection des données et principes de confidentialité.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
       ]
     },
     {
-      t: 'table',
-      head: ['Étape', 'Commande(s)', 'Attendu', 'Preuve'],
-      rows: [
-        ['Découverte', 'nmap -sn <LAB_NET>', 'Host up identifié', 'evidence/logs/discovery-*.nmap'],
-        ['Ports+versions', 'nmap -sV -sC <LAB_HOST>', 'Ports ouverts + services', 'evidence/logs/ports-*.nmap'],
-        ['Web headers', 'curl -I http://<LAB_HOST>:<PORT>', 'Server/X-Powered-By', 'evidence/logs/headers-*.txt'],
-        ['Tech', 'whatweb http://<LAB_HOST>:<PORT>', 'CMS/framework', 'evidence/logs/whatweb-*.txt'],
-        ['Synthèse', 'reports/recon_synthese_lab.md', 'Doc complète', 'reports/recon_synthese_lab.md']
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
       ]
     },
     {
-      t: 'callout', v: 'tip', title: "Critère de réussite",
-      x: "Vous devez pouvoir expliquer chaque port ouvert et justifier pourquoi c'est pertinent sans exploiter hors lab."
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "2.3 Autorisation, définition du périmètre et règles d'engagement"
+    },
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>autorisation, définition du périmètre et règles d'engagement</strong> dans le cadre du module « Lois cyber, conformité et éthique ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Autorisation, définition du périmètre et règles d'engagement », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Autorisation, définition du périmètre et règles d'engagement.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "2.4 Pratiques de divulgation responsable"
+    },
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>pratiques de divulgation responsable</strong> dans le cadre du module « Lois cyber, conformité et éthique ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Pratiques de divulgation responsable », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Pratiques de divulgation responsable.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "2.5 Gestion des preuves et bases du reporting légal"
+    },
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>gestion des preuves et bases du reporting légal</strong> dans le cadre du module « Lois cyber, conformité et éthique ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Gestion des preuves et bases du reporting légal », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Gestion des preuves et bases du reporting légal.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "2.6 Risques juridiques et limites du hacking assisté par IA"
+    },
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>risques juridiques et limites du hacking assisté par ia</strong> dans le cadre du module « Lois cyber, conformité et éthique ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Risques juridiques et limites du hacking assisté par IA », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Risques juridiques et limites du hacking assisté par IA.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 2.1 : Loi IT indienne et lois mondiales sur la cybercriminalité"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "facile",
+          "(concept) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "facile",
+          "(analyse) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "facile",
+          "(application) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "avancé",
+          "(risque) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "avancé",
+          "(contrôle) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Loi IT indienne et lois mondiales sur la cybercriminalité",
+          "avancé",
+          "(synthèse) Dans le contexte de « Loi IT indienne et lois mondiales sur la cybercriminalité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Loi IT indienne et lois mondiales sur la cybercriminalité », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 2.2 : RGPD, protection des données et principes de confidentialité"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — RGPD, protection des données et principes de confidentialité",
+          "facile",
+          "(concept) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — RGPD, protection des données et principes de confidentialité",
+          "facile",
+          "(analyse) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — RGPD, protection des données et principes de confidentialité",
+          "facile",
+          "(application) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — RGPD, protection des données et principes de confidentialité",
+          "intermédiaire",
+          "(défense) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — RGPD, protection des données et principes de confidentialité",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — RGPD, protection des données et principes de confidentialité",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — RGPD, protection des données et principes de confidentialité",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — RGPD, protection des données et principes de confidentialité",
+          "avancé",
+          "(risque) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — RGPD, protection des données et principes de confidentialité",
+          "avancé",
+          "(contrôle) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — RGPD, protection des données et principes de confidentialité",
+          "avancé",
+          "(synthèse) Dans le contexte de « RGPD, protection des données et principes de confidentialité » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « RGPD, protection des données et principes de confidentialité », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 2.3 : Autorisation, définition du périmètre et règles d'engagement"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Autorisation, définition du périmètre et règles d'engagement",
+          "facile",
+          "(concept) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Autorisation, définition du périmètre et règles d'engagement",
+          "facile",
+          "(analyse) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Autorisation, définition du périmètre et règles d'engagement",
+          "facile",
+          "(application) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Autorisation, définition du périmètre et règles d'engagement",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Autorisation, définition du périmètre et règles d'engagement",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Autorisation, définition du périmètre et règles d'engagement",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Autorisation, définition du périmètre et règles d'engagement",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Autorisation, définition du périmètre et règles d'engagement",
+          "avancé",
+          "(risque) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Autorisation, définition du périmètre et règles d'engagement",
+          "avancé",
+          "(contrôle) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Autorisation, définition du périmètre et règles d'engagement",
+          "avancé",
+          "(synthèse) Dans le contexte de « Autorisation, définition du périmètre et règles d'engagement » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Autorisation, définition du périmètre et règles d'engagement », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 2.4 : Pratiques de divulgation responsable"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Pratiques de divulgation responsable",
+          "facile",
+          "(concept) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Pratiques de divulgation responsable",
+          "facile",
+          "(analyse) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Pratiques de divulgation responsable",
+          "facile",
+          "(application) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Pratiques de divulgation responsable",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Pratiques de divulgation responsable",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Pratiques de divulgation responsable",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Pratiques de divulgation responsable",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Pratiques de divulgation responsable",
+          "avancé",
+          "(risque) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Pratiques de divulgation responsable",
+          "avancé",
+          "(contrôle) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Pratiques de divulgation responsable",
+          "avancé",
+          "(synthèse) Dans le contexte de « Pratiques de divulgation responsable » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Pratiques de divulgation responsable », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 2.5 : Gestion des preuves et bases du reporting légal"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Gestion des preuves et bases du reporting légal",
+          "facile",
+          "(concept) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Gestion des preuves et bases du reporting légal",
+          "facile",
+          "(analyse) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Gestion des preuves et bases du reporting légal",
+          "facile",
+          "(application) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Gestion des preuves et bases du reporting légal",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Gestion des preuves et bases du reporting légal",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Gestion des preuves et bases du reporting légal",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Gestion des preuves et bases du reporting légal",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Gestion des preuves et bases du reporting légal",
+          "avancé",
+          "(risque) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Gestion des preuves et bases du reporting légal",
+          "avancé",
+          "(contrôle) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Gestion des preuves et bases du reporting légal",
+          "avancé",
+          "(synthèse) Dans le contexte de « Gestion des preuves et bases du reporting légal » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des preuves et bases du reporting légal », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 2.6 : Risques juridiques et limites du hacking assisté par IA"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Risques juridiques et limites du hacking assisté par IA",
+          "facile",
+          "(concept) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Risques juridiques et limites du hacking assisté par IA",
+          "facile",
+          "(analyse) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Risques juridiques et limites du hacking assisté par IA",
+          "facile",
+          "(application) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Risques juridiques et limites du hacking assisté par IA",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Risques juridiques et limites du hacking assisté par IA",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Risques juridiques et limites du hacking assisté par IA",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Risques juridiques et limites du hacking assisté par IA",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Risques juridiques et limites du hacking assisté par IA",
+          "avancé",
+          "(risque) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Risques juridiques et limites du hacking assisté par IA",
+          "avancé",
+          "(contrôle) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Risques juridiques et limites du hacking assisté par IA",
+          "avancé",
+          "(synthèse) Dans le contexte de « Risques juridiques et limites du hacking assisté par IA » (module 2 : Lois cyber, conformité et éthique), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Risques juridiques et limites du hacking assisté par IA », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "CTF — Module 2"
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Défi CTF (lab autorisé)",
+      "x": "Mettez en pratique les notions du module « Lois cyber, conformité et éthique » dans un environnement de lab/CTF autorisé. Documentez votre démarche : reconnaissance (si pertinent), hypothèse, test contrôlé, preuve, impact et remédiation."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Préparation",
+          "p": "Vérifiez le périmètre, préparez votre environnement et votre journal de notes."
+        },
+        {
+          "h": "Exécution",
+          "p": "Appliquez les techniques du module de façon méthodique et non destructive."
+        },
+        {
+          "h": "Preuve",
+          "p": "Collectez des preuves minimales (captures, commandes, horodatage) dans un dossier dédié."
+        },
+        {
+          "h": "Remédiation",
+          "p": "Proposez des correctifs concrets et priorisés selon le risque."
+        }
+      ]
     }
   ],
-  quiz: 'q2'
+  "quiz": "q2"
 };

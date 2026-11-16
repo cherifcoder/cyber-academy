@@ -15,30 +15,21 @@ import m14 from './m14.js';
 import m15 from './m15.js';
 import m16 from './m16.js';
 import m17 from './m17.js';
+import m18 from './m18.js';
+import m19 from './m19.js';
+import m20 from './m20.js';
+import m21 from './m21.js';
+import m22 from './m22.js';
+import m23 from './m23.js';
+import m24 from './m24.js';
+import m25 from './m25.js';
+import m26 from './m26.js';
+import m27 from './m27.js';
+import m28 from './m28.js';
+import m29 from './m29.js';
+import m30 from './m30.js';
 
-import r1 from './refs/m1.js';
-import r2 from './refs/m2.js';
-import r3 from './refs/m3.js';
-import r4 from './refs/m4.js';
-import r5 from './refs/m5.js';
-import r6 from './refs/m6.js';
-import r7 from './refs/m7.js';
-import r8 from './refs/m8.js';
-import r17 from './refs/m17.js';
-
-const REFS = { m1: r1, m2: r2, m3: r3, m4: r4, m5: r5, m6: r6, m7: r7, m8: r8, m17: r17 };
-
-function withRefs(mod) {
-  const ref = REFS[mod.id];
-  if (!ref) return mod;
-  return {
-    ...mod,
-    blocks: [...mod.blocks, ...(ref.blocks || [])],
-    exos: ref.exos || []
-  };
-}
-
-export const MODULES = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17].map(withRefs);
+export const MODULES = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17, m18, m19, m20, m21, m22, m23, m24, m25, m26, m27, m28, m29, m30];
 export const MODULE_BY_ID = Object.fromEntries(MODULES.map((m) => [m.id, m]));
 export const TOTAL_XP = MODULES.reduce((sum, m) => sum + m.xp, 0);
 export const TOTAL_DURATION = MODULES.reduce((sum, m) => sum + m.duration, 0);

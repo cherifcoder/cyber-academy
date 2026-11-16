@@ -1,144 +1,938 @@
 export default {
-  id: 'm5',
-  num: 5,
-  title: "Maîtrise de Burp Suite",
-  short: "Burp Suite",
-  icon: "🕵️",
-  xp: 380,
-  duration: 75,
-  summary: "Le proxy d'interception de référence : configuration navigateur, Repeater, Intruder, Decoder, Comparer, Sequencer, Logger et extensions indispensables.",
-  objectives: [
-    "Configurer Burp et FoxyProxy avec le certificat CA",
-    "Intercepter, modifier et rejouer des requêtes HTTP/S",
-    "Choisir le bon type d'attaque Intruder (sniper, battering ram, pitchfork, cluster bomb)",
-    "Utiliser Decoder, Comparer, Sequencer et les extensions BApp"
+  "id": "m5",
+  "num": 5,
+  "title": "Fondamentaux Linux et ligne de commande",
+  "short": "Linux",
+  "icon": "🐧",
+  "xp": 270,
+  "duration": 70,
+  "summary": "Cours en français sur « Fondamentaux Linux et ligne de commande » avec 6 chapitres, 10 exercices par chapitre et un défi CTF.",
+  "objectives": [
+    "Comprendre et appliquer : Système de fichiers et structure des répertoires Linux.",
+    "Comprendre et appliquer : Commandes Linux essentielles pour les tests de sécurité.",
+    "Comprendre et appliquer : Gestion des utilisateurs, groupes et permissions.",
+    "Comprendre et appliquer : Gestion des processus et des services.",
+    "Comprendre et appliquer : Fondamentaux du scripting Bash.",
+    "Comprendre et appliquer : Aperçu des binaires living-off-the-land (LOLbins)."
   ],
-  blocks: [
+  "blocks": [
     {
-      t: 'p',
-      x: "Burp Suite est un <strong>proxy d'interception</strong> : tout le trafic du navigateur passe par lui, ce qui permet de l'observer, de le modifier et de le rejouer. La version Community suffit pour l'apprentissage ; la version Pro ajoute le scanner et l'Intruder illimité."
+      "t": "p",
+      "x": "<strong>Module 5 — Fondamentaux Linux et ligne de commande</strong>. Ce module est présenté en français et couvre les chapitres suivants avec des exercices pratiques et des objectifs de compréhension."
     },
     {
-      t: 'steps',
-      items: [
-        { h: "1. Lancer Burp", p: "Ouvrir Burp → Proxy → Options : vérifier l'écouteur sur 127.0.0.1:8080. Activer « Intercept is on » uniquement quand vous voulez bloquer les requêtes." },
-        { h: "2. Configurer le navigateur", p: "Installer FoxyProxy (Firefox/Chrome), créer un profil HTTP 127.0.0.1:8080. Utiliser un navigateur dédié au test, avec un profil vierge." },
-        { h: "3. Installer le certificat", p: "Avec le proxy actif, ouvrir http://burpsuite, télécharger le DER, l'importer dans les autorités de certification. Vérifier que le cadenas HTTPS est valide." },
-        { h: "4. Définir le scope", p: "Target → Scope → Add : domaine cible uniquement. Cocher « Use advanced scope control » pour limiter les ports et protocoles. Le scope filtre le sitemap et l'historique." },
-        { h: "5. Cartographier", p: "Naviguer dans l'application. Le Sitemap se construit automatiquement. Envoyer chaque requête intéressante vers Repeater avec Ctrl+R." }
+      "t": "callout",
+      "v": "info",
+      "title": "Résumé",
+      "x": "Durée estimée : 70 min · XP : 270. Travaillez chapitre par chapitre, réalisez les 10 exercices de chaque chapitre, puis validez vos acquis."
+    },
+    {
+      "t": "h",
+      "x": "5.1 Système de fichiers et structure des répertoires Linux"
+    },
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>système de fichiers et structure des répertoires linux</strong> dans le cadre du module « Fondamentaux Linux et ligne de commande ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Système de fichiers et structure des répertoires Linux », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Système de fichiers et structure des répertoires Linux.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
       ]
     },
     {
-      t: 'callout', v: 'warn', title: "HTTPS qui ne passe pas ?",
-      x: "Erreur de certificat = CA non installée. Page blanche = proxy mal configuré ou application qui épingle les certificats (certificate pinning) — fréquent sur les apps mobiles. Dans ce cas, utilisez un appareil rooté avec objection/Frida, uniquement dans un lab."
-    },
-    { t: 'h', x: "5.1 Les outils, un par un" },
-    {
-      t: 'mini',
-      items: [
-        { v: 'cyan', h: 'Proxy', p: "Intercepte et permet de modifier chaque requête/réponse. Historique complet, filtres, coloration." },
-        { v: 'magenta', h: 'Repeater', p: "Éditeur manuel de requêtes : modifier un paramètre, renvoyer, comparer les réponses. L'outil le plus utilisé." },
-        { v: 'amber', h: 'Intruder', p: "Attaques automatisées par positions et payloads. Community : throttlé. Pro : rapide et configurable." },
-        { v: 'lime', h: 'Decoder', p: "Encodage/décodage URL, Base64, hex, HTML, gzip. Indispensable face aux tokens et cookies." },
-        { v: 'violet', h: 'Comparer', p: "Diff de deux réponses ou requêtes (mots ou octets). Parfait pour le blind et les variations subtiles." },
-        { v: 'red', h: 'Sequencer', p: "Analyse l'entropie des jetons de session. Détecte un PRNG prévisible." }
-      ]
-    },
-    { t: 'h', x: "5.2 Repeater : la boucle de test" },
-    {
-      t: 'p',
-      x: "Le cycle de travail est toujours le même : <strong>capturer → envoyer vers Repeater → modifier un seul élément → comparer → conclure</strong>. Modifiez un paramètre à la fois pour attribuer l'effet observé."
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
     },
     {
-      t: 'code', lang: 'http', title: "Requête typique à manipuler",
-      x: `GET /api/profile?user=alice HTTP/1.1
-Host: app.lab
-Cookie: session=eyJ1aWQiOjEwNDJ9
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
-Accept: application/json
-
-# Tests : user=bob, cookie décodé/modifié, suppression du header,
-# ajout de X-Forwarded-For: 127.0.0.1, changement de méthode, etc.`
-    },
-    {
-      t: 'callout', v: 'tip', title: "Le droit à l'erreur",
-      x: "Repeater ne fait rien tout seul : c'est vous qui décidez. C'est l'endroit sûr pour tester des variantes d'encodage, des en-têtes de contournement et des payloads. Gardez une trace (Logger / notes) de chaque requête qui donne un résultat."
-    },
-    { t: 'h', x: "5.3 Intruder : quatre modes d'attaque" },
-    {
-      t: 'table',
-      head: ['Mode', 'Principe', 'Cas d’usage'],
-      rows: [
-        ['Sniper', "Un payload à la fois, une position à la fois", "Tester un paramètre avec une wordlist (fuzzing)"],
-        ['Battering ram', "Le même payload dans toutes les positions", "Mot de passe identique partout, injections simples"],
-        ['Pitchfork', "Une wordlist par position, avancement synchronisé", "Login/mot de passe appariés"],
-        ['Cluster bomb', "Toutes les combinaisons possibles", "Énumération login × mot de passe (attention au volume)"]
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
       ]
     },
     {
-      t: 'code', lang: 'text', title: "Configurer une attaque sur un login",
-      x: `POST /login HTTP/1.1
-Host: lab.local
-Content-Type: application/x-www-form-urlencoded
-
-username=§alice§&password=§wrong§
-
-# 1. Sélectionner les deux valeurs → Add §
-# 2. Type d'attaque : Cluster bomb
-# 3. Payload set 1 : users.txt (alice, bob, admin)
-# 4. Payload set 2 : passwords.txt (rockyou top 100)
-# 5. Grep - Match : "Welcome", "Invalid credentials"
-# 6. Resource pool : 1 thread (éviter le lockout)`
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
     },
     {
-      t: 'callout', v: 'danger', title: "Attention au verrouillage de compte",
-      x: "Un cluster bomb sur un vrai login peut verrouiller des comptes et déclencher le SOC. En lab, c'est sans risque. En mission, utilisez des comptes de test fournis par le client et un throttling explicite dans les RoE."
+      "t": "h",
+      "x": "5.2 Commandes Linux essentielles pour les tests de sécurité"
     },
-    { t: 'h', x: "5.4 Decoder, Comparer, Sequencer" },
     {
-      t: 'ul',
-      x: [
-        "<strong>Decoder</strong> : décoder un JWT (Base64URL) pour lire les claims, puis re-signer si la clé est faible. Attention : un JWT lisible n'est pas une faille — la faille est une signature absente ou vérifiable avec une clé devinable.",
-        "<strong>Comparer</strong> : en blind, deux réponses qui semblent identiques diffèrent souvent de quelques octets. Le diff révèle le bit qui change.",
-        "<strong>Sequencer</strong> : collectez ≥ 100 jetons, vérifiez l'entropie. Un token qui augmente de 1 est immédiatement exploitable."
+      "t": "p",
+      "x": "Ce chapitre présente <strong>commandes linux essentielles pour les tests de sécurité</strong> dans le cadre du module « Fondamentaux Linux et ligne de commande ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Commandes Linux essentielles pour les tests de sécurité », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Commandes Linux essentielles pour les tests de sécurité.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
       ]
     },
     {
-      t: 'code', lang: 'bash', title: "Décoder un JWT à la main",
-      x: `# Header
-echo 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' | base64 -d
-
-# Payload
-echo 'eyJ1aWQiOjEwNDIsInJvbGUiOiJ1c2VyIn0' | base64 -d
-{"uid":1042,"role":"user"}
-
-# Test "alg: none" en lab : reconstruire un JWT sans signature
-# Test de clé faible : hashcat -a 0 -m 16500 jwt.txt wordlist.txt`
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
     },
-    { t: 'h', x: "5.5 Extensions utiles (BApp Store)" },
     {
-      t: 'table',
-      head: ['Extension', 'Apport'],
-      rows: [
-        ['Turbo Intruder', "Requêtes massives et attaques par race condition"],
-        ['Autorize', "Détection automatique des problèmes d'autorisation (IDOR/BAC)"],
-        ['Param Miner', "Découverte de paramètres et d'en-têtes cachés"],
-        ['JWT Editor', "Édition et attaque de tokens JWT"],
-        ['Logger++', "Journalisation avancée et recherche dans l'historique"],
-        ['Hackvertor', "Encodages et transformations personnalisées"],
-        ['Collaborator Everywhere', "Détection SSRF/blind via un domaine contrôlé (Pro)"]
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
       ]
     },
     {
-      t: 'callout', v: 'info', title: "Bonnes pratiques de travail",
-      x: "Un projet Burp par mission, un scope propre, des notes par endpoint, des captures horodatées. Sauvegardez le projet (Pro) ou exportez l'historique régulièrement. Un rapport sans preuve reproductible ne vaut rien."
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
     },
-    { t: 'h', x: "5.6 Atelier : interception et falsification" },
     {
-      t: 'p',
-      x: "Vous interceptez une requête de commande. Modifiez le prix, l'identifiant ou les en-têtes, puis observez la réponse du serveur simulé."
+      "t": "h",
+      "x": "5.3 Gestion des utilisateurs, groupes et permissions"
     },
-    { t: 'lab', id: 'burp' }
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>gestion des utilisateurs, groupes et permissions</strong> dans le cadre du module « Fondamentaux Linux et ligne de commande ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Gestion des utilisateurs, groupes et permissions », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Gestion des utilisateurs, groupes et permissions.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "5.4 Gestion des processus et des services"
+    },
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>gestion des processus et des services</strong> dans le cadre du module « Fondamentaux Linux et ligne de commande ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Gestion des processus et des services », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Gestion des processus et des services.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "5.5 Fondamentaux du scripting Bash"
+    },
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>fondamentaux du scripting bash</strong> dans le cadre du module « Fondamentaux Linux et ligne de commande ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Fondamentaux du scripting Bash », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Fondamentaux du scripting Bash.",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "5.6 Aperçu des binaires living-off-the-land (LOLbins)"
+    },
+    {
+      "t": "p",
+      "x": "Ce chapitre présente <strong>aperçu des binaires living-off-the-land (lolbins)</strong> dans le cadre du module « Fondamentaux Linux et ligne de commande ». L'objectif est de comprendre les concepts clés, les enjeux opérationnels et les bonnes pratiques défensives, dans un contexte strictement légal et éthique."
+    },
+    {
+      "t": "callout",
+      "v": "info",
+      "title": "Objectifs du chapitre",
+      "x": "À l'issue de ce chapitre, vous devez être capable d'expliquer les notions essentielles de « Aperçu des binaires living-off-the-land (LOLbins) », d'identifier les risques associés et d'appliquer les mesures de protection appropriées."
+    },
+    {
+      "t": "ul",
+      "x": [
+        "Définir les concepts et la terminologie liés à : Aperçu des binaires living-off-the-land (LOLbins).",
+        "Comprendre le rôle et l'impact de ce thème dans un programme de sécurité.",
+        "Identifier les erreurs courantes, signaux d'alerte et points de contrôle.",
+        "Appliquer des pratiques de réduction du risque et de défense en profondeur.",
+        "Documenter les observations de manière claire, traçable et professionnelle."
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "warn",
+      "title": "Cadre légal et éthique",
+      "x": "Toute technique évoquée doit être utilisée uniquement dans un environnement autorisé (laboratoire, contrat, programme de bug bounty avec périmètre défini). L'accès non autorisé à des systèmes tiers est illégal."
+    },
+    {
+      "t": "mini",
+      "items": [
+        {
+          "v": "lime",
+          "h": "À faire",
+          "p": "Travailler dans un lab isolé, conserver des preuves, suivre les règles d'engagement et privilégier la minimisation des données."
+        },
+        {
+          "v": "amber",
+          "h": "À éviter",
+          "p": "Tester hors périmètre, perturber la production, conserver des données sensibles sans nécessité ou sans protection."
+        },
+        {
+          "v": "red",
+          "h": "Risque",
+          "p": "Impacts juridiques, opérationnels et réputationnels en cas de non-respect du cadre légal et contractuel."
+        }
+      ]
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Bonnes pratiques",
+      "x": "Adoptez une démarche méthodique : préparer, observer, analyser, valider, puis documenter. Reliez chaque constat à un risque métier et à une recommandation concrète."
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 5.1 : Système de fichiers et structure des répertoires Linux"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Système de fichiers et structure des répertoires Linux",
+          "facile",
+          "(concept) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Système de fichiers et structure des répertoires Linux",
+          "facile",
+          "(analyse) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Système de fichiers et structure des répertoires Linux",
+          "facile",
+          "(application) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Système de fichiers et structure des répertoires Linux",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Système de fichiers et structure des répertoires Linux",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Système de fichiers et structure des répertoires Linux",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Système de fichiers et structure des répertoires Linux",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Système de fichiers et structure des répertoires Linux",
+          "avancé",
+          "(risque) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Système de fichiers et structure des répertoires Linux",
+          "avancé",
+          "(contrôle) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Système de fichiers et structure des répertoires Linux",
+          "avancé",
+          "(synthèse) Dans le contexte de « Système de fichiers et structure des répertoires Linux » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Système de fichiers et structure des répertoires Linux », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 5.2 : Commandes Linux essentielles pour les tests de sécurité"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Commandes Linux essentielles pour les tests de sécurité",
+          "facile",
+          "(concept) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Commandes Linux essentielles pour les tests de sécurité",
+          "facile",
+          "(analyse) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Commandes Linux essentielles pour les tests de sécurité",
+          "facile",
+          "(application) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Commandes Linux essentielles pour les tests de sécurité",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Commandes Linux essentielles pour les tests de sécurité",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Commandes Linux essentielles pour les tests de sécurité",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Commandes Linux essentielles pour les tests de sécurité",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Commandes Linux essentielles pour les tests de sécurité",
+          "avancé",
+          "(risque) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Commandes Linux essentielles pour les tests de sécurité",
+          "avancé",
+          "(contrôle) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Commandes Linux essentielles pour les tests de sécurité",
+          "avancé",
+          "(synthèse) Dans le contexte de « Commandes Linux essentielles pour les tests de sécurité » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Commandes Linux essentielles pour les tests de sécurité », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 5.3 : Gestion des utilisateurs, groupes et permissions"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Gestion des utilisateurs, groupes et permissions",
+          "facile",
+          "(concept) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Gestion des utilisateurs, groupes et permissions",
+          "facile",
+          "(analyse) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Gestion des utilisateurs, groupes et permissions",
+          "facile",
+          "(application) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Gestion des utilisateurs, groupes et permissions",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Gestion des utilisateurs, groupes et permissions",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Gestion des utilisateurs, groupes et permissions",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Gestion des utilisateurs, groupes et permissions",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Gestion des utilisateurs, groupes et permissions",
+          "avancé",
+          "(risque) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Gestion des utilisateurs, groupes et permissions",
+          "avancé",
+          "(contrôle) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Gestion des utilisateurs, groupes et permissions",
+          "avancé",
+          "(synthèse) Dans le contexte de « Gestion des utilisateurs, groupes et permissions » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des utilisateurs, groupes et permissions », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 5.4 : Gestion des processus et des services"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Gestion des processus et des services",
+          "facile",
+          "(concept) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Gestion des processus et des services",
+          "facile",
+          "(analyse) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Gestion des processus et des services",
+          "facile",
+          "(application) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Gestion des processus et des services",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Gestion des processus et des services",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Gestion des processus et des services",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Gestion des processus et des services",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Gestion des processus et des services",
+          "avancé",
+          "(risque) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Gestion des processus et des services",
+          "avancé",
+          "(contrôle) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Gestion des processus et des services",
+          "avancé",
+          "(synthèse) Dans le contexte de « Gestion des processus et des services » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Gestion des processus et des services », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 5.5 : Fondamentaux du scripting Bash"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Fondamentaux du scripting Bash",
+          "facile",
+          "(concept) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Fondamentaux du scripting Bash",
+          "facile",
+          "(analyse) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Fondamentaux du scripting Bash",
+          "facile",
+          "(application) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Fondamentaux du scripting Bash",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Fondamentaux du scripting Bash",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Fondamentaux du scripting Bash",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Fondamentaux du scripting Bash",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Fondamentaux du scripting Bash",
+          "avancé",
+          "(risque) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Fondamentaux du scripting Bash",
+          "avancé",
+          "(contrôle) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Fondamentaux du scripting Bash",
+          "avancé",
+          "(synthèse) Dans le contexte de « Fondamentaux du scripting Bash » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Fondamentaux du scripting Bash », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "Exercices — Chapitre 5.6 : Aperçu des binaires living-off-the-land (LOLbins)"
+    },
+    {
+      "t": "p",
+      "x": "Réalisez les 10 exercices suivants. Répondez de manière argumentée, en vous appuyant sur un environnement de laboratoire autorisé."
+    },
+    {
+      "t": "table",
+      "head": [
+        "#",
+        "Titre",
+        "Difficulté",
+        "Consigne",
+        "Attendu"
+      ],
+      "rows": [
+        [
+          "1",
+          "Exercice 1 (concept) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "facile",
+          "(concept) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : définissez les concepts clés.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "2",
+          "Exercice 2 (analyse) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "facile",
+          "(analyse) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : listez les éléments essentiels à connaître.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "3",
+          "Exercice 3 (application) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "facile",
+          "(application) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : donnez un exemple concret en environnement de lab autorisé.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "4",
+          "Exercice 4 (défense) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "intermédiaire",
+          "(défense) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : expliquez un risque principal et son impact.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "5",
+          "Exercice 5 (scénario) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "intermédiaire",
+          "(scénario) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez une mesure de prévention ou de détection.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "6",
+          "Exercice 6 (terminologie) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "intermédiaire",
+          "(terminologie) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : décrivez une bonne pratique de mise en œuvre.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "7",
+          "Exercice 7 (méthode) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "intermédiaire",
+          "(méthode) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : analysez une erreur fréquente et comment l'éviter.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "8",
+          "Exercice 8 (risque) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "avancé",
+          "(risque) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : indiquez comment documenter et tracer correctement.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "9",
+          "Exercice 9 (contrôle) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "avancé",
+          "(contrôle) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : proposez un contrôle de sécurité ou de conformité.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ],
+        [
+          "10",
+          "Exercice 10 (synthèse) — Aperçu des binaires living-off-the-land (LOLbins)",
+          "avancé",
+          "(synthèse) Dans le contexte de « Aperçu des binaires living-off-the-land (LOLbins) » (module 5 : Fondamentaux Linux et ligne de commande), répondez de façon structurée : synthétisez les points clés à retenir pour un professionnel.",
+          "Réponse attendue : une explication claire en français, adaptée au contexte légal/éthique, mentionnant les notions importantes de « Aperçu des binaires living-off-the-land (LOLbins) », avec au moins une recommandation pratique."
+        ]
+      ]
+    },
+    {
+      "t": "h",
+      "x": "CTF — Module 5"
+    },
+    {
+      "t": "callout",
+      "v": "tip",
+      "title": "Défi CTF (lab autorisé)",
+      "x": "Mettez en pratique les notions du module « Fondamentaux Linux et ligne de commande » dans un environnement de lab/CTF autorisé. Documentez votre démarche : reconnaissance (si pertinent), hypothèse, test contrôlé, preuve, impact et remédiation."
+    },
+    {
+      "t": "steps",
+      "items": [
+        {
+          "h": "Préparation",
+          "p": "Vérifiez le périmètre, préparez votre environnement et votre journal de notes."
+        },
+        {
+          "h": "Exécution",
+          "p": "Appliquez les techniques du module de façon méthodique et non destructive."
+        },
+        {
+          "h": "Preuve",
+          "p": "Collectez des preuves minimales (captures, commandes, horodatage) dans un dossier dédié."
+        },
+        {
+          "h": "Remédiation",
+          "p": "Proposez des correctifs concrets et priorisés selon le risque."
+        }
+      ]
+    }
   ],
-  quiz: 'q5'
+  "quiz": "q5"
 };
