@@ -28,6 +28,10 @@ export const BADGES = [
   { id: 'permissions', name: "Gardien des accès", icon: '🔐', desc: "Module 16 validé : utilisateurs, groupes et permissions maîtrisés.", hint: "Validez le module 16 (permissions Linux).", test: (s) => !!s.completed.m16 },
   { id: 'sentinelle', name: "Sentinelle réseau", icon: '📡', desc: "Module 17 validé : IP, MAC et IMEI ne vous cachent plus leur portée.", hint: "Validez le module 17 (identités réseau).", test: (s) => !!s.completed.m17 },
 
+  { id: 'bluetooth', name: "Explorateur Bluetooth", icon: '📶', desc: "Module 32 validé : BR/EDR, BLE et GATT cartographiés.", hint: "Validez le module 32 (sécurité Bluetooth).", test: (s) => !!s.completed.m32 },
+  { id: 'radio', name: "Oreille radio", icon: '📡', desc: "Module 33 validé : SDR, spectre et banc RF maîtrisés.", hint: "Validez le module 33 (sécurité radio).", test: (s) => !!s.completed.m33 },
+  { id: 'audio', name: "Gardien du son", icon: '🎧', desc: "Module 34 validé : casques TWS et audio sans fil analysés.", hint: "Validez le module 34 (écouteurs connectés).", test: (s) => !!s.completed.m34 },
+
   { id: 'sans-faute', name: "Sans faute", icon: '🎯', desc: "Un quiz réussi à 100 %.", hint: "Obtenez 100 % à un quiz.", test: (s) => Object.values(s.quizzes).some((q) => q.total > 0 && q.best === q.total) },
 
   { id: 'operateur', name: "Opérateur", icon: '⚡', desc: "1 000 XP accumulés.", hint: "Atteignez 1 000 XP.", test: (s) => s.xp >= 1000 },

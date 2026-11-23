@@ -1,4 +1,4 @@
-export const DECKS = ['Tous', 'Terminologie', 'HTTP & en-têtes', 'Codes de statut', 'OWASP', 'Outils', 'Défense', 'Identité réseau'];
+export const DECKS = ['Tous', 'Terminologie', 'HTTP & en-têtes', 'Codes de statut', 'OWASP', 'Outils', 'Défense', 'Identité réseau', 'Sans fil & RF'];
 
 export const FLASHCARDS = [
   { deck: 'Terminologie', q: "Pentest", a: "Test d'intrusion autorisé, planifié et documenté, visant à évaluer la sécurité d'un système. La technique peut être identique à celle d'un attaquant ; seuls le consentement, le périmètre et la finalité changent." },
@@ -72,5 +72,21 @@ export const FLASHCARDS = [
   { deck: 'Identité réseau', q: "Randomisation MAC", a: "Les OS modernes changent de MAC par réseau Wi-Fi pour éviter le pistage. C'est légitime sur ses propres appareils, mais cela casse parfois le NAC, le port-security ou les réservations DHCP. Le filtrage MAC seul n'est pas une sécurité." },
   { deck: 'Identité réseau', q: "Structure d'un IMEI", a: "15 chiffres : TAC (8) + numéro de série (6) + chiffre de contrôle Luhn (1). L'IMEISV ajoute deux chiffres de version. L'IMEI identifie le terminal, l'IMSI identifie l'abonnement SIM, le MSISDN le numéro de téléphone." },
   { deck: 'Identité réseau', q: "Tracer un IMEI", a: "L'opérateur voit l'IMEI, l'IMSI et la cellule à l'attachement, et peut produire des CDR. La localisation précise relève de l'opérateur et des autorités dans un cadre légal. Un site public ne peut au mieux identifier que le modèle via le TAC." },
-  { deck: 'Identité réseau', q: "Défense : identités réseau", a: "802.1X, port-security, DHCP snooping, segmentation VLAN pour la MAC ; limitation de débit, MFA, journaux synchronisés pour l'IP ; chiffrement, MDM et déclaration officielle en cas de vol pour l'IMEI. Toujours minimiser la collecte et la durée de conservation." }
+  { deck: 'Identité réseau', q: "Défense : identités réseau", a: "802.1X, port-security, DHCP snooping, segmentation VLAN pour la MAC ; limitation de débit, MFA, journaux synchronisés pour l'IP ; chiffrement, MDM et déclaration officielle en cas de vol pour l'IMEI. Toujours minimiser la collecte et la durée de conservation." },
+
+  { deck: 'Sans fil & RF', q: "HCI", a: "Host Controller Interface : frontière entre le contrôleur radio et la pile hôte. btmon enregistre ces événements au format btsnoop, ce qui permet d'analyser une session Bluetooth sans émettre." },
+  { deck: 'Sans fil & RF', q: "BR/EDR vs BLE", a: "BR/EDR (classique) : 79 canaux de 1 MHz, inquiry, SDP, profils A2DP/HFP. BLE : 40 canaux de 2 MHz, 3 canaux publicitaires, GATT/ATT, faible consommation." },
+  { deck: 'Sans fil & RF', q: "GATT", a: "Generic Attribute Profile : services et caractéristiques identifiés par UUID et handle. 0x180F = batterie, 0x2A00 = nom, 0x2A19 = niveau de batterie." },
+  { deck: 'Sans fil & RF', q: "CCCD", a: "Client Characteristic Configuration Descriptor (0x2902). Écrire 0x0001 active les notifications, 0x0002 les indications ; 0x0000 les désactive." },
+  { deck: 'Sans fil & RF', q: "Just Works", a: "Mode d'appairage sans authentification : aucune confirmation numérique. Adapté aux appareils sans écran, mais ne résiste pas à un homme du milieu ; préférer Secure Connections avec comparaison numérique." },
+  { deck: 'Sans fil & RF', q: "Fast Pair", a: "Mécanisme Google d'appairage rapide basé sur un service BLE 0xFE2C. Pratique, mais un identifiant de modèle trop stable pose des questions de suivi et d'appairage indésirable." },
+  { deck: 'Sans fil & RF', q: "A2DP / AVRCP / HFP", a: "A2DP transporte la musique stéréo, AVRCP les commandes et métadonnées, HFP la voix via SCO/eSCO et des commandes AT sur RFCOMM." },
+  { deck: 'Sans fil & RF', q: "LE Audio", a: "Suite de profils Bluetooth LE : codec LC3, flux isochrones, BIG (broadcast) et BASS. Meilleure efficacité et diffusabilité que SBC." },
+  { deck: 'Sans fil & RF', q: "I/Q", a: "Échantillons en phase et quadrature sortant d'un SDR. La fréquence d'échantillonnage doit être au moins deux fois la bande utile (Nyquist) pour éviter le repliement." },
+  { deck: 'Sans fil & RF', q: "OOK / FSK / LoRa", a: "OOK : présence/absence de porteuse (télécommandes 433 MHz). FSK : variations de fréquence (BLE, capteurs). LoRa : étalement de spectre à longue portée." },
+  { deck: 'Sans fil & RF', q: "Rolling code", a: "Code changeant à chaque émission. Empêche la relecture d'une trame capturée. Un identifiant fixe ou une trame identique à chaque appui révèle son absence." },
+  { deck: 'Sans fil & RF', q: "Duty cycle", a: "Fraction de temps pendant laquelle un appareil émet. Limité par la réglementation SRD/ISM (ETSI, FCC) ; à vérifier lors de l'analyse d'un capteur." },
+  { deck: 'Sans fil & RF', q: "Preuve RF/BT", a: "Capture horodatée + métadonnées (fréquence, gain, sample rate, matériel) + empreinte SHA-256. Jamais de contenu vocal ou de données personnelles." },
+  { deck: 'Sans fil & RF', q: "Brouillage", a: "Émission destinée à empêcher la réception. Interdit hors banc blindé et autorisation réglementaire. À remplacer par une analyse passive et une voie légale." }
 ];
+

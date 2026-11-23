@@ -3625,5 +3625,357 @@ export const QUIZZES = {
         "explain": "Un rapport professionnel est reproductible, contextualisé, prouvé et orienté remédiation. Il évite d'exposer inutilement des secrets."
       }
     ]
-  }
+  },
+  "q32": {
+      "moduleId": "m32",
+      "title": "Évaluation — Sécurité Bluetooth : BR/EDR, BLE et labs",
+      "pass": 70,
+      "questions": [
+        {
+          "q": "Quelle interface sert de frontière entre le contrôleur Bluetooth et la pile hôte ?",
+          "options": [
+            "HCI",
+            "SDP",
+            "GATT",
+            "RFCOMM"
+          ],
+          "answer": 0,
+          "explain": "HCI (Host Controller Interface) transporte les commandes et événements entre l'hôte et le contrôleur. C'est ce trafic que btmon enregistre."
+        },
+        {
+          "q": "Combien de canaux publicitaires utilise le BLE ?",
+          "options": [
+            "3 (37, 38, 39)",
+            "40",
+            "79",
+            "1"
+          ],
+          "answer": 0,
+          "explain": "Le BLE diffuse sur trois canaux dédiés (37, 38, 39), puis utilise les 37 autres canaux de données après la connexion."
+        },
+        {
+          "q": "Quel identifiant GATT désigne la caractéristique « Device Name » ?",
+          "options": [
+            "0x2A00",
+            "0x180F",
+            "0x2902",
+            "0x2A19"
+          ],
+          "answer": 0,
+          "explain": "0x2A00 est le Device Name, 0x180F le service Battery, 0x2902 le CCCD et 0x2A19 le niveau de batterie."
+        },
+        {
+          "q": "Que permet le descripteur CCCD (0x2902) ?",
+          "options": [
+            "Activer notifications ou indications",
+            "Chiffrer le lien",
+            "Changer l'adresse MAC",
+            "Découvrir les services"
+          ],
+          "answer": 0,
+          "explain": "Écrire 0x0001 active les notifications et 0x0002 les indications sur une caractéristique."
+        },
+        {
+          "q": "Quelle commande liste les périphériques BLE en publicité ?",
+          "options": [
+            "hcitool lescan",
+            "hcitool scan",
+            "sdptool browse",
+            "l2ping"
+          ],
+          "answer": 0,
+          "explain": "hcitool lescan affiche les publicités BLE ; hcitool scan concerne le BR/EDR."
+        },
+        {
+          "q": "Qu'est-ce que SDP ?",
+          "options": [
+            "L'annuaire des services BR/EDR",
+            "Un codec audio",
+            "Un mode d'appairage",
+            "Un sniffeur radio"
+          ],
+          "answer": 0,
+          "explain": "SDP (Service Discovery Protocol) expose les services, UUID et canaux RFCOMM d'un appareil BR/EDR."
+        },
+        {
+          "q": "Pourquoi préférer Secure Connections avec comparaison numérique à Just Works ?",
+          "options": [
+            "Parce qu'elle authentifie l'appairage et résiste au MITM",
+            "Parce qu'elle augmente la portée",
+            "Parce qu'elle supprime les sauts de fréquence",
+            "Parce qu'elle réduit la consommation"
+          ],
+          "answer": 0,
+          "explain": "Just Works n'apporte aucune authentification d'appairage ; la comparaison numérique permet de détecter un homme du milieu."
+        },
+        {
+          "q": "Quel outil enregistre les événements HCI dans un fichier btsnoop ?",
+          "options": [
+            "btmon",
+            "nmap",
+            "ffuf",
+            "sqlmap"
+          ],
+          "answer": 0,
+          "explain": "btmon -w capture.btsnoop enregistre la trace HCI, ensuite analysable avec Wireshark ou tshark."
+        },
+        {
+          "q": "Que signifie une adresse BLE privée résolvable ?",
+          "options": [
+            "Une adresse tournante que l'appareil peut relier à une identité via IRK",
+            "Une adresse figée par le fabricant",
+            "Une adresse IP publique",
+            "Un UUID de service"
+          ],
+          "answer": 0,
+          "explain": "Les adresses privées résolvables changent périodiquement ; un appareil de confiance peut les résoudre grâce à l'IRK."
+        },
+        {
+          "q": "Dans un rapport de lab Bluetooth, quelle preuve est attendue ?",
+          "options": [
+            "Capture horodatée + hash SHA-256 + versions des outils",
+            "Une simple capture d'écran du téléphone",
+            "Le mot de passe Wi-Fi du lab",
+            "La liste des réseaux voisins"
+          ],
+          "answer": 0,
+          "explain": "Une preuve reproductible comprend la chronologie, l'intégrité (hash), le matériel et les versions utilisées."
+        }
+      ]
+    },
+  "q33": {
+      "moduleId": "m33",
+      "title": "Évaluation — Sécurité radio : SDR, bandes ISM et labs",
+      "pass": 70,
+      "questions": [
+        {
+          "q": "Que produit un récepteur SDR à partir du signal radio ?",
+          "options": [
+            "Des échantillons I/Q",
+            "Des paquets TCP",
+            "Des requêtes HTTP",
+            "Des fichiers exécutables"
+          ],
+          "answer": 0,
+          "explain": "Le SDR numérise la bande et fournit des échantillons en phase (I) et quadrature (Q)."
+        },
+        {
+          "q": "Quelle relation relie longueur d'onde et fréquence ?",
+          "options": [
+            "λ = c / f",
+            "λ = f × c",
+            "λ = f / c",
+            "λ = c + f"
+          ],
+          "answer": 0,
+          "explain": "La longueur d'onde vaut la vitesse de la lumière divisée par la fréquence. À 433,92 MHz, elle vaut environ 69 cm."
+        },
+        {
+          "q": "Quelle modulation est typique d'une télécommande 433 MHz bon marché ?",
+          "options": [
+            "OOK / ASK",
+            "OFDM",
+            "QAM-256",
+            "DSSS"
+          ],
+          "answer": 0,
+          "explain": "On-Off Keying est simple et économique : la porteuse est présente ou absente."
+        },
+        {
+          "q": "Quelle commande décode de nombreux protocoles de capteurs 433 MHz ?",
+          "options": [
+            "rtl_433",
+            "nmap",
+            "sqlmap",
+            "nikto"
+          ],
+          "answer": 0,
+          "explain": "rtl_433 contient des décodeurs pour plus de 150 protocoles de capteurs sans fil."
+        },
+        {
+          "q": "Que permet le critère de Nyquist ?",
+          "options": [
+            "Choisir un sample rate au moins double de la bande utile",
+            "Calculer la puissance d'émission",
+            "Déterminer l'adresse IP du dongle",
+            "Chiffrer la capture"
+          ],
+          "answer": 0,
+          "explain": "Pour éviter le repliement, la fréquence d'échantillonnage doit être au moins deux fois supérieure à la bande observée."
+        },
+        {
+          "q": "Qu'est-ce qu'un rolling code ?",
+          "options": [
+            "Un code changeant à chaque transmission",
+            "Un mot de passe fixe",
+            "Une fréquence fixe",
+            "Un type d'antenne"
+          ],
+          "answer": 0,
+          "explain": "Le code roulant rend chaque trame unique et empêche la relecture simple."
+        },
+        {
+          "q": "Dans quel cas une réémission I/Q est-elle acceptable ?",
+          "options": [
+            "Banc blindé, appareil de lab, autorisation et puissance minimale",
+            "Dans la rue, pour tester une porte",
+            "Sur un véhicule tiers",
+            "Sur le badge d'un collègue"
+          ],
+          "answer": 0,
+          "explain": "Émettre est strictement encadré : banc atténué, cible à soi et puissance minimale."
+        },
+        {
+          "q": "Quel outil analyse visuellement un fichier I/Q sous forme de spectrogramme ?",
+          "options": [
+            "inspectrum",
+            "ffuf",
+            "hydra",
+            " nikto"
+          ],
+          "answer": 0,
+          "explain": "inspectrum affiche le spectrogramme et permet de mesurer largeur de bande et durée."
+        },
+        {
+          "q": "Que faut-il joindre à une capture pour en faire une preuve ?",
+          "options": [
+            "Métadonnées, date, réglages et hash SHA-256",
+            "Uniquement le fichier brut",
+            "Le mot de passe du lab",
+            "Une photo de l'antenne"
+          ],
+          "answer": 0,
+          "explain": "Sans métadonnées ni empreinte, la capture n'est ni reproductible ni vérifiable."
+        },
+        {
+          "q": "Pourquoi le brouillage est-il interdit hors cadre réglementaire ?",
+          "options": [
+            "Il perturbe des services légitimes et occupe le spectre sans droit",
+            "Il consomme trop de CPU",
+            "Il rend le Wi-Fi plus rapide",
+            "Il est autorisé partout"
+          ],
+          "answer": 0,
+          "explain": "Le spectre est une ressource réglementée : émettre pour perturber est interdit sauf autorisation et banc adapté."
+        }
+      ]
+    },
+  "q34": {
+      "moduleId": "m34",
+      "title": "Évaluation — Écouteurs connectés et audio sans fil",
+      "pass": 70,
+      "questions": [
+        {
+          "q": "Quel profil Bluetooth transporte la musique stéréo ?",
+          "options": [
+            "A2DP",
+            "HFP",
+            "AVRCP",
+            "HOGP"
+          ],
+          "answer": 0,
+          "explain": "A2DP (Advanced Audio Distribution Profile) transporte le flux audio stéréo ; HFP sert à la voix et AVRCP au contrôle."
+        },
+        {
+          "q": "Quel codec est associé au LE Audio ?",
+          "options": [
+            "LC3",
+            "SBC",
+            "MP3",
+            "FLAC"
+          ],
+          "answer": 0,
+          "explain": "LC3 (Low Complexity Communication Codec) est le codec du LE Audio, plus efficace que SBC."
+        },
+        {
+          "q": "Comment la voix est-elle transportée dans le profil HFP classique ?",
+          "options": [
+            "Via un lien SCO/eSCO et des commandes AT sur RFCOMM",
+            "Via A2DP uniquement",
+            "Via HTTP",
+            "Via NFC"
+          ],
+          "answer": 0,
+          "explain": "HFP combine RFCOMM pour les commandes AT et SCO/eSCO pour le flux vocal."
+        },
+        {
+          "q": "À quoi sert AVRCP ?",
+          "options": [
+            "Contrôler la lecture et lire les métadonnées",
+            "Chiffrer le lien",
+            "Mettre à jour le firmware",
+            "Gérer la batterie"
+          ],
+          "answer": 0,
+          "explain": "AVRCP transporte les commandes lecture/pause/volume et les informations de piste."
+        },
+        {
+          "q": "Quel UUID GATT caractérise Google Fast Pair ?",
+          "options": [
+            "0xFE2C",
+            "0x180F",
+            "0x2A00",
+            "0x180A"
+          ],
+          "answer": 0,
+          "explain": "Le service Fast Pair utilise l'UUID 0xFE2C ; 0x180F est la batterie et 0x180A les informations appareil."
+        },
+        {
+          "q": "Quelle caractéristique standard donne la version firmware ?",
+          "options": [
+            "0x2A26",
+            "0x2A00",
+            "0x2A19",
+            "0x2902"
+          ],
+          "answer": 0,
+          "explain": "0x2A26 est Firmware Revision dans le service Device Information 0x180A."
+        },
+        {
+          "q": "Que faut-il vérifier pour une mise à jour OTA sécurisée ?",
+          "options": [
+            "La signature de l'image et le verrouillage du bootloader",
+            "La couleur du boîtier",
+            "Le nombre de boutons",
+            "La taille de la batterie"
+          ],
+          "answer": 0,
+          "explain": "Sans signature vérifiée et bootloader verrouillé, un firmware modifié peut être installé."
+        },
+        {
+          "q": "Que contient un HCI snoop log Android ?",
+          "options": [
+            "Des événements et métadonnées HCI",
+            "L'enregistrement audio brut",
+            "Les mots de passe Wi-Fi",
+            "Les contacts du téléphone"
+          ],
+          "answer": 0,
+          "explain": "Le snoop log contient des métadonnées protocolaires. S'il contient des données vocales, il doit être supprimé."
+        },
+        {
+          "q": "Pourquoi un numéro de série lisible avant authentification est-il un problème ?",
+          "options": [
+            "Il permet un suivi et une corrélation d'identité",
+            "Il augmente la portée",
+            "Il améliore le codec",
+            "Il réduit la latence"
+          ],
+          "answer": 0,
+          "explain": "Un identifiant stable est un vecteur de suivi : il doit être protégé ou rotatif."
+        },
+        {
+          "q": "Dans un rapport d'analyse audio, que doit-on joindre ?",
+          "options": [
+            "Métadonnées protocolaires, captures sans voix et hash SHA-256",
+            "L'enregistrement des appels",
+            "Les identifiants du compte",
+            "La liste des contacts"
+          ],
+          "answer": 0,
+          "explain": "On joint uniquement des preuves protocolaires et vérifiables, jamais de contenu vocal ou de données personnelles."
+        }
+      ]
+    }
+
 };

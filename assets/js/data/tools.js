@@ -5,6 +5,7 @@ export const TOOL_CATEGORIES = [
   'Web',
   'Exploitation (lab)',
   'Post-exploitation (lab)',
+  'Sans fil & RF (lab)',
   'Défense'
 ];
 
@@ -326,7 +327,78 @@ export const CHEATSHEET = [
       { cmd: 'semgrep --config=p/owasp-top-ten .', desc: 'SAST OWASP' },
       { cmd: 'npm audit --production', desc: 'Dépendances vulnérables' }
     ]
-  }
+  },
+  {
+    id: 'hcitool', name: 'hcitool / bluetoothctl', cat: 'Sans fil & RF (lab)', icon: '📶',
+    desc: "Découverte et contrôle Bluetooth : inquiry BR/EDR, scan BLE, informations d'un appareil et gestion de l'appairage.",
+    install: 'apt install bluez',
+    commands: [
+      { cmd: 'hciconfig hci0 up', desc: 'Activer le dongle de lab' },
+      { cmd: 'hcitool scan', desc: 'Inquiry BR/EDR' },
+      { cmd: 'hcitool lescan --duplicates', desc: 'Publicités BLE' },
+      { cmd: 'hcitool info AA:BB:CC:DD:EE:FF', desc: 'Version LMP et fabricant' },
+      { cmd: 'bluetoothctl info AA:BB:CC:DD:EE:FF', desc: 'Profils et état de connexion' }
+    ],
+    tips: ['Ne ciblez que votre matériel de lab.', 'Le RSSI donne une tendance de distance, pas une mesure fiable.']
+  },
+  {
+    id: 'sdptool', name: 'sdptool / gatttool', cat: 'Sans fil & RF (lab)', icon: '🧭',
+    desc: "Cartographie des services : SDP pour BR/EDR, GATT/ATT pour BLE. Permet de relever UUID, handles, propriétés et valeurs.",
+    install: 'apt install bluez',
+    commands: [
+      { cmd: 'sdptool browse AA:BB:CC:DD:EE:FF', desc: 'Services BR/EDR et canaux RFCOMM' },
+      { cmd: 'gatttool -b AA:BB:CC:DD:EE:FF --primary', desc: 'Services GATT' },
+      { cmd: 'gatttool -b AA:BB:CC:DD:EE:FF --characteristics', desc: 'Caractéristiques et propriétés' },
+      { cmd: 'gatttool -b AA:BB:CC:DD:EE:FF --char-read-uuid 0x2A00', desc: 'Lire le nom du device' }
+    ],
+    tips: ['Un service de debug exposé est à remonter.', '0x2902 est le CCCD : 0100 active les notifications.']
+  },
+  {
+    id: 'btmon', name: 'btmon / tshark', cat: 'Sans fil & RF (lab)', icon: '🐝',
+    desc: "Enregistre et filtre les événements HCI au format btsnoop, puis les opérations ATT/L2CAP avec Wireshark ou tshark.",
+    install: 'apt install bluez tshark',
+    commands: [
+      { cmd: 'sudo btmon -w session.btsnoop', desc: 'Capture HCI' },
+      { cmd: 'tshark -r session.btsnoop -Y btatt', desc: 'Opérations GATT/ATT' },
+      { cmd: 'tshark -r session.btsnoop -Y bthci_cmd', desc: 'Commandes HCI' },
+      { cmd: 'capinfos session.btsnoop', desc: 'Métadonnées de la capture' }
+    ],
+    tips: ['Démarrez la capture avant l’action observée.', 'Ne capturez jamais de contenu vocal réel.']
+  },
+  {
+    id: 'rtl', name: 'RTL-SDR (rtl_sdr, rtl_433)', cat: 'Sans fil & RF (lab)', icon: '📡',
+    desc: "Récepteur SDR bas coût pour observer le spectre et décoder des capteurs ISM en réception passive.",
+    install: 'apt install rtl-sdr librtlsdr-dev',
+    commands: [
+      { cmd: 'rtl_test -t', desc: 'Tester le flux USB' },
+      { cmd: 'rtl_sdr -f 433920000 -s 2000000 -g 20 -n 4000000 cap.iq', desc: 'Capturer 2 secondes en I/Q' },
+      { cmd: 'rtl_433 -f 433.92M -F json', desc: 'Décoder les capteurs 433 MHz' },
+      { cmd: 'gqrx', desc: 'Spectrogramme temps réel' }
+    ],
+    tips: ['Réception seulement : aucun signal émis.', 'Consignez fréquence, gain et sample rate avec la capture.']
+  },
+  {
+    id: 'hackrf', name: 'HackRF One', cat: 'Sans fil & RF (lab)', icon: '📻',
+    desc: "SDR émetteur/récepteur large bande. La réémission I/Q sert à démontrer l'absence de rolling code, uniquement sur banc blindé.",
+    install: 'apt install hackrf',
+    commands: [
+      { cmd: 'hackrf_transfer -r cap.iq -f 433920000 -s 2000000 -g 20', desc: 'Réception large bande' },
+      { cmd: 'hackrf_transfer -t cap.iq -f 433920000 -s 2000000 -x 0', desc: 'Réémission — LAB BLINDÉ UNIQUEMENT' },
+      { cmd: 'hackrf_info', desc: 'Informations sur le périphérique' }
+    ],
+    tips: ['-x 0 = puissance minimale.', 'Hors enceinte blindée et autorisation, émettre est interdit.']
+  },
+  {
+    id: 'urh', name: 'URH / inspectrum / GNU Radio', cat: 'Sans fil & RF (lab)', icon: '🧬',
+    desc: "Analyse hors ligne d'un signal : spectrogramme, détection du préambule, estimation du débit et décodage de bits.",
+    install: 'apt install urh inspectrum gnuradio',
+    commands: [
+      { cmd: 'urh cap.iq', desc: 'Détection des paramètres du protocole' },
+      { cmd: 'inspectrum cap.iq', desc: 'Mesure de la bande et de la durée' },
+      { cmd: 'gnuradio-companion', desc: 'Construction d’un graphe de traitement' }
+    ],
+    tips: ['URH fonctionne sur fichier : aucune émission.', 'Un sample rate erroné décale toutes les mesures.']
+  },
 ];
 
 export const HARDENING_CHECKLIST = [
